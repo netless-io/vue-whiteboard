@@ -29,8 +29,6 @@
 
 <script>
 import logo from "@/assets/image/logo.svg";
-import join from "@/assets/image/join.svg";
-import create from "@/assets/image/create.svg";
 import router from "@/router";
 
 export default {
@@ -39,8 +37,6 @@ export default {
   data() {
     return {
       logo,
-      join,
-      create,
       roomId: "",
     };
   },
