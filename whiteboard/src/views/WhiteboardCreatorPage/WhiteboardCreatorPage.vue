@@ -12,7 +12,7 @@ export default {
     return {
       foundError: false,
       uuid: "",
-      historied: "",
+      historied: ""
     };
   },
 
@@ -35,11 +35,11 @@ export default {
         return router.push({ path: `/PageError/` });
       } else if (this.uuid && this.userId) {
         return router.push({
-          path: `/whiteboard/${this.uuid}/${this.userId}/`,
+          path: `/whiteboard/${this.uuid}/${this.userId}/`
         });
       }
       return null;
-    },
+    }
   },
 
   async beforeMount() {
@@ -66,7 +66,7 @@ export default {
   mounted() {
     this.handleRedirect();
     console.log("object");
-  },
+  }
 };
 </script>
 

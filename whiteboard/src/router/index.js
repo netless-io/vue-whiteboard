@@ -2,13 +2,12 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Index from "@/views/IndexPage/Index.vue";
 import Join from "@/views/JoinPage/Join.vue";
-import WhiteboardCreatorPage from "@/views/WhiteboardCreatorPage/WhiteboardCreatorPage.vue";
+// import WhiteboardCreatorPage from "@/views/WhiteboardCreatorPage/WhiteboardCreatorPage.vue";
 import Whiteboard from "@/views/WhiteboardPage/Whiteboard.vue";
 
 Vue.use(VueRouter);
 
-const routes = [
-  {
+const routes = [{
     path: "/",
     name: "Index",
     component: Index,
@@ -18,16 +17,13 @@ const routes = [
     name: "Join",
     component: Join,
   },
+  // {
+  //   path: "/whiteboard/:uuid",
+  //   name: "WhiteboardCreatorPage",
+  //   component: WhiteboardCreatorPage,
+  // },
   {
-    path: "/whiteboard/:uuid",
-    name: "WhiteboardCreatorPage",
-    redirect: {
-      name: "WhiteboardPage",
-    },
-    component: WhiteboardCreatorPage,
-  },
-  {
-    path: "/whiteboard",
+    path: "/whiteboard/:uuid/:userId",
     name: "Whiteboard",
     component: Whiteboard,
   },

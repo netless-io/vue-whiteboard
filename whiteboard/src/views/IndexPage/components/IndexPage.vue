@@ -13,9 +13,9 @@
           </div>
           <div class="page-index-cutline-box"></div>
           <div class="page-index-start-cell">
-            <router-link to="/whiteboard">
-              <img :src="create" />
-            </router-link>
+            <!-- <router-link to="/whiteboard/:uuid/:userId"> -->
+            <img :src="create" @click="handleJump" />
+            <!-- </router-link> -->
             <span>创建房间</span>
           </div>
         </div>
@@ -33,7 +33,7 @@
 import logo from "@/assets/image/logo.svg";
 import join from "@/assets/image/join.svg";
 import create from "@/assets/image/create.svg";
-
+import { netlessWhiteboardApi } from "../../../apiMiddleware/RoomOperator";
 export default {
   name: "IndexPage",
   props: {},
@@ -41,8 +41,32 @@ export default {
     return {
       logo,
       join,
-      create
+      create,
+      uuid: "",
+      userId: ""
     };
+  },
+  methods: {
+    async createRoomAndGetUuid(room, limit, mode) {
+      const res = await netlessWhiteboardApi.room.createRoomApi(
+        room,
+        limit,
+        mode
+      );
+      if (res.code == 200) {
+        this.uuid = res.msg.room.uuid;
+        // console.log(this.uuid);
+      }
+      this.userId = `${Math.floor(Math.random() * 100000)}`;
+      // console.log(this.userId);
+    },
+
+    handleJump() {
+      this.$router.push({ path: `/whiteboard/${this.uuid}/${this.userId}` });
+    }
+  },
+  mounted() {
+    this.createRoomAndGetUuid();
   }
 };
 </script>

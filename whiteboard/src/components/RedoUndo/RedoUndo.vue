@@ -14,13 +14,10 @@ import redo from "./src/image/redo.svg";
 import undo from "./src/image/undo.svg";
 import redoDisabled from "./src/image/redo-disabled.svg";
 import undoDisabled from "./src/image/undo-disabled.svg";
-// import { Step } from "element-ui";
 
 export default {
   name: "RedoUndo",
-  props: {
-    room: null
-  },
+  props: ["room"],
   data() {
     return {
       redo,

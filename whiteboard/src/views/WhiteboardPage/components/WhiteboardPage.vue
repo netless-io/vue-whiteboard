@@ -5,7 +5,7 @@
     </div>
     <div class="tool-box-out"></div>
     <div class="redo-undo-box">
-      <redo-undo></redo-undo>
+      <!-- <redo-undo :room="room"></redo-undo> -->
     </div>
     <div class="zoom-controller-box"></div>
     <div class="room-controller-box">
@@ -30,25 +30,29 @@ import { netlessWhiteboardApi } from "../../../apiMiddleware/RoomOperator";
 import pages from "@/assets/image/pages.svg";
 import folder from "@/assets/image/folder.svg";
 import logo from "@/assets/image/logo.svg";
-import RedoUndo from "@/components/RedoUndo/RedoUndo";
+// import RedoUndo from "@/components/RedoUndo/RedoUndo";
 
 export default {
   name: "WhiteboardPage",
   components: {
-    RedoUndo
+    // RedoUndo
   },
   props: {
+    // uuid: null,
+    // userId: null,
     phase: null,
     isMenuVisible: Boolean,
-    isFileOpen: Boolean,
-    room: null
+    isFileOpen: Boolean
   },
   data() {
     return {
       pages,
       folder,
       logo,
-      whiteboardLayerDownRef: HTMLDivElement
+      room: "",
+      uuid: "",
+      userId: ""
+      // whiteboardLayerDownRef
     };
   },
   methods: {
@@ -70,7 +74,10 @@ export default {
     // },
 
     async startJoinRoom() {
-      // const { uuid, userId } = this.$route.params;
+      this.uuid = this.$route.params.uuid;
+      this.userId = this.$route.params.userId;
+      console.log(this.uuid);
+      console.log(this.userId);
       try {
         // const roomToken = await this.getRoomToken(uuid);
         // if (uuid && roomToken) {
