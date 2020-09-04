@@ -20,8 +20,7 @@
           @click="handleJoin"
           :disabled="roomId === ''"
           :value="roomId"
-          >加入房间</el-button
-        >
+        >加入房间</el-button>
       </div>
     </div>
   </div>
@@ -37,7 +36,7 @@ export default {
   data() {
     return {
       logo,
-      roomId: "",
+      roomId: ""
     };
   },
   methods: {
@@ -45,8 +44,8 @@ export default {
       const userId = `${Math.floor(Math.random() * 100000)}`;
       router.push({ path: `/whiteboard/${this.roomId}/${userId}` });
       console.log(this.roomId);
-    },
-  },
+    }
+  }
 };
 </script>
 

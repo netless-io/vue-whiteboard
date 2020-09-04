@@ -10,7 +10,6 @@
 </template>
 
 <script>
-import { Room } from "white-web-sdk";
 import redo from "./src/image/redo.svg";
 import undo from "./src/image/undo.svg";
 import redoDisabled from "./src/image/redo-disabled.svg";
@@ -20,7 +19,7 @@ import undoDisabled from "./src/image/undo-disabled.svg";
 export default {
   name: "RedoUndo",
   props: {
-    // room: Room
+    room: null
   },
   data() {
     return {
@@ -28,7 +27,6 @@ export default {
       undo,
       redoDisabled,
       undoDisabled,
-      room: Room,
       undoSteps: 0,
       redoSteps: 0
     };
@@ -41,7 +39,7 @@ export default {
     }
   },
   mounted() {
-    const { room } = this.props;
+    const room = this.props;
     room.disableSerialization = false;
     room.callbacks.on("onCanUndoStepsUpdate", steps => {
       this.undoSteps = steps;

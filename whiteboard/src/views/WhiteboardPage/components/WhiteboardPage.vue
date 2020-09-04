@@ -24,7 +24,7 @@
 
 <script>
 // import { createPlugins, Room, RoomPhase, WhiteWebSdk } from "white-web-sdk";
-import { WhiteWebSdk, RoomPhase } from "white-web-sdk";
+import { WhiteWebSdk } from "white-web-sdk";
 import { netlessToken } from "../../../appToken";
 import { netlessWhiteboardApi } from "../../../apiMiddleware/RoomOperator";
 import pages from "@/assets/image/pages.svg";
@@ -37,29 +37,19 @@ export default {
   components: {
     RedoUndo
   },
-  props: {},
+  props: {
+    phase: null,
+    isMenuVisible: Boolean,
+    isFileOpen: Boolean,
+    room: null
+  },
   data() {
     return {
       pages,
       folder,
       logo,
-      room: "",
-      phase: RoomPhase.Connecting,
-      isMenuVisible: false,
-      isFileOpen: false,
       whiteboardLayerDownRef: HTMLDivElement
     };
-    // props: {
-    //   phase: {
-    //     type: RoomPhase;
-    //   }
-    //   isMenuVisible: {
-    //     type: Boolean;
-    //   }
-    //   isFileOpen: {
-    //     type: Boolean;
-    //   }
-    // }
   },
   methods: {
     async getRoomToken(uuid) {
