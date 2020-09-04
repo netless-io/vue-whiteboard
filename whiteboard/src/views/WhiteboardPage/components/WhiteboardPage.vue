@@ -79,18 +79,17 @@ export default {
       console.log(this.uuid);
       console.log(this.userId);
       try {
-        // const roomToken = await this.getRoomToken(uuid);
+        const roomToken = await this.getRoomToken(this.uuid);
         // if (uuid && roomToken) {
         const whiteWebSdk = new WhiteWebSdk({
           appIdentifier: netlessToken.appIdentifier
         });
         const room = await whiteWebSdk.joinRoom(
           {
-            uuid: "87d705a0ed9411eab459e140f4526783",
-            roomToken:
-              "WHITEcGFydG5lcl9pZD14NGFfY1JDV09hbzItNEYtJnNpZz1hMGQ3MTFkNDg5NDJmNjk1NWRmYWYzMWJhZDFmZWNhOGNkYzNjYWU2OmFrPXg0YV9jUkNXT2FvMi00Ri0mY3JlYXRlX3RpbWU9MTU5OTEwMzI3ODU2OCZleHBpcmVfdGltZT0xNjMwNjM5Mjc4NTY4Jm5vbmNlPTE1OTkxMDMyNzg1NjgwMCZyb2xlPXJvb20mcm9vbUlkPTg3ZDcwNWEwZWQ5NDExZWFiNDU5ZTE0MGY0NTI2NzgzJnRlYW1JZD0yODM",
+            uuid: this.uuid,
+            roomToken: roomToken,
             userPayload: {
-              // userId: userId,
+              userId: this.userId
             },
             floatBar: true
           },
@@ -115,7 +114,6 @@ export default {
             enableDrawPoint: false
           }
         });
-        // this.handleBindRoom(this.$refs.bindRoom);
         room.bindHtmlElement(this.$refs.bindRoom);
         this.$room = room;
         // }
