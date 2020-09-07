@@ -5,7 +5,7 @@
     </div>
     <div class="tool-box-out"></div>
     <div class="redo-undo-box">
-      <!-- <redo-undo :room="room"></redo-undo> -->
+      <redo-undo :room="room"></redo-undo>
     </div>
     <div class="zoom-controller-box"></div>
     <div class="room-controller-box">
@@ -30,12 +30,12 @@ import { netlessWhiteboardApi } from "../../../apiMiddleware/RoomOperator";
 import pages from "@/assets/image/pages.svg";
 import folder from "@/assets/image/folder.svg";
 import logo from "@/assets/image/logo.svg";
-// import RedoUndo from "@/components/RedoUndo/RedoUndo";
+import RedoUndo from "@/components/RedoUndo/RedoUndo";
 
 export default {
   name: "WhiteboardPage",
   components: {
-    // RedoUndo
+    RedoUndo
   },
   props: {
     // uuid: null,
@@ -49,7 +49,7 @@ export default {
       pages,
       folder,
       logo,
-      room: "",
+      room: this.room,
       uuid: "",
       userId: ""
       // whiteboardLayerDownRef
@@ -106,6 +106,9 @@ export default {
             }
           }
         );
+        // this.room = room;
+        console.log(room);
+        // console.log(this.room);
         room.setMemberState({
           pencilOptions: {
             disableBezier: false,
@@ -116,6 +119,8 @@ export default {
         });
         room.bindHtmlElement(this.$refs.bindRoom);
         this.$room = room;
+        this.room = room;
+        // console.log(this.room);
         // }
       } catch (error) {
         console.error(error);
