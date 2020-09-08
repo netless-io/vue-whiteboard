@@ -5,12 +5,17 @@
     </div>
     <div class="tool-box-out"></div>
     <div class="redo-undo-box">
-      <redo-undo v-if="this.$room !== undefined ? true : false" :room="this.$room"></redo-undo>
+      <template v-if="roomIsInit">
+        <redo-undo :room="this.$room"></redo-undo>
+      </template>
     </div>
     <div class="zoom-controller-box"></div>
     <div class="room-controller-box">
       <div class="page-controller-mid-box">
         <div class="page-controller-cell"></div>
+        <template v-if="roomIsInit">
+          <PageController :room="this.$room" />
+        </template>
       </div>
     </div>
     <div class="page-controller-box">
@@ -32,16 +37,18 @@ import pages from "@/assets/image/pages.svg";
 import folder from "@/assets/image/folder.svg";
 import logo from "@/assets/image/logo.svg";
 import RedoUndo from "@/components/RedoUndo/RedoUndo";
+import PageController from "@/components/page-controller/PageController";
 
 export default {
   name: "WhiteboardPage",
   components: {
-    RedoUndo
+    RedoUndo,
+    PageController
   },
   props: {
     // uuid: null,
     // userId: null,
-    phase: null,
+    // phase: null,
     isMenuVisible: Boolean,
     isFileOpen: Boolean
   },
@@ -50,9 +57,10 @@ export default {
       pages,
       folder,
       logo,
-      // room: this.room,
+      phase: "",
       uuid: "",
-      userId: ""
+      userId: "",
+      roomIsInit: false
       // whiteboardLayerDownRef
     };
   },
@@ -99,7 +107,7 @@ export default {
           {
             onPhaseChanged: phase => {
               this.phase = phase;
-              // console.log(`room ${uuid} change: ${phase}`);
+              console.log(`room ${this.uuid} change: ${phase}`);
             },
             onDisconnectWithError: error => {
               console.error(error);
@@ -122,6 +130,7 @@ export default {
         });
         room.bindHtmlElement(this.$refs.bindRoom);
         // this.$room = room;
+        this.roomIsInit = true;
         Vue.prototype.$room = room;
 
         // this.room = room;
@@ -143,6 +152,10 @@ export default {
 
   async mounted() {
     await this.startJoinRoom();
+  },
+
+  created() {
+    Vue.prototype.$room = undefined;
   }
 };
 </script>

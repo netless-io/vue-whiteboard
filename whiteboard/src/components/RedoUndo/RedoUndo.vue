@@ -19,7 +19,8 @@ export default {
   name: "RedoUndo",
   props: {
     room: {
-      type: Object
+      type: Object,
+      require: true
     }
   },
   data() {
@@ -31,7 +32,6 @@ export default {
       undoSteps: 0,
       redoSteps: 0,
       disableSerialization: Boolean
-      // Room: this.room
     };
   },
 
@@ -39,7 +39,6 @@ export default {
     handleUndo() {
       const room = this.room;
       room.undo();
-      // this.room.undo()
     },
 
     handleRedo() {
