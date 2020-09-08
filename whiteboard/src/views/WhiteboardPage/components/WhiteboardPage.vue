@@ -5,7 +5,7 @@
     </div>
     <div class="tool-box-out"></div>
     <div class="redo-undo-box">
-      <redo-undo :room="room"></redo-undo>
+      <redo-undo v-if="this.$room !== undefined ? true : false" :room="this.$room"></redo-undo>
     </div>
     <div class="zoom-controller-box"></div>
     <div class="room-controller-box">
@@ -25,6 +25,7 @@
 <script>
 // import { createPlugins, Room, RoomPhase, WhiteWebSdk } from "white-web-sdk";
 import { WhiteWebSdk } from "white-web-sdk";
+import Vue from "vue";
 import { netlessToken } from "../../../appToken";
 import { netlessWhiteboardApi } from "../../../apiMiddleware/RoomOperator";
 import pages from "@/assets/image/pages.svg";
@@ -49,7 +50,7 @@ export default {
       pages,
       folder,
       logo,
-      room: this.room,
+      // room: this.room,
       uuid: "",
       userId: ""
       // whiteboardLayerDownRef
@@ -64,6 +65,8 @@ export default {
         return null;
       }
     },
+
+    handleRoom() {},
 
     // handleBindRoom(ref) {
     //   // const { room } = this;
@@ -118,9 +121,11 @@ export default {
           }
         });
         room.bindHtmlElement(this.$refs.bindRoom);
-        this.$room = room;
-        this.room = room;
-        // console.log(this.room);
+        // this.$room = room;
+        Vue.prototype.$room = room;
+
+        // this.room = room;
+        console.log(this.$room);
         // }
       } catch (error) {
         console.error(error);

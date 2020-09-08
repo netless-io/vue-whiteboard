@@ -37,21 +37,18 @@ export default {
 
   methods: {
     handleUndo() {
-      const { room } = this.props;
-      console.log(room);
+      const room = this.room;
       room.undo();
+      // this.room.undo()
     },
 
     handleRedo() {
-      const { room } = this.props;
-      console.log(room);
+      const room = this.room;
       room.redo();
     }
   },
   mounted() {
     const room = this.room;
-    console.log(this.room);
-    console.log(room);
     room.disableSerialization = false;
     room.callbacks.on("onCanUndoStepsUpdate", steps => {
       this.undoSteps = steps;
@@ -59,11 +56,6 @@ export default {
     room.callbacks.on("onCanRedoStepsUpdate", steps => {
       this.redoSteps = steps;
     });
-  },
-  beforeMount() {
-    const room = this.room;
-    console.log(this.room);
-    console.log(room);
   }
 };
 </script>
