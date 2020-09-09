@@ -9,12 +9,16 @@
         <redo-undo :room="this.$room"></redo-undo>
       </template>
     </div>
-    <div class="zoom-controller-box"></div>
+    <div class="zoom-controller-box">
+      <template v-if="roomIsInit">
+        <zoom-controller :room="this.$room"></zoom-controller>
+      </template>
+    </div>
     <div class="room-controller-box">
       <div class="page-controller-mid-box">
         <div class="page-controller-cell"></div>
         <template v-if="roomIsInit">
-          <PageController :room="this.$room" />
+          <page-controller :room="this.$room" />
         </template>
       </div>
     </div>
@@ -29,8 +33,8 @@
 
 <script>
 // import { createPlugins, Room, RoomPhase, WhiteWebSdk } from "white-web-sdk";
-import { WhiteWebSdk } from "white-web-sdk";
 import Vue from "vue";
+import { WhiteWebSdk } from "white-web-sdk";
 import { netlessToken } from "../../../appToken";
 import { netlessWhiteboardApi } from "../../../apiMiddleware/RoomOperator";
 import pages from "@/assets/image/pages.svg";
@@ -38,17 +42,15 @@ import folder from "@/assets/image/folder.svg";
 import logo from "@/assets/image/logo.svg";
 import RedoUndo from "@/components/RedoUndo/RedoUndo";
 import PageController from "@/components/page-controller/PageController";
-
+import ZoomController from "@/components/zoom-controller/ZoomController";
 export default {
   name: "WhiteboardPage",
   components: {
     RedoUndo,
-    PageController
+    PageController,
+    ZoomController
   },
   props: {
-    // uuid: null,
-    // userId: null,
-    // phase: null,
     isMenuVisible: Boolean,
     isFileOpen: Boolean
   },
