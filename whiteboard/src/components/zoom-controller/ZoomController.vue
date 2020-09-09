@@ -156,7 +156,7 @@ export default {
     document.body.addEventListener("keydown", this.arrowControllerHotKey);
   },
 
-  beforeMount() {
+  beforeDestroy() {
     document.body.removeEventListener("keydown", this.arrowControllerHotKey);
   }
 };
