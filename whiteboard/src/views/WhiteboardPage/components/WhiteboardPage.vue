@@ -17,16 +17,30 @@
     <div class="room-controller-box">
       <div class="page-controller-mid-box">
         <div class="page-controller-cell"></div>
+      </div>
+    </div>
+    <div class="page-controller-box">
+      <div class="page-controller-mid-box">
+        <el-tooltip effect="light" content="Page preview" placement="top">
+          <div class="page-controller-cell" @click="handlePreviewState(true)">
+            <template v-if="roomIsInit">
+              <preview-controller :room="this.$room"></preview-controller>
+              <!-- :isVisible="isMenuVisible" :handlePreviewState="handlePreviewState" -->
+            </template>
+          </div>
+        </el-tooltip>
         <template v-if="roomIsInit">
           <page-controller :room="this.$room" />
         </template>
       </div>
     </div>
-    <div class="page-controller-box">
-      <div class="page-controller-mid-box">
-        <div class="page-controller-cell"></div>
-      </div>
-    </div>
+    <!-- <template v-if="roomIsInit">
+      <preview-controller
+        :room="this.$room"
+        :handlePreviewState="handlePreviewState"
+        :isVisible="isMenuVisible"
+      ></preview-controller>
+    </template>-->
     <div ref="bindRoom" class="whiteboard-box" />
   </div>
 </template>
@@ -43,17 +57,19 @@ import logo from "@/assets/image/logo.svg";
 import RedoUndo from "@/components/RedoUndo/RedoUndo";
 import PageController from "@/components/page-controller/PageController";
 import ZoomController from "@/components/zoom-controller/ZoomController";
+import PreviewController from "@/components/preview-controller/PreviewController";
 export default {
   name: "WhiteboardPage",
   components: {
     RedoUndo,
     PageController,
-    ZoomController
+    ZoomController,
+    PreviewController
   },
-  props: {
-    isMenuVisible: Boolean,
-    isFileOpen: Boolean
-  },
+  // props: {
+  //   isMenuVisible: Boolean,
+  //   isFileOpen: Boolean
+  // },
   data() {
     return {
       pages,
@@ -62,7 +78,10 @@ export default {
       phase: "",
       uuid: "",
       userId: "",
-      roomIsInit: false
+      roomIsInit: false,
+      isMenuVisible: false,
+      isFileOpen: false
+      // drawer: false
       // whiteboardLayerDownRef
     };
   },
@@ -143,11 +162,11 @@ export default {
       }
     },
 
-    handlePreviewState: state => {
+    handlePreviewState(state) {
       this.isMenuVisible = state;
     },
 
-    handleDocCenterState: state => {
+    handleDocCenterState(state) {
       this.isFileOpen = state;
     }
   },
