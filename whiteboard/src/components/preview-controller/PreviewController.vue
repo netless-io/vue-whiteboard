@@ -18,6 +18,7 @@
       :with-header="false"
       :wrapperClosable="true"
       :modal-append-to-body="false"
+      custom-class="drawer-class"
     >
       <div class="menu-annex-box">
         <div class="menu-title-line-box">

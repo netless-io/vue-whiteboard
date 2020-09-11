@@ -25,7 +25,6 @@
           <div class="page-controller-cell" @click="handlePreviewState(true)">
             <template v-if="roomIsInit">
               <preview-controller :room="this.$room"></preview-controller>
-              <!-- :isVisible="isMenuVisible" :handlePreviewState="handlePreviewState" -->
             </template>
           </div>
         </el-tooltip>
@@ -34,6 +33,7 @@
         </template>
       </div>
     </div>
+
     <!-- <template v-if="roomIsInit">
       <preview-controller
         :room="this.$room"
