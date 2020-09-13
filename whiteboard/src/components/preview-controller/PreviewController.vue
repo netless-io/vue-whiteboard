@@ -9,13 +9,13 @@
     </div>
   </div>-->
   <div>
-    <img :src="pages" @click="drawer=!drawer" />
+    <img :src="pages" @click="test2" />
     <el-drawer
       title="我是标题"
       :modal="false"
       :class="['normal-drawer', oncevis?'':'hidden']"
       :show-close="true"
-      :visible="true"
+      :visible.sync="drawer"
       :with-header="false"
       :before-close="test"
       :wrapperClosable="true"
@@ -91,34 +91,27 @@ export default {
       scenes: this.room.state.sceneState.scenes,
       sceneDir: this.room.state.sceneState.scenePath.split("/"),
       hoverCellIndex: null,
-      drawer: false,
+      drawer: true,
       path: String,
       oncevis: false
     };
   },
-  watch: {
-    drawer: function(n, o) {
-      console.warn(n, o, "ccccc");
-      if (n) {
-        if (this.oncevis == false) {
-          document
-            .querySelector(".normal-drawer .el-drawer__container")
-            .classList.remove("hidden");
-          this.oncevis = true;
-        }
+
+  methods: {
+    test2() {
+      if (this.oncevis) this.drawer = !this.drawer;
+      else {
+        document
+          .querySelector(".normal-drawer .el-drawer__container")
+          .classList.remove("hidden");
+        this.oncevis = true;
         document
           .querySelector(".normal-drawer .el-drawer__container")
           .classList.add("el-drawer__open");
-      } else {
-        document
-          .querySelector(".normal-drawer .el-drawer__container")
-          .classList.remove("el-drawer__open");
       }
-      // document.querySelector('.normal-drawer .el-drawer__wrapper')
-    }
-    // immediate: true
-  },
-  methods: {
+
+      console.log("c2", this.drawer, this.oncevis);
+    },
     test(done) {
       console.log(12, this.drawer, done);
       this.drawer = false;
@@ -169,10 +162,10 @@ export default {
     //   this.drawer = !this.drawer;
     // }, 3000);
     this.setupDivRef(this.$refs.bindPpt);
-    console.log(this.$refs.bindPpt);
+    // console.log(this.$refs.bindPpt);
     this.$nextTick(() => {
       console.warn("refs", this.$refs.bindPpt);
-      // this.setupDivRef(this.$refs.bindPpt);
+      this.setupDivRef(this.$refs.bindPpt);
     });
   }
 };
