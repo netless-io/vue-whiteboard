@@ -71,14 +71,6 @@ export default {
       }
     },
 
-    // handleBindRoom(ref) {
-    //   // const { room } = this;
-    //   this.whiteboardLayerDownRef = ref;
-    //   if (room) {
-    //     room.bindHtmlElement(ref);
-    //   }
-    // },
-
     async startJoinRoom() {
       // const { uuid, userId } = this.$route.params;
       try {
