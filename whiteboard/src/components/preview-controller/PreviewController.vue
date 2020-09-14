@@ -42,6 +42,7 @@
             <div class="preview-cells-box">
               <div class="page-out-box">
                 <div class="page-box">
+                  <!-- @click="this.setScenePath(index)" -->
                   <div class="ppt-image" ref="bindPpt"></div>
                 </div>
                 <div></div>
@@ -92,7 +93,7 @@ export default {
       sceneDir: this.room.state.sceneState.scenePath.split("/"),
       hoverCellIndex: null,
       drawer: true,
-      path: String,
+      path: '',
       oncevis: false
     };
   },
@@ -146,6 +147,7 @@ export default {
 
     setupDivRef(ref) {
       if (ref) {
+        this.path = this.sceneDir.concat(this.scenes.name).join("/")
         this.room.scenePreview(this.path, ref, 208, 156);
       }
     }
@@ -155,18 +157,20 @@ export default {
     document
       .querySelector(".normal-drawer .el-drawer__container")
       .classList.remove("el-drawer__open");
+    
     this.room.callbacks.on("onRoomStateChanged", modifyState => {
       this.roomState = { ...this.room.state, ...modifyState };
     });
     // setInterval(() => {
     //   this.drawer = !this.drawer;
     // }, 3000);
-    this.setupDivRef(this.$refs.bindPpt);
+    // this.setupDivRef(this.$refs.bindPpt);
     // console.log(this.$refs.bindPpt);
     this.$nextTick(() => {
       console.warn("refs", this.$refs.bindPpt);
       this.setupDivRef(this.$refs.bindPpt);
     });
+
   }
 };
 </script>
