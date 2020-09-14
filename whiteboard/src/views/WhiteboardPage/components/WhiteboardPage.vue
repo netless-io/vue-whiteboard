@@ -23,7 +23,6 @@
       <div class="page-controller-mid-box">
         <el-tooltip effect="light" content="Page preview" placement="top">
           <div class="page-controller-cell">
-            <!-- @click="handlePreviewState(true)" -->
             <template v-if="roomIsInit">
               <preview-controller :room="this.$room"></preview-controller>
             </template>

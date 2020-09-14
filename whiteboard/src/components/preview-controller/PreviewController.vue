@@ -40,19 +40,20 @@
           <div :style="{ height: 64 }"></div>
           <div class="menu-annex-body">
             <div class="preview-cells-box">
-              <div class="page-out-box">
-                <div class="page-box">
-                  <!-- @click="this.setScenePath(index)" -->
-                  <div class="ppt-image" ref="bindPpt"></div>
-                </div>
-                <div></div>
-                <div class="page-box-under">
-                  <div class="page-box-under-left"></div>
-                  <div class="page-box-under-right" @click="removeScene">
-                    <img :src="deleteIcon" />
+              <template v-for="(item, index) in scenes">
+                <div class="page-out-box" :key="item.index">
+                  <div class="page-box" @click="setScenePath(index)">
+                    <!-- @click="this.setScenePath(index)" -->
+                    <div class="ppt-image" ref="bindPpt"></div>
+                  </div>
+                  <div class="page-box-under">
+                    <div class="page-box-under-left"></div>
+                    <div class="page-box-under-right" @click="removeScene">
+                      <img :src="deleteIcon" />
+                    </div>
                   </div>
                 </div>
-              </div>
+              </template>
             </div>
           </div>
         </div>
@@ -94,6 +95,8 @@ export default {
       hoverCellIndex: null,
       drawer: true,
       path: '',
+      activeIndex: '',
+      scenePath: '',
       oncevis: false
     };
   },
@@ -113,10 +116,12 @@ export default {
 
       console.log("c2", this.drawer, this.oncevis);
     },
+
     test(done) {
       console.log(12, this.drawer, done);
       this.drawer = false;
     },
+
     removeScene() {
       const scenePath = this.roomState.sceneState.scenePath;
       this.room.removeScene(`${scenePath}`);
@@ -137,10 +142,10 @@ export default {
     },
 
     handleAddPage() {
-      const activeIndex = this.roomState.sceneState.index;
-      newSceneIndex = activeIndex + 1;
-      scenePath = this.roomState.sceneState.scenePath;
-      pathName = this.pathName(scenePath);
+      this.activeIndex = this.roomState.sceneState.index;
+      const newSceneIndex = this.activeIndex + 1;
+      this.scenePath = this.roomState.sceneState.scenePath;
+      const pathName = this.pathName(this.scenePath);
       this.room.putScenes(`/${pathName}`, [{}], newSceneIndex);
       this.room.setSceneIndex(newSceneIndex);
     },
@@ -171,7 +176,14 @@ export default {
       this.setupDivRef(this.$refs.bindPpt);
     });
 
-  }
+    console.log('test', this.room.scenePreview)
+  },
+  // created() {
+  //     this.$nextTick(() => {
+  //     console.warn("create refs", this.$refs.bindPpt);
+  //     this.setupDivRef(this.$refs.bindPpt);
+  //   });
+  // },
 };
 </script>
 
