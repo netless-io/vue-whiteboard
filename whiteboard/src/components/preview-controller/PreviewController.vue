@@ -132,22 +132,27 @@ export default {
     },
 
     pathName(path) {
-      const reg = /\/([^\/]*)\//g;
-      reg.exec(path);
-      if (RegExp.$1 === "aria") {
-        return "";
-      } else {
-        return RegExp.$1;
-      }
+        const cells = path.split("/");
+        const popCell = cells.pop();
+        if (popCell === "") {
+            cells.pop();
+        }
+        return cells.join("/");
     },
 
     handleAddPage() {
+      console.log('sceneState.index',this.roomState.sceneState.index)
       this.activeIndex = this.roomState.sceneState.index;
       const newSceneIndex = this.activeIndex + 1;
       this.scenePath = this.roomState.sceneState.scenePath;
       const pathName = this.pathName(this.scenePath);
-      this.room.putScenes(`/${pathName}`, [{}], newSceneIndex);
+      // console.log(pathName)
+      console.log('roomState',this.roomState)
+      console.log('scenes.length',this.roomState.sceneState.scenes.length)
+      console.log('newSceneIndex',newSceneIndex);
+      this.room.putScenes(pathName, [{}], newSceneIndex);
       this.room.setSceneIndex(newSceneIndex);
+      // this.$forceUpdate();
     },
 
     setupDivRef(ref) {

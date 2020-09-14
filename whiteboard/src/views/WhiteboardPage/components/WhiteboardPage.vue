@@ -141,6 +141,7 @@ export default {
         // this.room = room;
         console.log(room);
         // console.log(this.room);
+        window.room = room;
         room.setMemberState({
           pencilOptions: {
             disableBezier: false,
