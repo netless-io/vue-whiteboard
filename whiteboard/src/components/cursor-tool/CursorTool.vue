@@ -23,7 +23,9 @@ export default {
       selectorCursor,
       eraserCursor,
       shapeCursor,
-      textCursor
+      textCursor,
+      cursorName: roomMember.payload.cursorName,
+      color: ''
     };
   }
 };

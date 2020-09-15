@@ -43,7 +43,6 @@
               <template v-for="(item, index) in scenes">
                 <div class="page-out-box" :key="item.index">
                   <div class="page-box" @click="setScenePath(index)">
-                    <!-- @click="this.setScenePath(index)" -->
                     <div class="ppt-image" ref="bindPpt"></div>
                   </div>
                   <div class="page-box-under">
@@ -63,6 +62,7 @@
 </template>
 
 <script>
+// import Vue from "vue";
 import close from "./src/image/close.svg";
 import addPage from "./src/image/add-page.svg";
 import deleteIcon from "./src/image/delete.svg";
@@ -74,12 +74,6 @@ export default {
     room: {
       type: Object,
       require: true
-    },
-    handlePreviewState: {
-      type: Function
-    },
-    isVisible: {
-      type: Boolean
     }
   },
   data() {
@@ -123,8 +117,8 @@ export default {
     },
 
     removeScene() {
-      const scenePath = this.roomState.sceneState.scenePath;
-      this.room.removeScene(`${scenePath}`);
+      this.scenePath = this.roomState.sceneState.scenePath;
+      this.room.removeScenes(`${this.scenePath}`);
     },
 
     setScenePath(newActiveIndex) {
@@ -146,17 +140,18 @@ export default {
       const newSceneIndex = this.activeIndex + 1;
       this.scenePath = this.roomState.sceneState.scenePath;
       const pathName = this.pathName(this.scenePath);
-      // console.log(pathName)
-      console.log('roomState',this.roomState)
-      console.log('scenes.length',this.roomState.sceneState.scenes.length)
-      console.log('newSceneIndex',newSceneIndex);
-      this.room.putScenes(pathName, [{}], newSceneIndex);
+      // Vue.set(this.data ,this.scenes, scenesValue);
       this.room.setSceneIndex(newSceneIndex);
+      console.log('object',this.room.putScenes);
+      this.room.putScenes(pathName, [{}], newSceneIndex);
+      console.log('secenes', this.scenes);
       // this.$forceUpdate();
     },
 
     setupDivRef(ref) {
       if (ref) {
+        console.log('ref1', typeof(ref))
+        console.log('refs', this.$refs.bindPpt)
         this.path = this.sceneDir.concat(this.scenes.name).join("/")
         this.room.scenePreview(this.path, ref, 208, 156);
       }
@@ -180,15 +175,7 @@ export default {
       console.warn("refs", this.$refs.bindPpt);
       this.setupDivRef(this.$refs.bindPpt);
     });
-
-    console.log('test', this.room.scenePreview)
   },
-  // created() {
-  //     this.$nextTick(() => {
-  //     console.warn("create refs", this.$refs.bindPpt);
-  //     this.setupDivRef(this.$refs.bindPpt);
-  //   });
-  // },
 };
 </script>
 

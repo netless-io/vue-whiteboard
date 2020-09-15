@@ -155,7 +155,6 @@ export default {
         this.roomIsInit = true;
         Vue.prototype.$room = room;
 
-        // this.room = room;
         console.log(this.$room);
         // }
       } catch (error) {
