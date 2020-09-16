@@ -3,5 +3,8 @@
   "private": true,
   "devDependencies": {
     "lerna": "^3.22.1"
+  },
+  "dependencies": {
+    "polly-js": "^1.6.8"
   }
 }

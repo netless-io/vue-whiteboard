@@ -16,7 +16,11 @@
     </div>
     <div class="room-controller-box">
       <div class="page-controller-mid-box">
-        <div class="page-controller-cell"></div>
+        <div class="page-controller-cell">
+          <template v-if="roomIsInit">
+            <exit-button-room :room="this.$room" :userId="userId"></exit-button-room>
+          </template>
+        </div>
       </div>
     </div>
     <div class="page-controller-box">
@@ -58,13 +62,15 @@ import RedoUndo from "@/components/RedoUndo/RedoUndo";
 import PageController from "@/components/page-controller/PageController";
 import ZoomController from "@/components/zoom-controller/ZoomController";
 import PreviewController from "@/components/preview-controller/PreviewController";
+import ExitButtonRoom from "@/components/Exit/ExitButtonRoom";
 export default {
   name: "WhiteboardPage",
   components: {
     RedoUndo,
     PageController,
     ZoomController,
-    PreviewController
+    PreviewController,
+    ExitButtonRoom
   },
   // props: {
   //   isMenuVisible: Boolean,
@@ -141,7 +147,7 @@ export default {
         // this.room = room;
         console.log(room);
         // console.log(this.room);
-        window.room = room;
+        // window.room = room;
         room.setMemberState({
           pencilOptions: {
             disableBezier: false,

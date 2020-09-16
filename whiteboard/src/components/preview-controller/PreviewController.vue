@@ -87,9 +87,9 @@ export default {
       sceneDir: this.room.state.sceneState.scenePath.split("/"),
       hoverCellIndex: null,
       drawer: true,
-      path: '',
-      activeIndex: '',
-      scenePath: '',
+      path: "",
+      activeIndex: "",
+      scenePath: "",
       oncevis: false
     };
   },
@@ -118,7 +118,7 @@ export default {
 
     removeScene() {
       this.scenePath = this.roomState.sceneState.scenePath;
-      this.scenes = this.room.state.sceneState.scenes
+      this.scenes = this.room.state.sceneState.scenes;
       this.room.removeScenes(`${this.scenePath}`);
     },
 
@@ -127,12 +127,12 @@ export default {
     },
 
     pathName(path) {
-        const cells = path.split("/");
-        const popCell = cells.pop();
-        if (popCell === "") {
-            cells.pop();
-        }
-        return cells.join("/");
+      const cells = path.split("/");
+      const popCell = cells.pop();
+      if (popCell === "") {
+        cells.pop();
+      }
+      return cells.join("/");
     },
     // 添加页面
     handleAddPage() {
@@ -143,12 +143,12 @@ export default {
       this.room.putScenes(pathName, [{}], newSceneIndex);
       this.room.setSceneIndex(newSceneIndex);
       this.room.setSceneIndex(newSceneIndex);
-      this.scenes = this.room.state.sceneState.scenes
+      this.scenes = this.room.state.sceneState.scenes;
     },
 
     setupDivRef(ref) {
       if (ref) {
-        this.path = this.sceneDir.concat(this.scenes.name).join("/")
+        this.path = this.sceneDir.concat(this.scenes.name).join("/");
         this.room.scenePreview(this.path, ref, 208, 156);
       }
     }
@@ -159,7 +159,7 @@ export default {
     document
       .querySelector(".normal-drawer .el-drawer__container")
       .classList.remove("el-drawer__open");
-    
+
     this.room.callbacks.on("onRoomStateChanged", modifyState => {
       this.roomState = { ...this.room.state, ...modifyState };
     });
@@ -173,7 +173,7 @@ export default {
       console.warn("refs", this.$refs.bindPpt);
       this.setupDivRef(this.$refs.bindPpt[0]);
     });
-  },
+  }
 };
 </script>
 
