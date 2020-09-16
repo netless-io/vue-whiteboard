@@ -28,6 +28,7 @@
             <div class="menu-title-line">
               <div class="menu-title-text-box">Previwe</div>
               <div class="menu-title-left">
+                <!-- 添加 preview 页面的按钮 -->
                 <div class="menu-head-btn" @click="handleAddPage">
                   <img :src="addPage" />
                 </div>
@@ -40,6 +41,7 @@
           <div :style="{ height: 64 }"></div>
           <div class="menu-annex-body">
             <div class="preview-cells-box">
+              <!-- 渲染元素 ，每点击一次“添加”按钮，在控制台可以看到 scenes 未能及时更新数据，重刷页面后才更新-->
               <template v-for="(item, index) in scenes">
                 <div class="page-out-box" :key="item.index">
                   <div class="page-box" @click="setScenePath(index)">
@@ -96,6 +98,7 @@ export default {
   },
 
   methods: {
+    // 暂时魔改的 elementUI 可忽略
     test2() {
       if (this.oncevis) this.drawer = !this.drawer;
       else {
@@ -110,7 +113,7 @@ export default {
 
       console.log("c2", this.drawer, this.oncevis);
     },
-
+    // 暂时魔改的 elementUI 可忽略
     test(done) {
       console.log(12, this.drawer, done);
       this.drawer = false;
@@ -133,7 +136,7 @@ export default {
         }
         return cells.join("/");
     },
-
+    // 添加页面
     handleAddPage() {
       console.log('sceneState.index',this.roomState.sceneState.index)
       this.activeIndex = this.roomState.sceneState.index;
@@ -148,6 +151,7 @@ export default {
       // this.$forceUpdate();
     },
 
+    // 在这个方法中传递 ref 后，被提示非dom元素。如果去掉template中的 v-for 属性，那么报错消失。
     setupDivRef(ref) {
       if (ref) {
         console.log('ref1', typeof(ref))
@@ -159,6 +163,7 @@ export default {
   },
 
   mounted() {
+    // 暂时魔改的 elementUI 可忽略
     document
       .querySelector(".normal-drawer .el-drawer__container")
       .classList.remove("el-drawer__open");
@@ -171,6 +176,8 @@ export default {
     // }, 3000);
     // this.setupDivRef(this.$refs.bindPpt);
     // console.log(this.$refs.bindPpt);
+
+    // 在此处调用 setupDivRef ，因为只有在$nextTick中才能获取到 $refs
     this.$nextTick(() => {
       console.warn("refs", this.$refs.bindPpt);
       this.setupDivRef(this.$refs.bindPpt);
