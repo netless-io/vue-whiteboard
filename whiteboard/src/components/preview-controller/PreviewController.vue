@@ -1,4 +1,4 @@
-<template>
+ <template>
   <!-- <div class="page-out-box">
     <div class="page-box"></div>
     <div class="page-box-under">
@@ -28,7 +28,6 @@
             <div class="menu-title-line">
               <div class="menu-title-text-box">Previwe</div>
               <div class="menu-title-left">
-                <!-- 添加 preview 页面的按钮 -->
                 <div class="menu-head-btn" @click="handleAddPage">
                   <img :src="addPage" />
                 </div>
@@ -41,7 +40,6 @@
           <div :style="{ height: 64 }"></div>
           <div class="menu-annex-body">
             <div class="preview-cells-box">
-              <!-- 渲染元素 ，每点击一次“添加”按钮，在控制台可以看到 scenes 未能及时更新数据，重刷页面后才更新-->
               <template v-for="(item, index) in scenes">
                 <div class="page-out-box" :key="item.index">
                   <div class="page-box" @click="setScenePath(index)">
@@ -64,7 +62,6 @@
 </template>
 
 <script>
-// import Vue from "vue";
 import close from "./src/image/close.svg";
 import addPage from "./src/image/add-page.svg";
 import deleteIcon from "./src/image/delete.svg";
@@ -121,6 +118,7 @@ export default {
 
     removeScene() {
       this.scenePath = this.roomState.sceneState.scenePath;
+      this.scenes = this.room.state.sceneState.scenes
       this.room.removeScenes(`${this.scenePath}`);
     },
 
@@ -138,24 +136,18 @@ export default {
     },
     // 添加页面
     handleAddPage() {
-      console.log('sceneState.index',this.roomState.sceneState.index)
       this.activeIndex = this.roomState.sceneState.index;
       const newSceneIndex = this.activeIndex + 1;
       this.scenePath = this.roomState.sceneState.scenePath;
       const pathName = this.pathName(this.scenePath);
-      // Vue.set(this.data ,this.scenes, scenesValue);
-      this.room.setSceneIndex(newSceneIndex);
-      console.log('object',this.room.putScenes);
       this.room.putScenes(pathName, [{}], newSceneIndex);
-      console.log('secenes', this.scenes);
-      // this.$forceUpdate();
+      this.room.setSceneIndex(newSceneIndex);
+      this.room.setSceneIndex(newSceneIndex);
+      this.scenes = this.room.state.sceneState.scenes
     },
 
-    // 在这个方法中传递 ref 后，被提示非dom元素。如果去掉template中的 v-for 属性，那么报错消失。
     setupDivRef(ref) {
       if (ref) {
-        console.log('ref1', typeof(ref))
-        console.log('refs', this.$refs.bindPpt)
         this.path = this.sceneDir.concat(this.scenes.name).join("/")
         this.room.scenePreview(this.path, ref, 208, 156);
       }
@@ -177,10 +169,9 @@ export default {
     // this.setupDivRef(this.$refs.bindPpt);
     // console.log(this.$refs.bindPpt);
 
-    // 在此处调用 setupDivRef ，因为只有在$nextTick中才能获取到 $refs
     this.$nextTick(() => {
       console.warn("refs", this.$refs.bindPpt);
-      this.setupDivRef(this.$refs.bindPpt);
+      this.setupDivRef(this.$refs.bindPpt[0]);
     });
   },
 };
