@@ -4,7 +4,7 @@ import Index from "@/views/IndexPage/Index.vue";
 import Join from "@/views/JoinPage/Join.vue";
 // import WhiteboardCreatorPage from "@/views/WhiteboardCreatorPage/WhiteboardCreatorPage.vue";
 import Whiteboard from "@/views/WhiteboardPage/Whiteboard.vue";
-// import Replay from "@/views/ReplayPage/Replay.vue";
+import Replay from "@/views/ReplayPage/Replay.vue";
 
 Vue.use(VueRouter);
 
@@ -28,11 +28,11 @@ const routes = [{
   name: "Whiteboard",
   component: Whiteboard,
 },
-  // {
-  //   path: "/replay/:uuid/:userId",
-  //   name: "Replay",
-  //   component: Replay,
-  // }
+{
+  path: "/replay/:uuid/:userId",
+  name: "Replay",
+  component: Replay,
+}
   // {
   //   path: "/about",
   //   name: "About",

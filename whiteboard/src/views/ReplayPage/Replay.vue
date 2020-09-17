@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import WhiteboardPage from "@/views/ReplayPage/components/ReplayPage.vue";
+import ReplayPage from "@/views/ReplayPage/components/ReplayPage.vue";
 
 export default {
   name: "Whiteboard",
