@@ -60,7 +60,54 @@ export default {
     };
   },
 
-  methods: {},
+  methods: {
+    onChange(time, offsetTime) {
+      if (player) {
+        this.currentTime = time;
+        this.player.seekToProgressTime(time);
+      }
+    },
+    onClickOperationButton(player) {
+      switch (this.player.phase) {
+        case WaitingFirstFrame:
+        case Pause: {
+          play();
+          break;
+        }
+        case Playing: {
+          pause();
+          break;
+        }
+        case Ended: {
+          seekToProgressTime();
+          break;
+        }
+      }
+    },
+
+    getCurrentTime(progressTime) {
+      if (this.isPlayerSeeking) {
+        this.progressTime = progressTime;
+        return this.currentTime;
+      } else {
+        const isChange = this.progressTime !== progressTime;
+        if (isChange) {
+          return progressTime;
+        } else {
+          return this.currentTime;
+        }
+      }
+    },
+
+    handleMultiplePlay(multiple) {
+      this.player.playbackSpeed = multiple;
+    },
+
+    handleActiveMultiple(multiple) {
+      this.handleMultiplePlay(multiple);
+      this.multiple = multiple;
+    }
+  },
 
   mounted() {
     this.player.callbacks.on("onPhaseChanged", phase => {
@@ -70,47 +117,6 @@ export default {
     this.player.callbacks.on("onProgressTimeChanged", currentTime => {
       this.currentTime = currentTime;
     });
-  },
-
-  onClickOperationButton(player) {
-    switch (this.player.phase) {
-      case WaitingFirstFrame:
-      case Pause: {
-        play();
-        break;
-      }
-      case Playing: {
-        pause();
-        break;
-      }
-      case Ended: {
-        seekToProgressTime();
-        break;
-      }
-    }
-  },
-
-  getCurrentTime(progressTime) {
-    if (this.isPlayerSeeking) {
-      this.progressTime = progressTime;
-      return this.currentTime;
-    } else {
-      const isChange = this.progressTime !== progressTime;
-      if (isChange) {
-        return progressTime;
-      } else {
-        return this.currentTime;
-      }
-    }
-  },
-
-  handleMultiplePlay(multiple) {
-    this.player.playbackSpeed = multiple;
-  },
-
-  handleActiveMultiple(multiple) {
-    this.handleMultiplePlay(multiple);
-    this.multiple = multiple;
   }
 };
 </script>
