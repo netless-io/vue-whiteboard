@@ -48,6 +48,8 @@ export default {
       if (this.room) {
         await this.room.disconnect();
         this.$router.push(`/replay/${this.room.uuid}/${this.userId}/`);
+        console.log("room", this.room);
+        console.log("uuid", this.room.uuid);
       }
     },
 

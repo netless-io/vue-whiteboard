@@ -18,14 +18,14 @@
           @mouseover="isVisible = true"
           @mouseleave="isVisible = false"
         >
-          <div class="player-mask" @click="onClickOperationButton(plyaer)">
+          <div class="player-mask" @click="onClickOperationButton(player)">
             <template v-if="phase === Pause">
               <div class="player-big-icon">
                 <!-- 还未添加样式 -->
                 <img :src="video_play" />
               </div>
             </template>
-            <div class="player-box" :ref="bindRoom"></div>
+            <div class="player-box" ref="bindRoom" @click="handleBindRoom"></div>
           </div>
         </div>
       </div>
@@ -36,8 +36,8 @@
 <script>
 // import { WhiteWebSdk, PlayerPhase, Player } from "white-web-sdk";
 import { WhiteWebSdk } from "white-web-sdk";
-import { WaitingFirstFrame, Playing, Pause, Ended } from "../../../PlayerPhase";
-// import PlayerPhase from "../../../constEnum";
+// import { WaitingFirstFrame, Playing, Pause, Ended } from "../../../PlayerPhase";
+import PlayerPhase from "../../../PlayerPhase";
 import polly from "polly-js";
 import { netlessToken } from "../../../appToken";
 import { netlessWhiteboardApi } from "../../../apiMiddleware/RoomOperator";
@@ -56,6 +56,10 @@ export default {
       isVisible: false,
       replayFail: false,
       replayState: false,
+      Pause: "",
+      Playing: "",
+      Ended: "",
+      // WhiteWebSdk: WhiteWebSdk,
       player: ""
     };
   },
@@ -73,7 +77,11 @@ export default {
       await polly()
         .waitAndRetry(10)
         .executeForPromise(async () => {
+          const whiteWebSdk = new WhiteWebSdk({
+            appIdentifier: netlessToken.appIdentifier
+          });
           const replayState = await whiteWebSdk.isPlayable({ room: uuid });
+          console.log("replay", replayState);
           if (replayState) {
             this.replayState = true;
             await this.startPlayer(whiteWebSdk, uuid, roomToken);
@@ -94,6 +102,7 @@ export default {
     async startPlayer(whiteWebSdk, uuid, roomToken) {
       // cursorTool 工具还未开发
       // const cursorAdapter = new CursorTool();
+
       const player = await whiteWebSdk.replayRoom(
         // , cursorAdapter: cursorAdapter
         { room: uuid, roomToken: roomToken },
@@ -116,11 +125,12 @@ export default {
       );
       // cursorAdapter.setPlayer(player);
       this.player = player;
+      console.log("player", this.player);
     },
 
-    handleBindRoom(ref) {
+    handleBindRoom() {
       if (this.player) {
-        this.player.bindHtmlElement(ref);
+        this.player.bindHtmlElement(this.$refs.bindRoom);
       }
     },
 
@@ -131,17 +141,17 @@ export default {
     },
 
     onClickOperationButton(player) {
-      switch (player.phase) {
-        case WaitingFirstFrame:
-        case Pause: {
+      switch (this.player.phase) {
+        case PlayerPhase.WaitingFirstFrame:
+        case PlayerPhase.Pause: {
           player.play();
           break;
         }
-        case Playing: {
+        case PlayerPhase.Playing: {
           player.pause();
           break;
         }
-        case Ended: {
+        case PlayerPhase.Ended: {
           player.seekToScheduleTime(0);
           break;
         }
@@ -152,7 +162,8 @@ export default {
   async mounted() {
     // window.addEventListener("resize", this.onWindowResize);
     // window.addEventListener("keydown", this.handleSpaceKey);
-    const { uuid } = this.$route.params.uuid;
+    // 还未添加 identity 参数。
+    const uuid = this.$route.params.uuid;
     const roomToken = await this.getRoomToken(uuid);
     if (uuid && roomToken) {
       const whiteWebSdk = new WhiteWebSdk({

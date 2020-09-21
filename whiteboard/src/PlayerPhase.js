@@ -1,5 +1,5 @@
 
-export const PlayerPhase = {
+const PlayerPhase = {
   WaitingFirstFrame: "waitingFirstFrame",
   Playing: "playing",
   Pause: "pause",
@@ -7,3 +7,5 @@ export const PlayerPhase = {
   Ended: "ended",
   Buffering: "buffering"
 }
+
+export default PlayerPhase

@@ -72,10 +72,7 @@ export default {
     PreviewController,
     ExitButtonRoom
   },
-  // props: {
-  //   isMenuVisible: Boolean,
-  //   isFileOpen: Boolean
-  // },
+
   data() {
     return {
       pages,
@@ -87,10 +84,9 @@ export default {
       roomIsInit: false,
       isMenuVisible: false,
       isFileOpen: false
-      // drawer: false
-      // whiteboardLayerDownRef
     };
   },
+
   methods: {
     async getRoomToken(uuid) {
       const res = await netlessWhiteboardApi.room.joinRoomApi(uuid);
@@ -100,16 +96,6 @@ export default {
         return null;
       }
     },
-
-    handleRoom() {},
-
-    // handleBindRoom(ref) {
-    //   // const { room } = this;
-    //   this.whiteboardLayerDownRef = ref;
-    //   if (room) {
-    //     room.bindHtmlElement(ref);
-    //   }
-    // },
 
     async startJoinRoom() {
       this.uuid = this.$route.params.uuid;
@@ -146,7 +132,6 @@ export default {
         );
         // this.room = room;
         console.log(room);
-        // console.log(this.room);
         // window.room = room;
         room.setMemberState({
           pencilOptions: {
