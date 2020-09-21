@@ -7,26 +7,22 @@
       <div class="page-controller-mid-box">
         <!-- ExitButtonPlayer -->
       </div>
-      <div class="player-board">
-        <template v-if="player && isVisible">
-          <div @mouseenter="isVisible = true">
-            <!-- player-controller -->
-          </div>
-        </template>
-        <div
-          class="player-board-inner"
-          @mouseover="isVisible = true"
-          @mouseleave="isVisible = false"
-        >
-          <div class="player-mask" @click="onClickOperationButton(player)">
-            <template v-if="phase === Pause">
-              <div class="player-big-icon">
-                <!-- 还未添加样式 -->
-                <img :src="video_play" />
-              </div>
-            </template>
-            <div class="player-box" ref="bindRoom" @click="handleBindRoom"></div>
-          </div>
+    </div>
+    <div class="player-board">
+      <template v-if="player && isVisible">
+        <div @mouseenter="isVisible = true">
+          <!-- player-controller -->
+        </div>
+      </template>
+      <div class="player-board-inner" @mouseover="isVisible = true" @mouseleave="isVisible = false">
+        <div class="player-mask" @click="onClickOperationButton(player)">
+          <template v-if="phase === Pause">
+            <div class="player-big-icon">
+              <!-- 还未添加样式 -->
+              <img :src="video_play" :style="{width: 50, marginLeft: 6}" />
+            </div>
+          </template>
+          <div class="player-box" ref="bindRoom" @click="handleBindRoom"></div>
         </div>
       </div>
     </div>
@@ -81,7 +77,6 @@ export default {
             appIdentifier: netlessToken.appIdentifier
           });
           const replayState = await whiteWebSdk.isPlayable({ room: uuid });
-          console.log("replay", replayState);
           if (replayState) {
             this.replayState = true;
             await this.startPlayer(whiteWebSdk, uuid, roomToken);
@@ -163,7 +158,8 @@ export default {
     // window.addEventListener("resize", this.onWindowResize);
     // window.addEventListener("keydown", this.handleSpaceKey);
     // 还未添加 identity 参数。
-    const uuid = this.$route.params.uuid;
+    const { uuid } = this.$route.params.uuid;
+    console.log("uuid", uuid);
     const roomToken = await this.getRoomToken(uuid);
     if (uuid && roomToken) {
       const whiteWebSdk = new WhiteWebSdk({
