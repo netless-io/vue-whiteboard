@@ -1,7 +1,7 @@
 <template>
   <div class="player-schedule">
     <div class="player-mid-box">
-      <!-- SeekSlider -->
+      <seek-slider :fullTime="this.play.duration" :currentTime="getCurrentTime()" @click="onChange"></seek-slider>
     </div>
     <div class="player-controller-box">
       <div class="player-controller-mid">
@@ -38,10 +38,14 @@
 <script>
 import video_play from "./src/image/video_play.svg";
 import video_pause from "./src/image/video_pause.svg";
+import SeekSlider from "./SeekSlider";
 // import { PlayerPhase } from 'white-web-sdk';
 
 export default {
   name: "PlayerController",
+  components: {
+    SeekSlider
+  },
   props: {
     player: {
       require: true
@@ -55,7 +59,7 @@ export default {
       // phase: player.phase,
       isPlayerSeeking: false,
       currentTime: 0,
-      multiple: playbackSpeed,
+      multiple: this.player.playbackSpeed,
       PlayerPhase: "defaultPhase"
     };
   },

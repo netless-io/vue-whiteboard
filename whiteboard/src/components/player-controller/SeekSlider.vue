@@ -6,8 +6,44 @@
       @mousedown.prevent="setSeeking()"
       @mouseenter="setMobileSeeking()"
     >
-      <div class="main"></div>
+      <div class="main">
+        <template v-if="bufferProgress">
+          <div
+            v-if="bufferColor"
+            class="buffered"
+            :style="{ ...getPositionStyle(this.bufferProgress), backgroundColor: this.bufferColor }"
+          ></div>
+          <div
+            v-else-if="!bufferColor"
+            class="buffered"
+            :style="{ ...getPositionStyle(this.bufferProgress) }"
+          ></div>
+        </template>
+        <div
+          v-if="sliderHoverColor"
+          class="seek-hover"
+          :style="{ ...getSeekHoverPosition(), backgroundColor: this.sliderHoverColor }"
+        ></div>
+        <div
+          v-else-if="!sliderHoverColor"
+          class="seek-hover"
+          :style="{ ...getSeekHoverPosition() }"
+        ></div>
+        <div
+          v-if="sliderColor"
+          class="connect"
+          :style="{ ...getPositionStyle(this.currentTime), backgroundColor: this.props.sliderColor }"
+        ></div>
+        <div
+          v-else-if="!sliderColor"
+          class="connect"
+          :style="{ ...getPositionStyle(this.currentTime) }"
+        ></div>
+      </div>
     </div>
+    <div v-if="!hideHoverTime"></div>
+    <div v-if="thumbColor"></div>
+    <div v-else-if="!thumbColor"></div>
   </div>
 </template>
 
@@ -36,14 +72,13 @@ export default {
       ready: false,
       trackWidth: 0,
       seekHoverPosition: 0,
-      seeking: Boolean,
       mobileSeeking: Boolean,
       track: "",
       hoverTime: "",
       offset: 0,
       secondsPrefix: "00:00:",
       minutesPrefix: "00:",
-      seekHoverPosition: Number,
+      seekHoverPosition: "",
       seeking: Boolean,
       transform: ""
     };
@@ -58,20 +93,19 @@ export default {
 
     changeCurrentTimePosition(pageX) {
       if (this.track) {
-        let positio = pageX - this.track.getBoundingClientRect().left;
+        let position = pageX - this.track.getBoundingClientRect().left;
         position = position < 0 ? 0 : position;
-        position =
-          position > this.state.trackWidth ? this.state.trackWidth : position;
+        position = position > this.trackWidth ? this.trackWidth : position;
         this.seekHoverPosition = position;
-        const percent = (position * 100) / this.state.trackWidth;
-        const time = +(percent * (this.props.fullTime / 100)).toFixed(0);
+        const percent = (position * 100) / this.trackWidth;
+        const time = +(percent * (this.fullTime / 100)).toFixed(0);
         this.onChange(time, time + this.offset);
       }
     },
 
     handleSeeking(evt) {
       if (this.seeking) {
-        this.changeCurrentTimePosition(evt.pageX);
+        this.changeCurrentTimePosition(pageX);
       }
     },
 
@@ -91,7 +125,7 @@ export default {
 
     handleTrackHover(clear, evt) {
       if (this.track) {
-        let position = evt.pageX - this.track.getBoundingClientRect().left;
+        let position = pageX - this.track.getBoundingClientRect().left;
         if (clear) {
           position = 0;
         }
@@ -107,8 +141,7 @@ export default {
     },
 
     getThumbHandlerPosition() {
-      const position =
-        this.state.trackWidth / (this.props.fullTime / this.props.currentTime);
+      const position = this.trackWidth / (this.fullTime / this.currentTime);
       return {
         transform: `translateX(${position}px)`
       };
@@ -164,6 +197,19 @@ export default {
 
     setSeeking(state, evt) {
       // evt.preventDefault();
+      this.seekHoverPosition = !this ? 0 : this.state.seekHoverPosition;
+    },
+
+    setMobileSeeking() {
+      this.seekHoverPosition = this.state.seekHoverPosition;
+    },
+
+    isThumbActive() {
+      this.state.seekHoverPosition > 0 || this.seeking;
+    },
+
+    mobileTouchSeekingHandler() {
+      this.setMobileSeeking(false);
     }
   },
 
@@ -177,14 +223,6 @@ export default {
       mobileTouchSeekingHandler.destroy();
     });
   }
-
-  // beforeDestroy() {
-  //   window.removeEventListener("resize", this.setTrackWidthState);
-  //   window.removeEventListener("mousemove", this.handleSeeking);
-  //   window.removeEventListener("mouseup", this.mouseSeekingHandler);
-  //   window.removeEventListener("touchmove", this.handleTouchSeeking);
-  //   window.removeEventListener("touchend", this.mobileTouchSeekingHandler);
-  // }
 };
 </script>
 
