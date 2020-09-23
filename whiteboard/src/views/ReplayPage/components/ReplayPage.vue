@@ -11,7 +11,7 @@
     <div class="player-board">
       <template v-if="player && isVisible">
         <div @mouseenter="isVisible = true">
-          <!-- <player-controller></player-controller> -->
+          <player-controller :player="this.player"></player-controller>
         </div>
       </template>
       <div class="player-board-inner" @mouseover="isVisible = true" @mouseleave="isVisible = false">
@@ -39,12 +39,12 @@ import { netlessToken } from "../../../appToken";
 import { netlessWhiteboardApi } from "../../../apiMiddleware/RoomOperator";
 import video_play from "@/assets/image/video-play.svg";
 import logo from "@/assets/image/logo.svg";
-// import PlayerController from "@/components/player-controller/PlayerController";
+import PlayerController from "@/components/player-controller/PlayerController";
 
 export default {
   name: "ReplayPage",
   components: {
-    // PlayerController
+    PlayerController
   },
   data() {
     return {
@@ -59,7 +59,6 @@ export default {
       Pause: "",
       Playing: "",
       Ended: "",
-      // WhiteWebSdk: WhiteWebSdk,
       player: ""
     };
   },
@@ -77,9 +76,6 @@ export default {
       await polly()
         .waitAndRetry(10)
         .executeForPromise(async () => {
-          const whiteWebSdk = new WhiteWebSdk({
-            appIdentifier: netlessToken.appIdentifier
-          });
           const replayState = await whiteWebSdk.isPlayable({ room: uuid });
           if (replayState) {
             this.replayState = true;
@@ -99,7 +95,7 @@ export default {
     },
 
     async startPlayer(whiteWebSdk, uuid, roomToken) {
-      // cursorTool 工具还未开发
+      // cursorTool 后续开发
       // const cursorAdapter = new CursorTool();
 
       const player = await whiteWebSdk.replayRoom(
@@ -166,16 +162,17 @@ export default {
 
     // 后续添加 identity 参数
     const uuid = this.$route.params.uuid;
-    console.log("uuid", uuid);
     const roomToken = await this.getRoomToken(uuid);
-    console.log("roomToken", roomToken);
     if (uuid && roomToken) {
       const whiteWebSdk = new WhiteWebSdk({
         appIdentifier: netlessToken.appIdentifier
       });
-      console.log("whiteWebSdk", whiteWebSdk);
+      // console.log("whiteWebSdk", whiteWebSdk);
+      // console.log("roomToken", roomToken);
+      // console.log("uuid", uuid);
+
       await this.loadPlayer(whiteWebSdk, uuid, roomToken);
-      console.log("this.player", this.player);
+      // console.log("this.player", this.player);
     }
   }
 };

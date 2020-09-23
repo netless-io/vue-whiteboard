@@ -1,10 +1,11 @@
 <template>
   <div class="ui-video-seek-slider">
     <div
-      @mouseleave="handleTrackHover()"
       @mousemove="handleTrackHover()"
+      @mouseleave="handleTrackHover()"
       @mousedown.prevent="setSeeking()"
       @mouseenter="setMobileSeeking()"
+      ref="track"
     >
       <div class="main">
         <template v-if="bufferProgress">
@@ -65,20 +66,14 @@ export default {
   },
   data() {
     return {
-      fullTime: "",
-      currentTime: "",
-      hideHoverTime: "",
-      limitTimeTooltipBySides: "",
       ready: false,
       trackWidth: 0,
       seekHoverPosition: 0,
       mobileSeeking: Boolean,
-      track: "",
       hoverTime: "",
       offset: 0,
       secondsPrefix: "00:00:",
       minutesPrefix: "00:",
-      seekHoverPosition: "",
       seeking: Boolean,
       transform: ""
     };
@@ -86,14 +81,14 @@ export default {
 
   methods: {
     setTrackWidthState() {
-      if (this.track) {
-        this.trackWidth = this.track.offsetWidth;
+      if (this.$refs.track) {
+        this.trackWidth = this.$refs.track.offsetWidth;
       }
     },
 
     changeCurrentTimePosition(pageX) {
-      if (this.track) {
-        let position = pageX - this.track.getBoundingClientRect().left;
+      if (this.$refs.track) {
+        let position = pageX - this.$refs.track.getBoundingClientRect().left;
         position = position < 0 ? 0 : position;
         position = position > this.trackWidth ? this.trackWidth : position;
         this.seekHoverPosition = position;
@@ -103,7 +98,7 @@ export default {
       }
     },
 
-    handleSeeking(evt) {
+    handleSeeking() {
       if (this.seeking) {
         this.changeCurrentTimePosition(pageX);
       }
@@ -123,9 +118,9 @@ export default {
       }
     },
 
-    handleTrackHover(clear, evt) {
-      if (this.track) {
-        let position = pageX - this.track.getBoundingClientRect().left;
+    handleTrackHover(clear) {
+      if (this.$refs.track) {
+        let position = pageX - this.$refs.track.getBoundingClientRect().left;
         if (clear) {
           position = 0;
         }
@@ -191,21 +186,21 @@ export default {
       }
     },
 
-    mouseSeekingHandler(evt) {
-      this.setSeeking(false, event);
+    mouseSeekingHandler() {
+      this.setSeeking(false);
     },
 
-    setSeeking(state, evt) {
+    setSeeking() {
       // evt.preventDefault();
-      this.seekHoverPosition = !this ? 0 : this.state.seekHoverPosition;
+      this.seekHoverPosition = !this ? 0 : this.seekHoverPosition;
     },
 
     setMobileSeeking() {
-      this.seekHoverPosition = this.state.seekHoverPosition;
+      this.seekHoverPosition = this.seekHoverPosition;
     },
 
     isThumbActive() {
-      this.state.seekHoverPosition > 0 || this.seeking;
+      this.seekHoverPosition > 0 || this.seeking;
     },
 
     mobileTouchSeekingHandler() {
@@ -216,12 +211,14 @@ export default {
   mounted() {
     // 程序化的事件侦听器，一次性侦听一个事件
     this.$once("hook:beforeDestroy", function() {
-      setTrackWidthState.destroy();
-      handleSeeking.destroy();
-      mouseSeekingHandler.destroy();
-      handleTouchSeeking.destroy();
-      mobileTouchSeekingHandler.destroy();
+      this.setTrackWidthState.destroy();
+      this.handleSeeking.destroy();
+      this.mouseSeekingHandler.destroy();
+      this.handleTouchSeeking.destroy();
+      this.mobileTouchSeekingHandler.destroy();
     });
+
+    console.log("refs", this.$refs.track);
   }
 };
 </script>

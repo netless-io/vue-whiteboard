@@ -1,7 +1,7 @@
 <template>
   <div class="player-schedule">
     <div class="player-mid-box">
-      <seek-slider :fullTime="this.play.duration" :currentTime="getCurrentTime()" @click="onChange"></seek-slider>
+      <!-- <seek-slider :fullTime="this.play.duration" :currentTime="getCurrentTime()" @click="onChange"></seek-slider> -->
     </div>
     <div class="player-controller-box">
       <div class="player-controller-mid">
@@ -38,13 +38,13 @@
 <script>
 import video_play from "./src/image/video_play.svg";
 import video_pause from "./src/image/video_pause.svg";
-import SeekSlider from "./SeekSlider";
-// import { PlayerPhase } from 'white-web-sdk';
+// import SeekSlider from "./SeekSlider";
+import { PlayerPhase } from "white-web-sdk";
 
 export default {
   name: "PlayerController",
   components: {
-    SeekSlider
+    // SeekSlider
   },
   props: {
     player: {
@@ -65,25 +65,25 @@ export default {
   },
 
   methods: {
-    onChange(time, offsetTime) {
-      if (player) {
-        this.currentTime = time;
-        this.player.seekToProgressTime(time);
-      }
-    },
-    onClickOperationButton(player) {
+    // onChange(time, offsetTime) {
+    //   if (this.player) {
+    //     this.currentTime = time;
+    //     this.player.seekToProgressTime(time);
+    //   }
+    // },
+    onClickOperationButton() {
       switch (this.player.phase) {
-        case WaitingFirstFrame:
-        case Pause: {
-          play();
+        case PlayerPhase.WaitingFirstFrame:
+        case PlayerPhase.Pause: {
+          this.player.play();
           break;
         }
-        case Playing: {
-          pause();
+        case PlayerPhase.Playing: {
+          this.player.pause();
           break;
         }
-        case Ended: {
-          seekToProgressTime();
+        case PlayerPhase.Ended: {
+          this.player.seekToProgressTime();
           break;
         }
       }
