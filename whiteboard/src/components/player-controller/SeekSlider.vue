@@ -1,10 +1,10 @@
 <template>
   <div class="ui-video-seek-slider">
     <div
-      @mousemove="handleTrackHover()"
-      @mouseleave="handleTrackHover()"
-      @mousedown.prevent="setSeeking()"
-      @mouseenter="setMobileSeeking()"
+      @mousemove="handleTrackHover(false)"
+      @mouseleave="handleTrackHover(true)"
+      @mousedown.prevent="setSeeking(true)"
+      @mouseenter="setMobileSeeking(true)"
       ref="track"
     >
       <div class="main">
@@ -98,9 +98,9 @@ export default {
       }
     },
 
-    handleSeeking() {
+    handleSeeking(evt) {
       if (this.seeking) {
-        this.changeCurrentTimePosition(pageX);
+        this.changeCurrentTimePosition(evt.pageX);
       }
     },
 
@@ -118,9 +118,10 @@ export default {
       }
     },
 
-    handleTrackHover(clear) {
+    handleTrackHover(clear, evt) {
       if (this.$refs.track) {
-        let position = pageX - this.$refs.track.getBoundingClientRect().left;
+        let position =
+          evt.pageX - this.$refs.track.getBoundingClientRect().left;
         if (clear) {
           position = 0;
         }
@@ -190,13 +191,15 @@ export default {
       this.setSeeking(false);
     },
 
-    setSeeking() {
-      // evt.preventDefault();
-      this.seekHoverPosition = !this ? 0 : this.seekHoverPosition;
+    setSeeking(state) {
+      this.handleSeeking();
+      this.seeking = state;
+      this.seekHoverPosition = !state ? 0 : this.seekHoverPosition;
     },
 
-    setMobileSeeking() {
-      this.seekHoverPosition = this.seekHoverPosition;
+    setMobileSeeking(state) {
+      this.mobileSeeking = state;
+      this.seekHoverPosition = !state ? 0 : this.seekHoverPosition;
     },
 
     isThumbActive() {
@@ -209,16 +212,30 @@ export default {
   },
 
   mounted() {
-    // 程序化的事件侦听器，一次性侦听一个事件
-    this.$once("hook:beforeDestroy", function() {
-      this.setTrackWidthState.destroy();
-      this.handleSeeking.destroy();
-      this.mouseSeekingHandler.destroy();
-      this.handleTouchSeeking.destroy();
-      this.mobileTouchSeekingHandler.destroy();
-    });
+    this.setTrackWidthState();
+    window.addEventListener("resize", this.setTrackWidthState);
+    window.addEventListener("mousemove", this.handleSeeking);
+    window.addEventListener("mouseup", this.mouseSeekingHandler);
+    window.addEventListener("touchmove", this.handleTouchSeeking);
+    window.addEventListener("touchend", this.mobileTouchSeekingHandler);
 
+    // 程序化侦听事件
+    // this.$once("hook:beforeDestroy", function() {
+    //   this.setTrackWidthState().destroy();
+    //   this.handleSeeking().destroy();
+    //   this.mouseSeekingHandler().destroy();
+    //   this.handleTouchSeeking().destroy();
+    //   this.mobileTouchSeekingHandler().destroy();
+    // });
     console.log("refs", this.$refs.track);
+  },
+
+  beforeDestroy() {
+    window.addEventListener("resize", this.setTrackWidthState);
+    window.addEventListener("mousemove", this.handleSeeking);
+    window.addEventListener("mouseup", this.mouseSeekingHandler);
+    window.addEventListener("touchmove", this.handleTouchSeeking);
+    window.addEventListener("touchend", this.mobileTouchSeekingHandler);
   }
 };
 </script>
