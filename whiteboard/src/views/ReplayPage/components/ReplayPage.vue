@@ -167,9 +167,6 @@ export default {
       const whiteWebSdk = new WhiteWebSdk({
         appIdentifier: netlessToken.appIdentifier
       });
-      // console.log("whiteWebSdk", whiteWebSdk);
-      // console.log("roomToken", roomToken);
-      // console.log("uuid", uuid);
 
       await this.loadPlayer(whiteWebSdk, uuid, roomToken);
       // console.log("this.player", this.player);

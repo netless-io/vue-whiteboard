@@ -55,10 +55,8 @@ export default {
       );
       if (res.code == 200) {
         this.uuid = res.msg.room.uuid;
-        // console.log(this.uuid);
       }
       this.userId = `${Math.floor(Math.random() * 100000)}`;
-      // console.log(this.userId);
     },
 
     handleJump() {

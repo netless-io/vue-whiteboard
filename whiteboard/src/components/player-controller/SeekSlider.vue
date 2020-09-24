@@ -1,6 +1,7 @@
 <template>
   <div class="ui-video-seek-slider">
     <div
+      :class="isThumbActive() ? 'track active' : 'track'"
       @mousemove="handleTrackHover(false)"
       @mouseleave="handleTrackHover(true)"
       @mousedown.prevent="setSeeking(true)"

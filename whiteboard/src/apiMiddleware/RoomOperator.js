@@ -4,16 +4,16 @@ import { netlessToken } from "../appToken";
 const fetcher = new Fetcher(5000, "https://cloudcapiv4.herewhite.com");
 
 class RoomOperator {
-  async createRoomApi(name, limit, mode) {
+  async createRoomApi() {
     const json = await fetcher.post({
       path: `room`,
-      query: {
-        token: netlessToken.sdkToken,
+      headers: {
+        token: netlessToken.sdkToken
       },
       body: {
-        name,
-        limit,
-        mode,
+        name: 'whiteboard',
+        limit: 0,
+        mode: 'historied'
       },
     });
     return json;
