@@ -125,8 +125,8 @@ export default {
             // message.error(`Playback error: ${error}`); //后续添加 element 组件
             this.replayFail = true;
           },
-          onProgressTimeChanged(scheduleTime) {
-            this.currentTime = scheduleTime;
+          onProgressTimeChanged(currentTime) {
+            this.currentTime = currentTime;
           }
         }
       );

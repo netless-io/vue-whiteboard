@@ -1,11 +1,11 @@
 <template>
   <div class="ui-video-seek-slider">
-    <!-- :class="isThumbActive() ? 'track active' : 'track'" -->
     <div
       @mousemove="handleTrackHover(false)"
       @mouseleave="handleTrackHover(true)"
       @mousedown.prevent="setSeeking(true)"
       @mouseenter="setMobileSeeking(true)"
+      :class="isThumbActive() ? 'track active' : 'track'"
       ref="track"
     >
       <div class="main">
@@ -13,10 +13,10 @@
           <div
             v-if="bufferColor"
             class="buffered"
-            :style="{
-              ...getPositionStyle(this.bufferProgress),
-              backgroundColor: this.bufferColor
-            }"
+            :style="[
+              getPositionStyle(this.bufferProgress),
+              { backgroundColor: this.bufferColor }
+            ]"
           ></div>
           <div
             v-else-if="!bufferColor"
@@ -85,7 +85,12 @@ export default {
       secondsPrefix: "00:00:",
       minutesPrefix: "00:",
       seeking: Boolean,
-      transform: ""
+      transform: "",
+      bufferProgress: "",
+      sliderColor: "",
+      sliderHoverColor: "",
+      thumbColor: "",
+      bufferColor: ""
     };
   },
 

@@ -3,8 +3,17 @@
     <div class="player-mid-box">
       <seek-slider
         :fullTime="this.player.timeDuration"
-        :currentTime="getCurrentTime"
-        @click="onChange"
+        :currentTime="getCurrentTime(this.currentTime)"
+        :onChange="
+          (time, offsetTime) => {
+            if (this.player) {
+              this.currentTime = time;
+              this.player.seekToProgressTime(time);
+            }
+          }
+        "
+        :hideHoverTime="true"
+        :limitTimeTooltipBySides="true"
       ></seek-slider>
     </div>
     <div class="player-controller-box">
@@ -98,7 +107,8 @@ export default {
       video_play,
       video_pause,
       progressTime: 0,
-      phase: this.player.phase,
+      phase: PlayerPhase,
+      // phase: this.player.phase,
       isPlayerSeeking: false,
       currentTime: 0,
       multiple: this.player.playbackSpeed,
