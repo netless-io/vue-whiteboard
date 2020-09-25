@@ -2,12 +2,25 @@
   <div class="player-schedule">
     <div class="player-mid-box">
       <!-- :fullTime="this.play.duration" :currentTime="getCurrentTime()" @click="onChange" -->
-      <seek-slider></seek-slider>
+      <seek-slider
+        :fullTime="this.player.timeDuration"
+        :currentTime="getCurrentTime()"
+        @click="onChange"
+      ></seek-slider>
     </div>
     <div class="player-controller-box">
       <div class="player-controller-mid">
         <div class="player-left-box">
-          <div class="player-controller" @click="onClickOperationButton(player)">
+          <div
+            class="player-controller"
+            @click="
+              () => {
+                if (this.plyaer) {
+                  onClickOperationButton(this.player);
+                }
+              }
+            "
+          >
             <template v-if="PlayerPhase === defaultPhase">
               <img :src="video_play" />
             </template>
@@ -18,17 +31,44 @@
               <img :src="video_pause" />
             </template>
           </div>
-          <div class="player-mid-box-time"></div>
+          <div class="player-mid-box-time">
+            {{ displayWatch(Math.floor(this.player.progressTime / 1000)) }} /
+            {{ displayWatch(Math.floor(this.player.timeDuration / 1000)) }}
+          </div>
         </div>
         <el-dropdown placement="top-start">
           <span class="el-dropdown-link">倍数</span>
           <el-dropdown-menu slot="dropdown" class="player-menu-box">
-            <el-dropdown-item class="player-menu-cell" @click="handleActiveMultiple(2.0)">2.0x</el-dropdown-item>
-            <el-dropdown-item class="player-menu-cell" @click="handleActiveMultiple(1.5)">1.5x</el-dropdown-item>
-            <el-dropdown-item class="player-menu-cell" @click="handleActiveMultiple(1.25)">1.25x</el-dropdown-item>
-            <el-dropdown-item class="player-menu-cell" @click="handleActiveMultiple(1.0)">1.0x</el-dropdown-item>
-            <el-dropdown-item class="player-menu-cell" @click="handleActiveMultiple(0.75)">0.75x</el-dropdown-item>
-            <el-dropdown-item class="player-menu-cell" @click="handleActiveMultiple(0.5)">0.5x</el-dropdown-item>
+            <el-dropdown-item
+              class="player-menu-cell"
+              @click="handleActiveMultiple(2.0)"
+              >2.0x</el-dropdown-item
+            >
+            <el-dropdown-item
+              class="player-menu-cell"
+              @click="handleActiveMultiple(1.5)"
+              >1.5x</el-dropdown-item
+            >
+            <el-dropdown-item
+              class="player-menu-cell"
+              @click="handleActiveMultiple(1.25)"
+              >1.25x</el-dropdown-item
+            >
+            <el-dropdown-item
+              class="player-menu-cell"
+              @click="handleActiveMultiple(1.0)"
+              >1.0x</el-dropdown-item
+            >
+            <el-dropdown-item
+              class="player-menu-cell"
+              @click="handleActiveMultiple(0.75)"
+              >0.75x</el-dropdown-item
+            >
+            <el-dropdown-item
+              class="player-menu-cell"
+              @click="handleActiveMultiple(0.5)"
+              >0.5x</el-dropdown-item
+            >
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -41,6 +81,7 @@ import video_play from "./src/image/video_play.svg";
 import video_pause from "./src/image/video_pause.svg";
 import SeekSlider from "./SeekSlider";
 import { PlayerPhase } from "white-web-sdk";
+import { displayWatch } from "./WatchDisplay";
 
 export default {
   name: "PlayerController",
@@ -61,7 +102,8 @@ export default {
       isPlayerSeeking: false,
       currentTime: 0,
       multiple: this.player.playbackSpeed,
-      PlayerPhase: "defaultPhase"
+      PlayerPhase: "defaultPhase",
+      time: ""
     };
   },
 
@@ -72,6 +114,7 @@ export default {
     //     this.player.seekToProgressTime(time);
     //   }
     // },
+
     onClickOperationButton() {
       switch (this.player.phase) {
         case PlayerPhase.WaitingFirstFrame:

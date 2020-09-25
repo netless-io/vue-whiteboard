@@ -11,18 +11,30 @@
     <div class="player-board">
       <template v-if="player && isVisible">
         <div @mouseenter="isVisible = true">
-          <player-controller :player="this.player"></player-controller>
+          <player-controller :player="player"></player-controller>
         </div>
       </template>
-      <div class="player-board-inner" @mouseover="isVisible = true" @mouseleave="isVisible = false">
+      <div
+        class="player-board-inner"
+        @mouseover="isVisible = true"
+        @mouseleave="isVisible = false"
+      >
         <div class="player-mask" @click="onClickOperationButton(player)">
           <template v-if="phase === Pause">
             <div class="player-big-icon">
               <!-- 还未添加样式 -->
-              <img :src="video_play" :style="{width: 50, marginLeft: 6}" />
+              <img
+                :src="video_play"
+                :style="{ width: '50px', marginLeft: '6px' }"
+              />
             </div>
           </template>
-          <div class="player-box" ref="bindRoom" @click="handleBindRoom"></div>
+          <div
+            class="player-box"
+            ref="bindRoom"
+            @click="handleBindRoom"
+            :style="{ backgroundColor: 'F2F2F2' }"
+          ></div>
         </div>
       </div>
     </div>
@@ -169,7 +181,7 @@ export default {
       });
 
       await this.loadPlayer(whiteWebSdk, uuid, roomToken);
-      // console.log("this.player", this.player);
+      console.log("this.player", this.player);
     }
   }
 };
