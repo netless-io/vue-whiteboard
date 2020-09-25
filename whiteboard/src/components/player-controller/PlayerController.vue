@@ -1,10 +1,9 @@
 <template>
   <div class="player-schedule">
     <div class="player-mid-box">
-      <!-- :fullTime="this.play.duration" :currentTime="getCurrentTime()" @click="onChange" -->
       <seek-slider
         :fullTime="this.player.timeDuration"
-        :currentTime="getCurrentTime()"
+        :currentTime="getCurrentTime"
         @click="onChange"
       ></seek-slider>
     </div>
@@ -21,19 +20,19 @@
               }
             "
           >
-            <template v-if="PlayerPhase === defaultPhase">
-              <img :src="video_play" />
-            </template>
-            <template v-else-if="PlayerPhase === Buffering">
+            <div v-if="phase">
+              <img :src="video_play" :style="{ marginLeft: 2 }" />
+            </div>
+            <div v-else-if="phase === PlayerPhase.Buffering">
               <img :src="video_pause" />
-            </template>
-            <template v-else-if="PlayerPhase === Playing">
+            </div>
+            <div v-else-if="phase === PlayerPhase.Playing">
               <img :src="video_pause" />
-            </template>
+            </div>
           </div>
           <div class="player-mid-box-time">
-            {{ displayWatch(Math.floor(this.player.progressTime / 1000)) }} /
-            {{ displayWatch(Math.floor(this.player.timeDuration / 1000)) }}
+            {{ this.showProgressTime }} /
+            {{ this.showTime }}
           </div>
         </div>
         <el-dropdown placement="top-start">
@@ -81,6 +80,7 @@ import video_play from "./src/image/video_play.svg";
 import video_pause from "./src/image/video_pause.svg";
 import SeekSlider from "./SeekSlider";
 import { PlayerPhase } from "white-web-sdk";
+// import { PlayerPhase } from "../../PlayerPhase";
 import { displayWatch } from "./WatchDisplay";
 
 export default {
@@ -98,22 +98,30 @@ export default {
       video_play,
       video_pause,
       progressTime: 0,
-      // phase: player.phase,
+      phase: this.player.phase,
       isPlayerSeeking: false,
       currentTime: 0,
       multiple: this.player.playbackSpeed,
-      PlayerPhase: "defaultPhase",
-      time: ""
+      showTime: "",
+      showProgressTime: ""
     };
   },
 
   methods: {
-    // onChange(time, offsetTime) {
-    //   if (this.player) {
-    //     this.currentTime = time;
-    //     this.player.seekToProgressTime(time);
-    //   }
-    // },
+    onChange(time) {
+      if (this.player) {
+        this.currentTime = time;
+        this.player.seekToProgressTime(time);
+      }
+    },
+
+    handleWatch() {
+      this.showProgressTime = displayWatch(
+        Math.floor(this.player.progressTime / 1000)
+      );
+
+      this.showTime = displayWatch(Math.floor(this.player.timeDuration / 1000));
+    },
 
     onClickOperationButton() {
       switch (this.player.phase) {
@@ -165,6 +173,8 @@ export default {
     this.player.callbacks.on("onProgressTimeChanged", currentTime => {
       this.currentTime = currentTime;
     });
+
+    this.handleWatch();
   }
 };
 </script>

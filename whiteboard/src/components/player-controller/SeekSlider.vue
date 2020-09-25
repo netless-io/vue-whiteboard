@@ -1,7 +1,7 @@
 <template>
   <div class="ui-video-seek-slider">
+    <!-- :class="isThumbActive() ? 'track active' : 'track'" -->
     <div
-      :class="isThumbActive() ? 'track active' : 'track'"
       @mousemove="handleTrackHover(false)"
       @mouseleave="handleTrackHover(true)"
       @mousedown.prevent="setSeeking(true)"
@@ -13,7 +13,10 @@
           <div
             v-if="bufferColor"
             class="buffered"
-            :style="{ ...getPositionStyle(this.bufferProgress), backgroundColor: this.bufferColor }"
+            :style="{
+              ...getPositionStyle(this.bufferProgress),
+              backgroundColor: this.bufferColor
+            }"
           ></div>
           <div
             v-else-if="!bufferColor"
@@ -24,7 +27,10 @@
         <div
           v-if="sliderHoverColor"
           class="seek-hover"
-          :style="{ ...getSeekHoverPosition(), backgroundColor: this.sliderHoverColor }"
+          :style="{
+            ...getSeekHoverPosition(),
+            backgroundColor: this.sliderHoverColor
+          }"
         ></div>
         <div
           v-else-if="!sliderHoverColor"
@@ -34,7 +40,10 @@
         <div
           v-if="sliderColor"
           class="connect"
-          :style="{ ...getPositionStyle(this.currentTime), backgroundColor: this.props.sliderColor }"
+          :style="{
+            ...getPositionStyle(this.currentTime),
+            backgroundColor: this.props.sliderColor
+          }"
         ></div>
         <div
           v-else-if="!sliderColor"
