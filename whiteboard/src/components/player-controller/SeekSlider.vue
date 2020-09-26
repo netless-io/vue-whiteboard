@@ -144,8 +144,8 @@ export default {
       }
     },
 
-    getPositionStyle() {
-      const position = this.trackWidth / (this.fullTime / this.currentTime);
+    getPositionStyle(time) {
+      const position = (time * 100) / this.fullTime;
       return {
         transform: `scaleX(${position / 100})`
       };
@@ -159,6 +159,13 @@ export default {
     },
 
     getSeekHoverPosition() {
+      const position = (this.seekHoverPosition * 100) / this.trackWidth;
+      return {
+        transform: `scaleX(${position / 100})`
+      };
+    },
+
+    getHoverTimePosition() {
       let position = 0;
       if (this.hoverTime) {
         position = this.seekHoverPosition - this.hoverTime.offsetWidth / 2;
@@ -202,12 +209,12 @@ export default {
       }
     },
 
-    mouseSeekingHandler() {
-      this.setSeeking(false);
+    mouseSeekingHandler(event) {
+      this.setSeeking(false, event);
     },
 
-    setSeeking(state) {
-      this.handleSeeking();
+    setSeeking(state, evt) {
+      this.handleSeeking(evt);
       this.seeking = state;
       this.seekHoverPosition = !state ? 0 : this.seekHoverPosition;
     },
