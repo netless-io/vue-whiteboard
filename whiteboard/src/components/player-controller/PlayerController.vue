@@ -4,14 +4,7 @@
       <seek-slider
         :fullTime="this.player.timeDuration"
         :currentTime="getCurrentTime(this.currentTime)"
-        :onChange="
-          (time, offsetTime) => {
-            if (this.player) {
-              this.currentTime = time;
-              this.player.seekToProgressTime(time);
-            }
-          }
-        "
+        @handleOnChange="onChange"
         :hideHoverTime="true"
         :limitTimeTooltipBySides="true"
       ></seek-slider>
@@ -47,36 +40,12 @@
         <el-dropdown placement="top-start">
           <span class="el-dropdown-link">倍数</span>
           <el-dropdown-menu slot="dropdown" class="player-menu-box">
-            <el-dropdown-item
-              class="player-menu-cell"
-              @click="handleActiveMultiple(2.0)"
-              >2.0x</el-dropdown-item
-            >
-            <el-dropdown-item
-              class="player-menu-cell"
-              @click="handleActiveMultiple(1.5)"
-              >1.5x</el-dropdown-item
-            >
-            <el-dropdown-item
-              class="player-menu-cell"
-              @click="handleActiveMultiple(1.25)"
-              >1.25x</el-dropdown-item
-            >
-            <el-dropdown-item
-              class="player-menu-cell"
-              @click="handleActiveMultiple(1.0)"
-              >1.0x</el-dropdown-item
-            >
-            <el-dropdown-item
-              class="player-menu-cell"
-              @click="handleActiveMultiple(0.75)"
-              >0.75x</el-dropdown-item
-            >
-            <el-dropdown-item
-              class="player-menu-cell"
-              @click="handleActiveMultiple(0.5)"
-              >0.5x</el-dropdown-item
-            >
+            <el-dropdown-item class="player-menu-cell" @click="handleActiveMultiple(2.0)">2.0x</el-dropdown-item>
+            <el-dropdown-item class="player-menu-cell" @click="handleActiveMultiple(1.5)">1.5x</el-dropdown-item>
+            <el-dropdown-item class="player-menu-cell" @click="handleActiveMultiple(1.25)">1.25x</el-dropdown-item>
+            <el-dropdown-item class="player-menu-cell" @click="handleActiveMultiple(1.0)">1.0x</el-dropdown-item>
+            <el-dropdown-item class="player-menu-cell" @click="handleActiveMultiple(0.75)">0.75x</el-dropdown-item>
+            <el-dropdown-item class="player-menu-cell" @click="handleActiveMultiple(0.5)">0.5x</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>

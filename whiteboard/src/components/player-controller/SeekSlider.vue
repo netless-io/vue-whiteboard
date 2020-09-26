@@ -62,9 +62,9 @@
 export default {
   name: "SeekSlider",
   props: {
-    onChange: {
-      type: Function
-    },
+    // onChange: {
+    //   type: Function
+    // },
     fullTime: {},
     currentTime: {},
     hideHoverTime: {
@@ -90,7 +90,8 @@ export default {
       sliderColor: "",
       sliderHoverColor: "",
       thumbColor: "",
-      bufferColor: ""
+      bufferColor: "",
+      time: ""
     };
   },
 
@@ -109,8 +110,14 @@ export default {
         this.seekHoverPosition = position;
         const percent = (position * 100) / this.trackWidth;
         const time = +(percent * (this.fullTime / 100)).toFixed(0);
-        this.onChange(time, time + this.offset);
+        this.handleOnChange(time, time + this.offset);
       }
+    },
+
+    handleOnChange(time, offset) {
+      this.time = time;
+      this.offset = offset;
+      this.$emit("onChange", [this.time, this.offset]);
     },
 
     handleSeeking(evt) {
