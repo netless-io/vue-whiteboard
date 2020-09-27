@@ -13,10 +13,10 @@
           <div
             v-if="bufferColor"
             class="buffered"
-            :style="[
-              getPositionStyle(this.bufferProgress),
-              { backgroundColor: this.bufferColor }
-            ]"
+            :style="{
+              ...getPositionStyle(this.bufferProgress),
+              backgroundColor: this.bufferColor
+            }"
           ></div>
           <div
             v-else-if="!bufferColor"
@@ -65,8 +65,12 @@ export default {
     // onChange: {
     //   type: Function
     // },
-    fullTime: {},
-    currentTime: {},
+    fullTime: {
+      type: Number
+    },
+    currentTime: {
+      type: Number
+    },
     hideHoverTime: {
       type: Boolean
     },
@@ -139,10 +143,10 @@ export default {
       }
     },
 
-    handleTrackHover(clear, evt) {
+    handleTrackHover(clear, event) {
       if (this.$refs.track) {
         let position =
-          evt.pageX - this.$refs.track.getBoundingClientRect().left;
+          event.pageX - this.$refs.track.getBoundingClientRect().left;
         if (clear) {
           position = 0;
         }
@@ -219,8 +223,8 @@ export default {
       this.setSeeking(false, event);
     },
 
-    setSeeking(state, evt) {
-      this.handleSeeking(evt);
+    setSeeking(state, event) {
+      this.handleSeeking(event);
       this.seeking = state;
       this.seekHoverPosition = !state ? 0 : this.seekHoverPosition;
     },

@@ -107,7 +107,7 @@ export default {
     },
 
     async startPlayer(whiteWebSdk, uuid, roomToken) {
-      // cursorTool 后续开发
+      // cursorTool 后续添加
       // const cursorAdapter = new CursorTool();
 
       const player = await whiteWebSdk.replayRoom(

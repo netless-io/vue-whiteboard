@@ -1,11 +1,19 @@
 <template>
   <div class="player-schedule">
     <div class="player-mid-box">
+      <!-- @handleOnChange="onChange" -->
       <seek-slider
         :fullTime="this.player.timeDuration"
         :currentTime="getCurrentTime(this.currentTime)"
-        @handleOnChange="onChange"
         :hideHoverTime="true"
+        @onChange="
+          time => {
+            if (player) {
+              this.currentTime = time;
+              player.seekToProgressTime(time);
+            }
+          }
+        "
         :limitTimeTooltipBySides="true"
       ></seek-slider>
     </div>
@@ -16,8 +24,8 @@
             class="player-controller"
             @click="
               () => {
-                if (this.plyaer) {
-                  onClickOperationButton(this.player);
+                if (plyaer) {
+                  onClickOperationButton(player);
                 }
               }
             "
@@ -40,12 +48,36 @@
         <el-dropdown placement="top-start">
           <span class="el-dropdown-link">倍数</span>
           <el-dropdown-menu slot="dropdown" class="player-menu-box">
-            <el-dropdown-item class="player-menu-cell" @click="handleActiveMultiple(2.0)">2.0x</el-dropdown-item>
-            <el-dropdown-item class="player-menu-cell" @click="handleActiveMultiple(1.5)">1.5x</el-dropdown-item>
-            <el-dropdown-item class="player-menu-cell" @click="handleActiveMultiple(1.25)">1.25x</el-dropdown-item>
-            <el-dropdown-item class="player-menu-cell" @click="handleActiveMultiple(1.0)">1.0x</el-dropdown-item>
-            <el-dropdown-item class="player-menu-cell" @click="handleActiveMultiple(0.75)">0.75x</el-dropdown-item>
-            <el-dropdown-item class="player-menu-cell" @click="handleActiveMultiple(0.5)">0.5x</el-dropdown-item>
+            <el-dropdown-item
+              class="player-menu-cell"
+              @click="handleActiveMultiple(2.0)"
+              >2.0x</el-dropdown-item
+            >
+            <el-dropdown-item
+              class="player-menu-cell"
+              @click="handleActiveMultiple(1.5)"
+              >1.5x</el-dropdown-item
+            >
+            <el-dropdown-item
+              class="player-menu-cell"
+              @click="handleActiveMultiple(1.25)"
+              >1.25x</el-dropdown-item
+            >
+            <el-dropdown-item
+              class="player-menu-cell"
+              @click="handleActiveMultiple(1.0)"
+              >1.0x</el-dropdown-item
+            >
+            <el-dropdown-item
+              class="player-menu-cell"
+              @click="handleActiveMultiple(0.75)"
+              >0.75x</el-dropdown-item
+            >
+            <el-dropdown-item
+              class="player-menu-cell"
+              @click="handleActiveMultiple(0.5)"
+              >0.5x</el-dropdown-item
+            >
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -81,8 +113,10 @@ export default {
       isPlayerSeeking: false,
       currentTime: 0,
       multiple: this.player.playbackSpeed,
-      showTime: "",
-      showProgressTime: ""
+      showTime: displayWatch(Math.floor(this.player.timeDuration / 1000)),
+      showProgressTime: displayWatch(
+        Math.floor(this.player.progressTime / 1000)
+      )
     };
   },
 
@@ -94,27 +128,27 @@ export default {
       }
     },
 
-    handleWatch() {
-      this.showProgressTime = displayWatch(
-        Math.floor(this.player.progressTime / 1000)
-      );
+    // handleWatch() {
+    //   this.showProgressTime = displayWatch(
+    //     Math.floor(this.player.progressTime / 1000)
+    //   );
 
-      this.showTime = displayWatch(Math.floor(this.player.timeDuration / 1000));
-    },
+    //   this.showTime = displayWatch(Math.floor(this.player.timeDuration / 1000));
+    // },
 
-    onClickOperationButton() {
+    onClickOperationButton(player) {
       switch (this.player.phase) {
         case PlayerPhase.WaitingFirstFrame:
         case PlayerPhase.Pause: {
-          this.player.play();
+          player.play();
           break;
         }
         case PlayerPhase.Playing: {
-          this.player.pause();
+          player.pause();
           break;
         }
         case PlayerPhase.Ended: {
-          this.player.seekToProgressTime();
+          player.seekToProgressTime(0);
           break;
         }
       }
@@ -144,6 +178,16 @@ export default {
     }
   },
 
+  // watch: {
+  //   listChange: {
+  //     handler(time, oldTime) {
+  //       console.warn("listTime", oldTime);
+  //       this.onChange(time);
+  //     }
+  //   },
+  //   immediate: true
+  // },
+
   mounted() {
     this.player.callbacks.on("onPhaseChanged", phase => {
       this.phase = phase;
@@ -153,7 +197,7 @@ export default {
       this.currentTime = currentTime;
     });
 
-    this.handleWatch();
+    // this.handleWatch();
   }
 };
 </script>
