@@ -114,19 +114,16 @@ export default {
         // , cursorAdapter: cursorAdapter
         { room: uuid, roomToken: roomToken },
         {
-          onPhaseChanged(phase) {
+          onPhaseChanged: phase => {
             this.phase = phase;
           },
-          // onLoadFirstFrame() {
-          //   cursorAdapter.setPlayer(player);
-          // },
-          onStoppedWithError(error) {
+          onStoppedWithError: error => {
             console.error(`Playback error: ${error}`);
             // message.error(`Playback error: ${error}`); //后续添加 element 组件
             this.replayFail = true;
           },
-          onProgressTimeChanged(currentTime) {
-            this.currentTime = currentTime;
+          onProgressTimeChanged: scheduleTime => {
+            this.currentTime = scheduleTime;
           }
         }
       );

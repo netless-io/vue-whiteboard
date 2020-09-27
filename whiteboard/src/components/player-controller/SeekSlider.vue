@@ -1,10 +1,10 @@
 <template>
   <div class="ui-video-seek-slider">
     <div
-      @mousemove="handleTrackHover(false)"
-      @mouseleave="handleTrackHover(true)"
+      @mousemove="evt => handleTrackHover(false, evt)"
+      @mouseleave="evt => handleTrackHover(true, evt)"
       @mousedown.prevent="setSeeking(true)"
-      @mouseenter="setMobileSeeking(true)"
+      @mouseenter="evt => setMobileSeeking(true, evt)"
       :class="isThumbActive() ? 'track active' : 'track'"
       ref="track"
     >
@@ -110,14 +110,13 @@ export default {
         this.seekHoverPosition = position;
         const percent = (position * 100) / this.trackWidth;
         const time = +(percent * (this.fullTime / 100)).toFixed(0);
-        this.handleOnChange(time, time + this.offset);
+        this.handleOnChange(time);
       }
     },
 
-    handleOnChange(time, offset) {
+    handleOnChange(time) {
       this.time = time;
-      this.offset = offset;
-      this.$emit("onChange", [this.time, this.offset]);
+      this.$emit("onChange", this.time);
     },
 
     handleSeeking(evt) {
