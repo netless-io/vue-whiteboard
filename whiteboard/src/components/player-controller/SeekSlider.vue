@@ -1,10 +1,10 @@
 <template>
   <div class="ui-video-seek-slider">
     <div
-      @mousemove="evt => handleTrackHover(false, evt)"
-      @mouseleave="evt => handleTrackHover(true, evt)"
+      @mousemove="handleTrackHover(false, $event)"
+      @mouseleave="handleTrackHover(true, $event)"
       @mousedown.prevent="setSeeking(true)"
-      @mouseenter="evt => setMobileSeeking(true, evt)"
+      @mouseenter="setMobileSeeking(true, $event)"
       :class="isThumbActive() ? 'track active' : 'track'"
       ref="track"
     >
@@ -84,7 +84,7 @@ export default {
       offset: 0,
       secondsPrefix: "00:00:",
       minutesPrefix: "00:",
-      seeking: Boolean,
+      seeking: "",
       transform: "",
       bufferProgress: "",
       sliderColor: "",
@@ -255,7 +255,6 @@ export default {
     //   this.handleTouchSeeking().destroy();
     //   this.mobileTouchSeekingHandler().destroy();
     // });
-    console.log("refs", this.$refs.track);
   },
 
   beforeDestroy() {
