@@ -1,7 +1,6 @@
 <template>
   <div class="player-schedule">
     <div class="player-mid-box">
-      <!-- @handleOnChange="onChange" -->
       <seek-slider
         :fullTime="this.player.timeDuration"
         :currentTime="getCurrentTime(this.currentTime)"
@@ -22,18 +21,12 @@
         <div class="player-left-box">
           <div
             class="player-controller"
-            @click="
-              () => {
-                if (plyaer) {
-                  onClickOperationButton(player);
-                }
-              }
-            "
+            @click="onClickOperationButton(player)"
           >
-            <div v-if="phase">
+            <div v-if="changePhase">
               <img :src="video_play" :style="{ marginLeft: 2 }" />
             </div>
-            <div v-else-if="phase === PlayerPhase.Buffering">
+            <div v-else-if="changePhase === pause">
               <img :src="video_pause" />
             </div>
             <div v-else-if="phase === PlayerPhase.Playing">
@@ -41,8 +34,8 @@
             </div>
           </div>
           <div class="player-mid-box-time">
-            {{ this.showProgressTime }} /
-            {{ this.showTime }}
+            {{ showProgressTime }} /
+            {{ showTime }}
           </div>
         </div>
         <el-dropdown placement="top-start">
@@ -109,6 +102,7 @@ export default {
       video_pause,
       progressTime: 0,
       phase: PlayerPhase,
+      changePhase: "playing",
       // phase: this.player.phase,
       isPlayerSeeking: false,
       currentTime: 0,
@@ -121,29 +115,16 @@ export default {
   },
 
   methods: {
-    onChange(time) {
-      if (this.player) {
-        this.currentTime = time;
-        this.player.seekToProgressTime(time);
-      }
-    },
-
-    // handleWatch() {
-    //   this.showProgressTime = displayWatch(
-    //     Math.floor(this.player.progressTime / 1000)
-    //   );
-
-    //   this.showTime = displayWatch(Math.floor(this.player.timeDuration / 1000));
-    // },
-
     onClickOperationButton(player) {
       switch (this.player.phase) {
         case PlayerPhase.WaitingFirstFrame:
         case PlayerPhase.Pause: {
+          // this.changePhase = "pause";
           player.play();
           break;
         }
         case PlayerPhase.Playing: {
+          // this.changePhase = "playing";
           player.pause();
           break;
         }
@@ -178,16 +159,6 @@ export default {
     }
   },
 
-  // watch: {
-  //   listChange: {
-  //     handler(time, oldTime) {
-  //       console.warn("listTime", oldTime);
-  //       this.onChange(time);
-  //     }
-  //   },
-  //   immediate: true
-  // },
-
   mounted() {
     this.player.callbacks.on("onPhaseChanged", phase => {
       this.phase = phase;
@@ -195,9 +166,10 @@ export default {
 
     this.player.callbacks.on("onProgressTimeChanged", currentTime => {
       this.currentTime = currentTime;
+      this.showProgressTime = displayWatch(
+        Math.floor(this.player.progressTime / 1000)
+      );
     });
-
-    // this.handleWatch();
   }
 };
 </script>
