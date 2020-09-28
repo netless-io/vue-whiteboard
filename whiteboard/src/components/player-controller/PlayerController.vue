@@ -30,36 +30,39 @@
             {{ showProgressTime }} / {{ showTime }}
           </div>
         </div>
-        <el-dropdown placement="top-start">
+        <el-dropdown placement="top-start" @command="handleActiveMultiple">
           <span class="el-dropdown-link">倍数</span>
           <el-dropdown-menu slot="dropdown" class="player-menu-box">
-            <el-dropdown-item
-              class="player-menu-cell"
-              @click="handleActiveMultiple(2.0)"
+            <el-dropdown-item class="player-menu-cell" command="2.0"
               >2.0x</el-dropdown-item
             >
             <el-dropdown-item
               class="player-menu-cell"
               @click="handleActiveMultiple(1.5)"
+              command="1.5"
               >1.5x</el-dropdown-item
             >
             <el-dropdown-item
               class="player-menu-cell"
               @click="handleActiveMultiple(1.25)"
+              command="1.25"
               >1.25x</el-dropdown-item
             >
             <el-dropdown-item
               class="player-menu-cell"
+              command="1.0"
               @click="handleActiveMultiple(1.0)"
               >1.0x</el-dropdown-item
             >
             <el-dropdown-item
               class="player-menu-cell"
+              command="0.75"
               @click="handleActiveMultiple(0.75)"
               >0.75x</el-dropdown-item
             >
             <el-dropdown-item
               class="player-menu-cell"
+              command="0.5"
               @click="handleActiveMultiple(0.5)"
               >0.5x</el-dropdown-item
             >
@@ -148,13 +151,13 @@ export default {
       }
     },
 
-    handleMultiplePlay(multiple) {
-      this.player.playbackSpeed = multiple;
+    handleMultiplePlay(command) {
+      this.player.playbackSpeed = command;
     },
 
-    handleActiveMultiple(multiple) {
-      this.handleMultiplePlay(multiple);
-      this.multiple = multiple;
+    handleActiveMultiple(command) {
+      this.handleMultiplePlay(command);
+      this.multiple = command;
     }
   },
 
