@@ -22,7 +22,6 @@
         <div class="player-mask" @click="onClickOperationButton(player)">
           <template v-if="phase === Pause">
             <div class="player-big-icon">
-              <!-- 还未添加样式 -->
               <img
                 :src="video_play"
                 :style="{ width: '50px', marginLeft: '6px' }"

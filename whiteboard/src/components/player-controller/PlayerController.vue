@@ -5,14 +5,7 @@
         :fullTime="this.player.timeDuration"
         :currentTime="getCurrentTime(this.currentTime)"
         :hideHoverTime="true"
-        @onChange="
-          time => {
-            if (player) {
-              this.currentTime = time;
-              player.seekToProgressTime(time);
-            }
-          }
-        "
+        @onChange="handleChangeTime"
         :limitTimeTooltipBySides="true"
       ></seek-slider>
     </div>
@@ -23,19 +16,18 @@
             class="player-controller"
             @click="onClickOperationButton(player)"
           >
-            <div v-if="changePhase">
+            <div v-if="phase === 'pause'">
               <img :src="video_play" :style="{ marginLeft: 2 }" />
             </div>
-            <div v-else-if="changePhase === pause">
+            <div v-else-if="phase === 'playing'">
               <img :src="video_pause" />
             </div>
-            <div v-else-if="phase === PlayerPhase.Playing">
-              <img :src="video_pause" />
+            <div v-else>
+              <img :src="video_play" />
             </div>
           </div>
           <div class="player-mid-box-time">
-            {{ showProgressTime }} /
-            {{ showTime }}
+            {{ showProgressTime }} / {{ showTime }}
           </div>
         </div>
         <el-dropdown placement="top-start">
@@ -115,11 +107,18 @@ export default {
   },
 
   methods: {
+    handleChangeTime(time) {
+      if (this.player) {
+        this.currentTime = time;
+        this.player.seekToProgressTime(time);
+      }
+    },
+
     onClickOperationButton(player) {
       switch (this.player.phase) {
         case PlayerPhase.WaitingFirstFrame:
         case PlayerPhase.Pause: {
-          // this.changePhase = "pause";
+          this.changePhase = "pause";
           player.play();
           break;
         }

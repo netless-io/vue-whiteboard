@@ -62,9 +62,6 @@
 export default {
   name: "SeekSlider",
   props: {
-    // onChange: {
-    //   type: Function
-    // },
     fullTime: {
       type: Number
     },
