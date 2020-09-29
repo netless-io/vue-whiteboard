@@ -80,7 +80,7 @@ export default {
       ready: false,
       trackWidth: 0,
       seekHoverPosition: 0,
-      mobileSeeking: Boolean,
+      mobileSeeking: "",
       hoverTime: "",
       offset: 0,
       secondsPrefix: "00:00:",
