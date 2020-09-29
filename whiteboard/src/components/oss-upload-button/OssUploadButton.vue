@@ -1,29 +1,41 @@
-<template v-for="item of dataArr">
-  <div class="oss-upload-box" :key="item">
-    <el-upload
-      :key="index"
-      :accept="item.accept"
-      :show-file-list="false"
-      :http-request="[item.fuc]"
-    >
-      <div class="oss-ipload-section">
-        <div class="oss-upload-section-inner">
-          <div class="oss-upload-title-section">
-            <div class="oss-upload-title">{{ item.title }}</div>
-            <div class="oss-upload-icon">
-              <img :src="item.img" />
+<template>
+  <!-- TopLoadingBar from "@netless/loading-bar" -->
+  <el-popver trigger="click" placement="left-bottom">
+    <template v-for="item of dataArr">
+      <div class="oss-upload-box" :key="item">
+        <el-upload
+          :key="index"
+          :accept="item.accept"
+          :show-file-list="false"
+          :http-request="item.fun"
+        >
+          <div class="oss-ipload-section">
+            <div class="oss-upload-section-inner">
+              <div class="oss-upload-title-section">
+                <div class="oss-upload-title">{{ item.title }}</div>
+                <div class="oss-upload-icon">
+                  <img :src="item.img" />
+                </div>
+              </div>
+              <div class="oss-upload-section-script">
+                <div class="oss-upload-section-text">
+                  {{ item.text }}
+                </div>
+              </div>
             </div>
           </div>
-          <div class="oss-upload-section-script">
-            <div class="oss-upload-section-text">
-              {{ text }}
-            </div>
-          </div>
+        </el-upload>
+        <div :style="{ width: 208, height: 0.5, backgroundColor: '#E7E7E7' }" />
+      </div>
+    </template>
+    <el-tooltip placement="right" title="upload">
+      <div class="oss-upload-cell-box-left">
+        <div class="oss-upload-cell">
+          <img :src="isActive ? uploadActive : upload" alt="upload" />
         </div>
       </div>
-    </el-upload>
-    <div :style="{ width: 208, height: 0.5, backgroundColor: '#E7E7E7' }" />
-  </div>
+    </el-tooltip>
+  </el-popver>
 </template>
 
 <script>
@@ -51,6 +63,9 @@ export default {
       fileTransWeb,
       Video,
       Audio,
+      ossPercent: 0,
+      converterPercent: 0,
+      // uploadState: PPTProgressPhase.Stop, // 后续添加
       dataArr: [
         [
           { title: "上传图片" },
