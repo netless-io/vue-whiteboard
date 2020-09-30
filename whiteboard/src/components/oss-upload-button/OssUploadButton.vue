@@ -116,8 +116,9 @@ export default {
       ]
     };
   },
-
-  methods: {},
+  methods: {
+    uploadStatic() {}
+  },
 
   mounted() {}
 };
