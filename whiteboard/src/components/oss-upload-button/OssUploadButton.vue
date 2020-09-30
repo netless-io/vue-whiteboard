@@ -68,12 +68,12 @@ export default {
       ossPercent: 0,
       converterPercent: 0,
       uploadState: PPTProgressPhase.Stop,
-      client = new OSS({
-            accessKeyId: props.oss.accessKeyId,
-            accessKeySecret: props.oss.accessKeySecret,
-            region: props.oss.region,
-            bucket: props.oss.bucket,
-        }),
+      // client: new OSS({
+      //   accessKeyId: props.oss.accessKeyId,
+      //   accessKeySecret: props.oss.accessKeySecret,
+      //   region: props.oss.region,
+      //   bucket: props.oss.bucket
+      // }),
       dataArr: [
         [
           { title: "上传图片" },
@@ -83,7 +83,6 @@ export default {
           { title: "文档转图片" }
         ],
         [
-          nm,
           { img: "image" },
           { img: "Video" },
           { img: "Audio" },
@@ -125,10 +124,12 @@ export default {
     };
   },
   methods: {
-    uploadStatic() {
+    async uploadStatic(event) {
       const { uuid, roomToken } = this.room;
       const UploadManager = new UploadManager(this.client, this.room);
-      const whiteWebSdk = new WhiteWebSdk({appIdentifier: this.appIdentifier});
+      const whiteWebSdk = new WhiteWebSdk({
+        appIdentifier: this.appIdentifier
+      });
       const pptConverter = whiteWebSdk.pptConverter(roomToken);
       try {
         await uploadManager.convertFile(
@@ -138,7 +139,7 @@ export default {
           this.props.oss.folder,
           uuid,
           this.props.sdkToken,
-          this.progress,
+          this.progress
         );
       } catch (error) {
         console.error(error); // 后续添加 elementUI

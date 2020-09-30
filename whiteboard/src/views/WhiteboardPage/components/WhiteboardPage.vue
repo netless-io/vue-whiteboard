@@ -3,7 +3,17 @@
     <div class="logo-box">
       <img :src="logo" />
     </div>
-    <div class="tool-box-out"></div>
+    <div class="tool-box-out">
+      <!-- <template>
+        <oss-upload-button
+          :room="this.$room"
+          :oss="ossConfigObj"
+          :appIdentifier="netlessToken.appIdentifier"
+          :sdkToken="netlessToken.sdkToken"
+          :whiteboardRef="whiteboardLayerDownRef"
+        ></oss-upload-button>
+      </template> -->
+    </div>
     <div class="redo-undo-box">
       <template v-if="roomIsInit">
         <redo-undo :room="this.$room"></redo-undo>
@@ -18,7 +28,10 @@
       <div class="page-controller-mid-box">
         <div class="page-controller-cell">
           <template v-if="roomIsInit">
-            <exit-button-room :room="this.$room" :userId="userId"></exit-button-room>
+            <exit-button-room
+              :room="this.$room"
+              :userId="userId"
+            ></exit-button-room>
           </template>
         </div>
       </div>
@@ -53,7 +66,7 @@
 // import { createPlugins, Room, RoomPhase, WhiteWebSdk } from "white-web-sdk";
 import Vue from "vue";
 import { WhiteWebSdk } from "white-web-sdk";
-import { netlessToken } from "../../../appToken";
+import { netlessToken } from "../../../appToken"; // ossConfigObj
 import { netlessWhiteboardApi } from "../../../apiMiddleware/RoomOperator";
 import pages from "@/assets/image/pages.svg";
 import folder from "@/assets/image/folder.svg";
@@ -63,6 +76,8 @@ import PageController from "@/components/page-controller/PageController";
 import ZoomController from "@/components/zoom-controller/ZoomController";
 import PreviewController from "@/components/preview-controller/PreviewController";
 import ExitButtonRoom from "@/components/Exit/ExitButtonRoom";
+// import OssUploadButton from "@/components/oss-upload-button/OssUploadButton";
+
 export default {
   name: "WhiteboardPage",
   components: {
@@ -71,6 +86,7 @@ export default {
     ZoomController,
     PreviewController,
     ExitButtonRoom
+    // OssUploadButton
   },
 
   data() {
