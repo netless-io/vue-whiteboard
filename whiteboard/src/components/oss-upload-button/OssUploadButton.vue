@@ -40,6 +40,8 @@
 
 <script>
 import { PPTKind, Room, WhiteWebSdk } from "white-web-sdk";
+import OSS from "ali-oss";
+import { PPTProgressPhase, UploadManager } from "../oss-upload-manager/index";
 import upload from "./src/image/upload.svg";
 import image from "./src/image/image.svg";
 import uploadActive from "./src/image/upload-active.svg";
@@ -65,7 +67,13 @@ export default {
       Audio,
       ossPercent: 0,
       converterPercent: 0,
-      // uploadState: PPTProgressPhase.Stop, // 后续添加
+      uploadState: PPTProgressPhase.Stop,
+      client = new OSS({
+            accessKeyId: props.oss.accessKeyId,
+            accessKeySecret: props.oss.accessKeySecret,
+            region: props.oss.region,
+            bucket: props.oss.bucket,
+        }),
       dataArr: [
         [
           { title: "上传图片" },
@@ -117,7 +125,25 @@ export default {
     };
   },
   methods: {
-    uploadStatic() {}
+    uploadStatic() {
+      const { uuid, roomToken } = this.room;
+      const UploadManager = new UploadManager(this.client, this.room);
+      const whiteWebSdk = new WhiteWebSdk({appIdentifier: this.appIdentifier});
+      const pptConverter = whiteWebSdk.pptConverter(roomToken);
+      try {
+        await uploadManager.convertFile(
+          event.file,
+          pptConverter,
+          PPTKind.Static,
+          this.props.oss.folder,
+          uuid,
+          this.props.sdkToken,
+          this.progress,
+        );
+      } catch (error) {
+        console.error(error); // 后续添加 elementUI
+      }
+    }
   },
 
   mounted() {}

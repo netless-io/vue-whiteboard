@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@netless/fetch-middleware": "^1.0.6",
+    "ali-oss": "^6.10.0",
     "core-js": "^3.6.5",
     "element-ui": "^2.13.2",
     "normalize.css": "^8.0.1",

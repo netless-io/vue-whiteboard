@@ -2,17 +2,19 @@ import {
   AnimationMode,
   ApplianceNames,
   createPPTTask,
-  LegacyPPTConverter,
-  PPT,
+  // LegacyPPTConverter,
+  // PPT,
   PPTKind,
-  Room, SceneDefinition
+  // Room, SceneDefinition
 } from "white-web-sdk";
 import { v4 as uuidv4 } from "uuid";
-import { MultipartUploadResult } from "ali-oss";
+// import { MultipartUploadResult } from "ali-oss";
 import TaskOperator from "./fetch-middleware";
 // import * as default_cover from "./image/default_cover.svg";
 
 export class UploadManager {
+  task = new TaskOperator()
+
   constructor(ossClient, room) {
     this.ossClient = ossClient;
     this.room = room;
@@ -239,7 +241,7 @@ export class UploadManager {
     return this.ossClient.generateObjectUrl(name);
   }
 
-  addFile = async (path, rawFile, onProgress) {
+  addFile = async (path, rawFile, onProgress) => {
     const res = await this.ossClient.multipartUpload(
       path,
       rawFile,
