@@ -50,14 +50,6 @@
         </template>
       </div>
     </div>
-
-    <!-- <template v-if="roomIsInit">
-      <preview-controller
-        :room="this.$room"
-        :handlePreviewState="handlePreviewState"
-        :isVisible="isMenuVisible"
-      ></preview-controller>
-    </template>-->
     <div ref="bindRoom" class="whiteboard-box" />
   </div>
 </template>
