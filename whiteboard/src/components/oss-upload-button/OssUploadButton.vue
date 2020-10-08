@@ -136,13 +136,53 @@ export default {
           event.file,
           pptConverter,
           PPTKind.Static,
-          this.props.oss.folder,
+          this.oss.folder,
           uuid,
-          this.props.sdkToken,
+          this.sdkToken,
           this.progress
         );
       } catch (error) {
         console.error(error); // 后续添加 elementUI
+      }
+    },
+
+    async uploadDynamic(event) {
+      const { uuid, roomToken } = this.props.room;
+      const uploadManager = new UploadManager(this.client, this.props.room);
+      const whiteWebSdk = new WhiteWebSdk({
+        appIdentifier: this.props.appIdentifier
+      });
+      const pptConverter = whiteWebSdk.pptConverter(roomToken);
+      try {
+        await uploadManager.convertFile(
+          event.file,
+          pptConverter,
+          PPTKind.Dynamic,
+          this.oss.folder,
+          uuid,
+          this.sdkToken,
+          this.progress
+        );
+      } catch (error) {
+        message.error(error);
+      }
+    },
+
+    progress(phase, percent) {
+      this.uploadState = phase;
+      switch (phase) {
+        case PPTProgressPhase.Uploading: {
+          this.ossPercent = percent * 100;
+          break;
+        }
+        case PPTProgressPhase.Converting: {
+          this.converterPercent = percent * 100;
+          break;
+        }
+        case PPTProgressPhase.Stop: {
+          this.converterPercent = 0;
+          this.ossPercent = 0;
+        }
       }
     }
   },
