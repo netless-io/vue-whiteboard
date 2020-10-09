@@ -1,6 +1,6 @@
 <template>
   <!-- TopLoadingBar from "@netless/loading-bar" -->
-  <el-popver trigger="click" placement="left-bottom">
+  <el-popover trigger="click" placement="right">
     <template v-for="item of dataArr">
       <div class="oss-upload-box" :key="item">
         <el-upload
@@ -35,7 +35,7 @@
         </div>
       </div>
     </el-tooltip>
-  </el-popver>
+  </el-popover>
 </template>
 
 <script>
@@ -43,6 +43,7 @@
 import { PPTKind, WhiteWebSdk } from "white-web-sdk";
 import OSS from "ali-oss";
 import { PPTProgressPhase, UploadManager } from "../oss-upload-manager/index";
+import { v4 as uuidv4 } from "uuid";
 import upload from "./src/image/upload.svg";
 import image from "./src/image/image.svg";
 import uploadActive from "./src/image/upload-active.svg";
@@ -201,6 +202,61 @@ export default {
         }
       } catch (error) {
         this.$message(error);
+      }
+    },
+
+    async getUrl(event) {
+      const uploadManager = new UploadManager(this.client, this.room);
+      const res = await uploadManager.addFile(
+        `${uuidv4()}/${event.file.name}`,
+        event.file,
+        this.progress
+      );
+      const isHttps = res.indexOf("https") !== -1;
+      let url;
+      if (isHttps) {
+        url = res;
+      } else {
+        url = res.replace("http", "https");
+      }
+      return url;
+    },
+
+    async uploadVideo(event) {
+      try {
+        const url = await this.getUrl(event);
+        if (url) {
+          this.room.insertPlugin("video", {
+            originX: -240,
+            originY: -135,
+            width: 480,
+            height: 270,
+            attributes: {
+              pluginVideoUrl: url
+            }
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    async uploadAudio(event) {
+      try {
+        const url = await this.getUrl(event);
+        if (url) {
+          this.props.room.insertPlugin("audio", {
+            originX: -240,
+            originY: -43,
+            width: 480,
+            height: 86,
+            attributes: {
+              pluginAudioUrl: url
+            }
+          });
+        }
+      } catch (error) {
+        console.log(error);
       }
     },
 
