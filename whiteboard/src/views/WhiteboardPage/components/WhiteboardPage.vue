@@ -4,7 +4,7 @@
       <img :src="logo" />
     </div>
     <div class="tool-box-out">
-      <!-- <template>
+      <template>
         <oss-upload-button
           :room="this.$room"
           :oss="ossConfigObj"
@@ -12,7 +12,7 @@
           :sdkToken="netlessToken.sdkToken"
           :whiteboardRef="whiteboardLayerDownRef"
         ></oss-upload-button>
-      </template> -->
+      </template>
     </div>
     <div class="redo-undo-box">
       <template v-if="roomIsInit">
@@ -68,7 +68,7 @@ import PageController from "@/components/page-controller/PageController";
 import ZoomController from "@/components/zoom-controller/ZoomController";
 import PreviewController from "@/components/preview-controller/PreviewController";
 import ExitButtonRoom from "@/components/Exit/ExitButtonRoom";
-// import OssUploadButton from "@/components/oss-upload-button/OssUploadButton";
+import OssUploadButton from "@/components/oss-upload-button/OssUploadButton";
 
 export default {
   name: "WhiteboardPage",
@@ -77,8 +77,8 @@ export default {
     PageController,
     ZoomController,
     PreviewController,
-    ExitButtonRoom
-    // OssUploadButton
+    ExitButtonRoom,
+    OssUploadButton
   },
 
   data() {
@@ -168,6 +168,12 @@ export default {
     handleDocCenterState(state) {
       this.isFileOpen = state;
     }
+
+    // provide() {
+    //   return {
+    //     ref: this
+    //   };
+    // }
   },
 
   async mounted() {

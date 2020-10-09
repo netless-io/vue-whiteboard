@@ -39,7 +39,8 @@
 </template>
 
 <script>
-import { PPTKind, Room, WhiteWebSdk } from "white-web-sdk";
+// Room white-web-sdk
+import { PPTKind, WhiteWebSdk } from "white-web-sdk";
 import OSS from "ali-oss";
 import { PPTProgressPhase, UploadManager } from "../oss-upload-manager/index";
 import upload from "./src/image/upload.svg";
@@ -51,6 +52,7 @@ import Video from "./src/image/video.svg";
 import Audio from "./src/image/audio.svg";
 export default {
   name: "OssUploadButton",
+  inject: ["ref"],
   props: {
     room: {
       type: Object,
@@ -63,17 +65,32 @@ export default {
       image,
       uploadActive,
       fileTransWeb,
+      fileTransImg,
       Video,
       Audio,
       ossPercent: 0,
       converterPercent: 0,
       uploadState: PPTProgressPhase.Stop,
-      // client: new OSS({
-      //   accessKeyId: props.oss.accessKeyId,
-      //   accessKeySecret: props.oss.accessKeySecret,
-      //   region: props.oss.region,
-      //   bucket: props.oss.bucket
-      // }),
+      accessKeyId: "",
+      accessKeySecret: "",
+      region: "",
+      bucket: "",
+      folder: "",
+      prefix: "",
+      client: new OSS({
+        accessKeyId: this.accessKeyId,
+        accessKeySecret: this.accessKeySecret,
+        region: this.region,
+        bucket: this.bucket
+      }),
+      // oss: {
+      //   accessKeyId: string,
+      //   accessKeySecret: string,
+      //   region: string,
+      //   bucket: string,
+      //   folder: string,
+      //   prefix: string
+      // },
       dataArr: [
         [
           { title: "上传图片" },
@@ -126,7 +143,7 @@ export default {
   methods: {
     async uploadStatic(event) {
       const { uuid, roomToken } = this.room;
-      const UploadManager = new UploadManager(this.client, this.room);
+      const uploadManager = new UploadManager(this.client, this.room);
       const whiteWebSdk = new WhiteWebSdk({
         appIdentifier: this.appIdentifier
       });
@@ -164,7 +181,26 @@ export default {
           this.progress
         );
       } catch (error) {
-        message.error(error);
+        this.$message(error);
+      }
+    },
+
+    async uploadImage(event) {
+      const uploadFileArray = [];
+      uploadFileArray.push(event.file);
+      const uploadManager = new UploadManager(this.client, this.room);
+      try {
+        if (this.$parent.$refs.bindRoom) {
+          const { clientWidth, clientHeight } = this.$parent.$refs.bindRoom;
+          await uploadManager.uploadImageFiles(
+            uploadFileArray,
+            clientWidth / 2,
+            clientHeight / 2,
+            this.progress
+          );
+        }
+      } catch (error) {
+        this.$message(error);
       }
     },
 
@@ -187,7 +223,24 @@ export default {
     }
   },
 
-  mounted() {}
+  mounted() {},
+
+  updated(prevState) {
+    // this.$watch(expOrFn, callback, [options])
+    if (this.uploadState !== prevState.uploadState) {
+      if (this.uploadState === PPTProgressPhase.Uploading) {
+        this.$message({
+          message: "正在上传",
+          iconClass: "el-icon-loading"
+        });
+      } else if (this.uploadState === PPTProgressPhase.Converting) {
+        this.message({
+          message: "正在转码",
+          iconClass: "el-icon-loading"
+        });
+      }
+    }
+  }
 };
 </script>
 
