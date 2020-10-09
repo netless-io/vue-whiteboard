@@ -5,12 +5,12 @@
     </div>
     <div class="tool-box-out">
       <template>
+        <!-- :whiteboardRef="whiteboardLayerDownRef" -->
         <oss-upload-button
           :room="this.$room"
           :oss="ossConfigObj"
           :appIdentifier="netlessToken.appIdentifier"
           :sdkToken="netlessToken.sdkToken"
-          :whiteboardRef="whiteboardLayerDownRef"
         ></oss-upload-button>
       </template>
     </div>
@@ -58,7 +58,7 @@
 // import { createPlugins, Room, RoomPhase, WhiteWebSdk } from "white-web-sdk";
 import Vue from "vue";
 import { WhiteWebSdk } from "white-web-sdk";
-import { netlessToken } from "../../../appToken"; // ossConfigObj
+import { netlessToken, ossConfigObj } from "../../../appToken"; // ossConfigObj
 import { netlessWhiteboardApi } from "../../../apiMiddleware/RoomOperator";
 import pages from "@/assets/image/pages.svg";
 import folder from "@/assets/image/folder.svg";
@@ -91,7 +91,9 @@ export default {
       userId: "",
       roomIsInit: false,
       isMenuVisible: false,
-      isFileOpen: false
+      isFileOpen: false,
+      netlessToken,
+      ossConfigObj
     };
   },
 
