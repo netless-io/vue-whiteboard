@@ -53,7 +53,7 @@ import Video from "./src/image/video.svg";
 import Audio from "./src/image/audio.svg";
 export default {
   name: "OssUploadButton",
-  inject: ["ref"],
+  // inject: ["ref"],
   props: {
     room: {
       type: Object,
@@ -69,6 +69,7 @@ export default {
       fileTransImg,
       Video,
       Audio,
+      isActive: false,
       ossPercent: 0,
       converterPercent: 0,
       uploadState: PPTProgressPhase.Stop,
