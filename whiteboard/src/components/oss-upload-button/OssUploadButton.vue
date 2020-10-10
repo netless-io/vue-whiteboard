@@ -2,9 +2,8 @@
   <!-- TopLoadingBar from "@netless/loading-bar" -->
   <el-popover trigger="click" placement="right">
     <template v-for="item of dataArr">
-      <div class="oss-upload-box" :key="item">
+      <div class="oss-upload-box" :key="item.value">
         <el-upload
-          :key="index"
           :accept="item.accept"
           :show-file-list="false"
           :http-request="item.fun"
@@ -51,13 +50,31 @@ import fileTransWeb from "./src/image/file-trans-web.svg";
 import fileTransImg from "./src/image/file-trans-img.svg";
 import Video from "./src/image/video.svg";
 import Audio from "./src/image/audio.svg";
+
+// const client = new OSS({
+//   accessKeyId: this.oss.accessKeyId,
+//   accessKeySecret: this.oss.accessKeySecret,
+//   region: this.oss.region,
+//   bucket: this.oss.bucket
+// });
+
 export default {
   name: "OssUploadButton",
   // inject: ["ref"],
+
   props: {
     room: {
       type: Object,
       require: true
+    },
+    oss: {
+      type: Object
+    },
+    appIdentifier: {
+      type: String
+    },
+    sdkToken: {
+      type: String
     }
   },
   data() {
@@ -73,26 +90,18 @@ export default {
       ossPercent: 0,
       converterPercent: 0,
       uploadState: PPTProgressPhase.Stop,
-      accessKeyId: "",
-      accessKeySecret: "",
-      region: "",
-      bucket: "",
-      folder: "",
-      prefix: "",
       client: new OSS({
-        accessKeyId: this.accessKeyId,
-        accessKeySecret: this.accessKeySecret,
-        region: this.region,
-        bucket: this.bucket
+        accessKeyId: this.oss.accessKeyId,
+        accessKeySecret: this.oss.accessKeySecret,
+        region: this.oss.region,
+        bucket: this.oss.bucket
       }),
-      // oss: {
-      //   accessKeyId: string,
-      //   accessKeySecret: string,
-      //   region: string,
-      //   bucket: string,
-      //   folder: string,
-      //   prefix: string
-      // },
+      // accessKeyId: String,
+      // accessKeySecret: String,
+      // region: String,
+      // bucket: String,
+      // folder: String,
+      // prefix: String,
       dataArr: [
         [
           { title: "上传图片" },
@@ -161,15 +170,15 @@ export default {
           this.progress
         );
       } catch (error) {
-        console.error(error); // 后续添加 elementUI
+        this.$message(error);
       }
     },
 
     async uploadDynamic(event) {
-      const { uuid, roomToken } = this.props.room;
-      const uploadManager = new UploadManager(this.client, this.props.room);
+      const { uuid, roomToken } = this.room;
+      const uploadManager = new UploadManager(this.client, this.room);
       const whiteWebSdk = new WhiteWebSdk({
-        appIdentifier: this.props.appIdentifier
+        appIdentifier: this.appIdentifier
       });
       const pptConverter = whiteWebSdk.pptConverter(roomToken);
       try {
@@ -246,7 +255,7 @@ export default {
       try {
         const url = await this.getUrl(event);
         if (url) {
-          this.props.room.insertPlugin("audio", {
+          this.room.insertPlugin("audio", {
             originX: -240,
             originY: -43,
             width: 480,
