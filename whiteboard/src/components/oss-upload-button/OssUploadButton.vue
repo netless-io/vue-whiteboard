@@ -9,7 +9,7 @@
           :accept="item.accept"
           :show-file-list="false"
         >
-          <div class="oss-ipload-section">
+          <div class="oss-upload-section">
             <div class="oss-upload-section-inner">
               <div class="oss-upload-title-section">
                 <div class="oss-upload-title">{{ item.title }}</div>
