@@ -4,9 +4,10 @@
     <template v-for="item of dataArr">
       <div class="oss-upload-box" :key="item.value">
         <el-upload
+          action=""
+          :http-request="item.fun"
           :accept="item.accept"
           :show-file-list="false"
-          :http-request="item.fun"
         >
           <div class="oss-ipload-section">
             <div class="oss-upload-section-inner">
@@ -51,17 +52,8 @@ import fileTransImg from "./src/image/file-trans-img.svg";
 import Video from "./src/image/video.svg";
 import Audio from "./src/image/audio.svg";
 
-// const client = new OSS({
-//   accessKeyId: this.oss.accessKeyId,
-//   accessKeySecret: this.oss.accessKeySecret,
-//   region: this.oss.region,
-//   bucket: this.oss.bucket
-// });
-
 export default {
   name: "OssUploadButton",
-  // inject: ["ref"],
-
   props: {
     room: {
       type: Object,
@@ -289,7 +281,9 @@ export default {
     }
   },
 
-  mounted() {},
+  mounted() {
+    console.log("ref", this.$parent.$refs.bindRoom);
+  },
 
   updated(prevState) {
     // this.$watch(expOrFn, callback, [options])

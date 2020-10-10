@@ -4,15 +4,14 @@
       <img :src="logo" />
     </div>
     <div class="tool-box-out">
-      <template>
-        <!-- :whiteboardRef="whiteboardLayerDownRef" -->
-        <oss-upload-button
-          :room="this.$room"
-          :oss="ossConfigObj"
-          :appIdentifier="netlessToken.appIdentifier"
-          :sdkToken="netlessToken.sdkToken"
-        ></oss-upload-button>
-      </template>
+      <!-- :whiteboardRef="whiteboardLayerDownRef" -->
+      <oss-upload-button
+        :room="this.$room"
+        :oss="ossConfigObj"
+        :appIdentifier="netlessToken.appIdentifier"
+        :sdkToken="netlessToken.sdkToken"
+      >
+      </oss-upload-button>
     </div>
     <div class="redo-undo-box">
       <template v-if="roomIsInit">
