@@ -88,12 +88,6 @@ export default {
         region: this.oss.region,
         bucket: this.oss.bucket
       }),
-      // accessKeyId: String,
-      // accessKeySecret: String,
-      // region: String,
-      // bucket: String,
-      // folder: String,
-      // prefix: String,
       dataArr: [
         [
           { title: "上传图片" },
