@@ -195,6 +195,7 @@ export default {
             clientHeight / 2,
             this.progress
           );
+          console.log("图片上传成功");
         }
       } catch (error) {
         this.$message(error);
@@ -231,9 +232,10 @@ export default {
               pluginVideoUrl: url
             }
           });
+          console.log("上传视频成功");
         }
-      } catch (error) {
-        console.log(error);
+      } catch (err) {
+        console.log(err);
       }
     },
 
@@ -250,6 +252,7 @@ export default {
               pluginAudioUrl: url
             }
           });
+          console.log("上传音频成功");
         }
       } catch (error) {
         console.log(error);
@@ -274,8 +277,6 @@ export default {
       }
     }
   },
-
-  mounted() {},
 
   updated(prevState) {
     // this.$watch(expOrFn, callback, [options])

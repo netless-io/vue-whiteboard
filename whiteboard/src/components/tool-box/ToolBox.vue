@@ -3,6 +3,7 @@
 </template>
 
 <script>
+import { ApplianceNames, RoomState } from "white-web-sdk";
 import selector from "./image/selector.svg";
 import selectorActive from "./image/selector-active.svg";
 import pen from "./image/pencil.svg";
@@ -25,6 +26,12 @@ import hand from "./image/hand.svg";
 import handActive from "./image/hand-active.svg";
 export default {
   name: "ToolBox",
+  props: {
+    room: {
+      type: Object,
+      require: true
+    }
+  },
   data() {
     return {
       selector,
@@ -46,8 +53,33 @@ export default {
       laserPointer,
       laserPointerActive,
       hand,
-      handActive
+      handActive,
+      strokeEnable: false,
+      extendsPanel: false,
+      roomState: this.room.state,
+      isSelected:
+        this.roomState.memberState.currentApplianceName === applianceName
     };
+  },
+
+  methods: {
+    clickAppliance(eventTarget, applianceName) {
+      // eventTarget.preventDefault(); 还需补充 prevent 事件
+      this.room.setMemberState({ currentApplianceName: applianceName });
+      this.extendsPanel = true;
+    },
+
+    onVisibleChange(visible) {
+      if (!visible) {
+        this.extendsPanel = false;
+      }
+    }
+  },
+
+  mounted() {
+    this.room.callbacks.on("onRoomStateChanged", modifyState => {
+      this.roomState = { ...room.state, ...modifyState };
+    });
   }
 };
 </script>
