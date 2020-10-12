@@ -44,7 +44,6 @@
 </template>
 
 <script>
-// Room white-web-sdk
 import { PPTKind, WhiteWebSdk } from "white-web-sdk";
 import OSS from "ali-oss";
 import { PPTProgressPhase, UploadManager } from "../oss-upload-manager/index";
@@ -276,9 +275,7 @@ export default {
     }
   },
 
-  mounted() {
-    console.log("ref", this.$parent.$refs.bindRoom);
-  },
+  mounted() {},
 
   updated(prevState) {
     // this.$watch(expOrFn, callback, [options])
