@@ -5,7 +5,7 @@
       <div class="oss-upload-box" :key="item.value">
         <el-upload
           action=""
-          :http-request="item.fun"
+          :http-request="item.method"
           :accept="item.accept"
           :show-file-list="false"
         >
@@ -98,26 +98,30 @@ export default {
           title: "上传图片",
           img: image,
           text: "支持常见格式，可以改变图片大小和位置。",
-          accept: "image/*"
+          accept: "image/*",
+          method: this.uploadImage
         },
         video: {
           title: "上传视频",
           img: Video,
           text: "支持 MP4 格式。",
-          accept: "video/mp4"
+          accept: "video/mp4",
+          method: this.uploadVideo
         },
         audio: {
           title: "上传音频",
           img: Audio,
           text: "支持 MP3 格式。",
-          accept: "audio/mp3"
+          accept: "audio/mp3",
+          method: this.uploadAudio
         },
         fileTransWeb: {
           title: "资料转网页",
           img: fileTransWeb,
           text: "支持 pptx 格式，如果是 ppt 格式，请手动转换。",
           accept:
-            "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+            "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+          method: this.uploadDynamic
         },
         fileTransImg: {
           title: "文档转图片",
@@ -128,7 +132,8 @@ export default {
             "application/vnd.openxmlformats-officedocument.presentationml.presentation, " +
             "application/vnd.ms-powerpoint, " +
             "application/msword, " +
-            "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+          method: this.uploadStatic
         }
       }
     };
