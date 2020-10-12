@@ -93,43 +93,44 @@ export default {
         region: this.oss.region,
         bucket: this.oss.bucket
       }),
-      dataArr: [
-        { title: "上传图片" },
-        { title: "上传视频" },
-        { title: "上传音频" },
-        { title: "资料转网页" },
-        { title: "文档转图片" },
-        { img: "image" },
-        { img: "Video" },
-        { img: "Audio" },
-        { img: "fileTransWeb" },
-        { img: "fileTransImg" },
-        { text: "支持常见格式,可以改变图片大小和位置。" },
-        { text: "支持 MP4 格式" },
-        { text: "支持 MP3 格式" },
-        { text: "支持 pptx 格式，如果是 ppt 格式，请手动转换。" },
-        { text: "支持 ppt、pptx、word and pdf 格式" },
-        { accept: "image/*" },
-        { accept: "video/mp4" },
-        { accept: "audio/mp3" },
-        {
+      dataArr: {
+        picture: {
+          title: "上传图片",
+          img: image,
+          text: "支持常见格式，可以改变图片大小和位置。",
+          accept: "image/*"
+        },
+        video: {
+          title: "上传视频",
+          img: Video,
+          text: "支持 MP4 格式。",
+          accept: "video/mp4"
+        },
+        audio: {
+          title: "上传音频",
+          img: Audio,
+          text: "支持 MP3 格式。",
+          accept: "audio/mp3"
+        },
+        fileTransWeb: {
+          title: "资料转网页",
+          img: fileTransWeb,
+          text: "支持 pptx 格式，如果是 ppt 格式，请手动转换。",
           accept:
             "application/vnd.openxmlformats-officedocument.presentationml.presentation"
         },
-        {
+        fileTransImg: {
+          title: "文档转图片",
+          img: fileTransImg,
+          text: "支持 ppt、pptx、word and pdf 格式。",
           accept:
             "application/pdf, " +
             "application/vnd.openxmlformats-officedocument.presentationml.presentation, " +
             "application/vnd.ms-powerpoint, " +
             "application/msword, " +
             "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-        },
-        { fun: "uploadImage" },
-        { fun: "uploadVideo" },
-        { fun: "uploadAudio" },
-        { fun: "uploadDynamic" },
-        { fun: "uploadStatic" }
-      ]
+        }
+      }
     };
   },
   methods: {
