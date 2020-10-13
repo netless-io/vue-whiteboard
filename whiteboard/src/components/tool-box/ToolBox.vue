@@ -1,31 +1,51 @@
-<template>
-  <div></div>
+<template v-for="item of descriptions">
+  <el-popver placement="right" trigger="click" :key="item.values">
+    <tool-box-palette-box
+      :room="this.room"
+      :roomState="roomState"
+      :displayStroke="isExtendable"
+    ></tool-box-palette-box>
+    <el-tooltip placement="right" :titile="item.descriptions" slot="reference">
+      <div class="tool-box-cell-box-left" v-if="isExtendable && isSelected">
+        <div
+          class="tool-box-cell"
+          @click="clickAppliance(event, applianceName)"
+        >
+          <img :src="item.iconUrl" />
+        </div>
+      </div>
+    </el-tooltip>
+  </el-popver>
 </template>
 
 <script>
-import { ApplianceNames, RoomState } from "white-web-sdk";
-import selector from "./image/selector.svg";
-import selectorActive from "./image/selector-active.svg";
-import pen from "./image/pencil.svg";
-import penActive from "./image/pencil-active.svg";
-import text from "./image/text.svg";
-import textActive from "./image/text-active.svg";
-import eraser from "./image/eraser.svg";
-import eraserActive from "./image/eraser-active.svg";
-import ellipse from "./image/ellipse.svg";
-import ellipseActive from "./image/ellipse-active.svg";
-import rectangle from "./image/rectangle.svg";
-import rectangleActive from "./image/rectangle-active.svg";
-import straight from "./image/straight.svg";
-import straightActive from "./image/straight-active.svg";
-import arrow from "./image/arrow.svg";
-import arrowActive from "./image/arrow-active.svg";
-import laserPointer from "./image/laserPointer.svg";
-import laserPointerActive from "./image/laserPointer-active.svg";
-import hand from "./image/hand.svg";
-import handActive from "./image/hand-active.svg";
+import ToolBoxPaletteBox from "./ToolBoxPaletteBox";
+// import { ApplianceNames, RoomState } from "white-web-sdk";
+import selector from "./src/image/selector.svg";
+import selectorActive from "./src/image/selector-active.svg";
+import pen from "./src/image/pencil.svg";
+import penActive from "./src/image/pencil-active.svg";
+import text from "./src/image/text.svg";
+import textActive from "./src/image/text-active.svg";
+import eraser from "./src/image/eraser.svg";
+import eraserActive from "./src/image/eraser-active.svg";
+import ellipse from "./src/image/ellipse.svg";
+import ellipseActive from "./src/image/ellipse-active.svg";
+import rectangle from "./src/image/rectangle.svg";
+import rectangleActive from "./src/image/rectangle-active.svg";
+import straight from "./src/image/straight.svg";
+import straightActive from "./src/image/straight-active.svg";
+import arrow from "./src/image/arrow.svg";
+import arrowActive from "./src/image/arrow-active.svg";
+import laserPointer from "./src/image/laserPointer.svg";
+import laserPointerActive from "./src/image/laserPointer-active.svg";
+import hand from "./src/image/hand.svg";
+import handActive from "./src/image/hand-active.svg";
 export default {
   name: "ToolBox",
+  components: {
+    ToolBoxPaletteBox
+  },
   props: {
     room: {
       type: Object,
@@ -58,7 +78,73 @@ export default {
       extendsPanel: false,
       roomState: this.room.state,
       isSelected:
-        this.roomState.memberState.currentApplianceName === applianceName
+        this.roomState.memberState.currentApplianceName ===
+        this.descriptions.applianceName,
+      isExtendable: this.descriptions.hasStroke || this.descriptions.hasColor,
+      descriptions: {
+        applianceName: Object.freeze({
+          selector: Object.freeze({
+            icon: selector,
+            iconActive: selectorActive,
+            hasColor: false,
+            hasStroke: false
+          }),
+          pencil: Object.freeze({
+            icon: pen,
+            iconActive: penActive,
+            hasColor: true,
+            hasStroke: true
+          }),
+          text: Object.freeze({
+            icon: text,
+            iconActive: textActive,
+            hasColor: true,
+            hasStroke: false
+          }),
+          eraser: Object.freeze({
+            icon: eraser,
+            iconActive: eraserActive,
+            hasColor: false,
+            hasStroke: false
+          }),
+          ellipse: Object.freeze({
+            icon: ellipse,
+            iconActive: ellipseActive,
+            hasColor: true,
+            hasStroke: true
+          }),
+          rectangle: Object.freeze({
+            icon: rectangle,
+            iconActive: rectangleActive,
+            hasColor: true,
+            hasStroke: true
+          }),
+          straight: Object.freeze({
+            icon: straight,
+            iconActive: straightActive,
+            hasColor: true,
+            hasStroke: true
+          }),
+          arrow: Object.freeze({
+            icon: arrow,
+            iconActive: arrowActive,
+            hasColor: true,
+            hasStroke: true
+          }),
+          laserPointer: Object.freeze({
+            icon: laserPointer,
+            iconActive: laserPointerActive,
+            hasColor: false,
+            hasStroke: false
+          }),
+          hand: Object.freeze({
+            icon: hand,
+            iconActive: handActive,
+            hasColor: false,
+            hasStroke: false
+          })
+        })
+      }
     };
   },
 
@@ -78,7 +164,7 @@ export default {
 
   mounted() {
     this.room.callbacks.on("onRoomStateChanged", modifyState => {
-      this.roomState = { ...room.state, ...modifyState };
+      this.roomState = { ...this.room.state, ...modifyState };
     });
   }
 };

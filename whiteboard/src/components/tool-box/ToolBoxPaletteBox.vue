@@ -47,6 +47,15 @@
 // import ToolPaletteConfig from "./ToolPaletteConfig";
 export default {
   name: "ToolBoxPaletteBox",
+  props: {
+    room: {
+      type: Object,
+      require: true
+    },
+    roomState: {
+      type: Object
+    }
+  },
   data() {
     return {
       borderColor: "#FFFFF",
@@ -103,7 +112,7 @@ export default {
 
     handleMouseUp() {
       this.room.setMemberState({
-        strokeWidth: roomState.memberState.strokeWidth
+        strokeWidth: this.roomState.memberState.strokeWidth
       });
     }
   }

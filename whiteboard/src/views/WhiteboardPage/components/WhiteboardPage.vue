@@ -5,6 +5,7 @@
     </div>
     <div class="tool-box-out">
       <!-- :whiteboardRef="whiteboardLayerDownRef" -->
+      <tool-box :room="this.$room"></tool-box>
       <oss-upload-button
         :room="this.$room"
         :oss="ossConfigObj"
@@ -68,6 +69,7 @@ import ZoomController from "@/components/zoom-controller/ZoomController";
 import PreviewController from "@/components/preview-controller/PreviewController";
 import ExitButtonRoom from "@/components/Exit/ExitButtonRoom";
 import OssUploadButton from "@/components/oss-upload-button/OssUploadButton";
+import ToolBox from "@/components/tool-box/ToolBox";
 
 export default {
   name: "WhiteboardPage",
@@ -77,7 +79,8 @@ export default {
     ZoomController,
     PreviewController,
     ExitButtonRoom,
-    OssUploadButton
+    OssUploadButton,
+    ToolBox
   },
 
   data() {
