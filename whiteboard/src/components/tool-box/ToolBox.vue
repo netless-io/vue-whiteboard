@@ -1,21 +1,34 @@
-<template v-for="item of descriptions">
-  <el-popver placement="right" trigger="click" :key="item.values">
-    <tool-box-palette-box
-      :room="this.room"
-      :roomState="roomState"
-      :displayStroke="isExtendable"
-    ></tool-box-palette-box>
-    <el-tooltip placement="right" :titile="item.descriptions" slot="reference">
-      <div class="tool-box-cell-box-left" v-if="isExtendable && isSelected">
-        <div
-          class="tool-box-cell"
-          @click="clickAppliance(event, applianceName)"
+<template>
+  <div>
+    <template v-for="item in descriptions">
+      <el-popver
+        placement="right"
+        trigger="click"
+        :key="item.values"
+        slot="reference"
+      >
+        <tool-box-palette-box
+          :room="this.room"
+          :roomState="roomState"
+          :displayStroke="isExtendable"
+        ></tool-box-palette-box>
+        <el-tooltip
+          placement="right"
+          :title="item.descriptions"
+          slot="reference"
         >
-          <img :src="item.iconUrl" />
-        </div>
-      </div>
-    </el-tooltip>
-  </el-popver>
+          <div class="tool-box-cell-box-left" v-if="isExtendable && isSelected">
+            <div
+              class="tool-box-cell"
+              @click="clickAppliance(event, applianceName)"
+            >
+              <img :src="item.iconUrl" />
+            </div>
+          </div>
+        </el-tooltip>
+      </el-popver>
+    </template>
+  </div>
 </template>
 
 <script>

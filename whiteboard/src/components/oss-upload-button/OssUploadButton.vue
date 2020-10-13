@@ -1,7 +1,7 @@
 <template>
   <!-- TopLoadingBar from "@netless/loading-bar" -->
   <el-popover trigger="click" placement="right">
-    <template v-for="item of dataArr">
+    <template v-for="item in dataArr">
       <div class="oss-upload-box" :key="item.value">
         <el-upload
           action=""
@@ -233,6 +233,7 @@ export default {
             }
           });
           console.log("上传视频成功");
+          console.log("video", this.room.insertPlugin);
         }
       } catch (err) {
         console.log(err);
