@@ -2,12 +2,23 @@
   <div class="palette-box">
     <div class="tool-box-stroke-box">
       <div class="tool-box-input-box">
-        <input type="text" class="palette-stroke-slider" />
+        <input
+          type="range"
+          class="palette-stroke-slider"
+          min="1"
+          max="32"
+          @click="setStrokeWidth"
+          :placeholder="roomState.memberState.strokeWidth"
+          @onmouseup="handleMouseUp"
+        />
       </div>
       <div class="tool-box-mask-box">
         <img :src="mask" />
       </div>
-      <div class="tool-box-under-box-2"></div>
+      <div
+        class="tool-box-under-box-2"
+        :style="{ width: 156 * this.state.percentage }"
+      ></div>
       <div class="tool-box-under-box"></div>
     </div>
     <div class="stroke-script">
@@ -18,7 +29,13 @@
 
     <div class="cell-box">
       <template v-for="item of toolPaletteConfig">
-        <div class="cell-mid-color" :key="item.values">
+        <div
+          class="cell-mid-color"
+          :key="item.values"
+          :style="{
+            borderColor: this.isMatchColor(newColor) ? '#3381FF' : '#FFFFFF'
+          }"
+        >
           <div class="color" @click="selectColor(newColor)"></div>
         </div>
       </template>
@@ -82,6 +99,12 @@ export default {
         strokeColor[1] === color[1] &&
         strokeColor[2] === color[2]
       );
+    },
+
+    handleMouseUp() {
+      this.room.setMemberState({
+        strokeWidth: roomState.memberState.strokeWidth
+      });
     }
   }
 };

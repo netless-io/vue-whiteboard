@@ -64,7 +64,7 @@ export default {
 
   methods: {
     clickAppliance(eventTarget, applianceName) {
-      // eventTarget.preventDefault(); 还需补充 prevent 事件
+      // eventTarget.preventDefault();  Later add prevent Event
       this.room.setMemberState({ currentApplianceName: applianceName });
       this.extendsPanel = true;
     },
