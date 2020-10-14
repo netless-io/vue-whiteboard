@@ -13,9 +13,7 @@
           </div>
           <div class="page-index-cutline-box"></div>
           <div class="page-index-start-cell">
-            <!-- <router-link to="/whiteboard/:uuid/:userId"> -->
             <img :src="create" @click="handleJump" />
-            <!-- </router-link> -->
             <span>创建房间</span>
           </div>
         </div>
@@ -34,6 +32,7 @@ import logo from "@/assets/image/logo.svg";
 import join from "@/assets/image/join.svg";
 import create from "@/assets/image/create.svg";
 import { netlessWhiteboardApi } from "../../../apiMiddleware/RoomOperator";
+import Identity from "../../../Identity";
 export default {
   name: "IndexPage",
   props: {},
@@ -43,7 +42,8 @@ export default {
       join,
       create,
       uuid: "",
-      userId: ""
+      userId: "",
+      identity: Identity.creator
     };
   },
   methods: {
@@ -60,7 +60,9 @@ export default {
     },
 
     handleJump() {
-      this.$router.push({ path: `/whiteboard/${this.uuid}/${this.userId}` });
+      this.$router.push({
+        path: `/whiteboard/${this.identity}/${this.uuid}/${this.userId}`
+      });
     }
   },
   mounted() {

@@ -30,7 +30,7 @@
 <script>
 import logo from "@/assets/image/logo.svg";
 import router from "@/router";
-import { Identity } from "../../../Identity";
+import Identity from "../../../Identity";
 
 export default {
   name: "JoinPage",

@@ -127,10 +127,10 @@ export default {
         });
         //  { identity === Identity.creator ? "host" : "" }
         plugins.setPluginContext("video", {
-          identity: identity === Identity.creator ? "host" : ""
+          identity: this.identity === Identity.creator ? "host" : ""
         });
         plugins.setPluginContext("audio", {
-          identity: identity === Identity.creator ? "host" : ""
+          identity: this.identity === Identity.creator ? "host" : ""
         });
         const whiteWebSdk = new WhiteWebSdk({
           appIdentifier: netlessToken.appIdentifier,
