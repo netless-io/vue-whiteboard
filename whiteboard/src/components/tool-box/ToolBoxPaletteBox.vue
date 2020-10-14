@@ -17,7 +17,7 @@
       </div>
       <div
         class="tool-box-under-box-2"
-        :style="{ width: 156 * this.state.percentage }"
+        :style="{ width: 156 * this.percentage }"
       ></div>
       <div class="tool-box-under-box"></div>
     </div>
@@ -33,7 +33,7 @@
           class="cell-mid-color"
           :key="item.values"
           :style="{
-            borderColor: this.isMatchColor(newColor) ? '#3381FF' : '#FFFFFF'
+            borderColor: isMatchColor(newColor) ? '#3381FF' : '#FFFFFF'
           }"
         >
           <div class="color" @click="selectColor(newColor)"></div>
@@ -44,7 +44,7 @@
 </template>
 
 <script>
-// import ToolPaletteConfig from "./ToolPaletteConfig";
+import mask from "./src/image/mask.svg";
 export default {
   name: "ToolBoxPaletteBox",
   props: {
@@ -58,6 +58,7 @@ export default {
   },
   data() {
     return {
+      mask,
       borderColor: "#FFFFF",
       percentage: this.room.state.memberState.strokeWidth / 32,
       toolPaletteConfig: [

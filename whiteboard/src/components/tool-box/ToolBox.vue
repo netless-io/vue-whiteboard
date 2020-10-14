@@ -1,23 +1,17 @@
 <template>
   <div>
     <template v-for="item in descriptions">
-      <el-popver
-        placement="right"
-        trigger="click"
-        :key="item.values"
-        slot="reference"
-      >
+      <el-popover placement="right" trigger="click" :key="item.values">
+        <!-- :room="this.room" -->
+        <!-- :roomState="roomState"
+          :displayStroke="isExtendable" -->
         <tool-box-palette-box
-          :room="this.room"
+          :room="room"
           :roomState="roomState"
-          :displayStroke="isExtendable"
         ></tool-box-palette-box>
-        <el-tooltip
-          placement="right"
-          :title="item.descriptions"
-          slot="reference"
-        >
-          <div class="tool-box-cell-box-left" v-if="isExtendable && isSelected">
+        <el-tooltip placement="right" :title="item.descriptions">
+          <!-- v-if="isExtendable && isSelected" -->
+          <div class="tool-box-cell-box-left">
             <div
               class="tool-box-cell"
               @click="clickAppliance(event, applianceName)"
@@ -26,7 +20,7 @@
             </div>
           </div>
         </el-tooltip>
-      </el-popver>
+      </el-popover>
     </template>
   </div>
 </template>
@@ -90,10 +84,10 @@ export default {
       strokeEnable: false,
       extendsPanel: false,
       roomState: this.room.state,
-      isSelected:
-        this.roomState.memberState.currentApplianceName ===
-        this.descriptions.applianceName,
-      isExtendable: this.descriptions.hasStroke || this.descriptions.hasColor,
+      // isSelected:
+      //   this.room.state.memberState.currentApplianceName ===
+      //   this.descriptions.applianceName,
+      // isExtendable: this.descriptions.hasStroke || this.descriptions.hasColor,
       descriptions: {
         applianceName: Object.freeze({
           selector: Object.freeze({
