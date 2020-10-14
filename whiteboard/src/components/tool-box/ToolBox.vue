@@ -12,7 +12,9 @@
           <div class="tool-box-cell-box-left">
             <div
               class="tool-box-cell"
-              @click="clickAppliance(event, applianceName)"
+              @click.prevent="
+                event => clickAppliance(event, item.applianceName)
+              "
             >
               <img :src="item.icon" />
             </div>
@@ -165,7 +167,6 @@ export default {
 
   methods: {
     clickAppliance(eventTarget, applianceName) {
-      // eventTarget.preventDefault();  Later add prevent Event
       this.room.setMemberState({ currentApplianceName: applianceName });
       this.extendsPanel = true;
     },
