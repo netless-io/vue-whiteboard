@@ -1,22 +1,20 @@
 <template>
   <div>
-    <template v-for="item in descriptions">
+    <template v-for="item in descriptions.applianceName">
       <el-popover placement="right" trigger="click" :key="item.values">
-        <!-- :room="this.room" -->
-        <!-- :roomState="roomState"
-          :displayStroke="isExtendable" -->
-        <tool-box-palette-box
+        <!-- :displayStroke="isExtendable" -->
+        <!-- <tool-box-palette-box
           :room="room"
           :roomState="roomState"
-        ></tool-box-palette-box>
-        <el-tooltip placement="right" :title="item.descriptions">
+        ></tool-box-palette-box> -->
+        <el-tooltip placement="right" :content="item.name" slot="reference">
           <!-- v-if="isExtendable && isSelected" -->
           <div class="tool-box-cell-box-left">
             <div
               class="tool-box-cell"
               @click="clickAppliance(event, applianceName)"
             >
-              <img :src="item.iconUrl" />
+              <img :src="item.icon" />
             </div>
           </div>
         </el-tooltip>
@@ -26,7 +24,7 @@
 </template>
 
 <script>
-import ToolBoxPaletteBox from "./ToolBoxPaletteBox";
+// import ToolBoxPaletteBox from "./ToolBoxPaletteBox";
 // import { ApplianceNames, RoomState } from "white-web-sdk";
 import selector from "./src/image/selector.svg";
 import selectorActive from "./src/image/selector-active.svg";
@@ -51,7 +49,7 @@ import handActive from "./src/image/hand-active.svg";
 export default {
   name: "ToolBox",
   components: {
-    ToolBoxPaletteBox
+    // ToolBoxPaletteBox
   },
   props: {
     room: {
@@ -91,60 +89,70 @@ export default {
       descriptions: {
         applianceName: Object.freeze({
           selector: Object.freeze({
+            name: "selector",
             icon: selector,
             iconActive: selectorActive,
             hasColor: false,
             hasStroke: false
           }),
           pencil: Object.freeze({
+            name: "pencil",
             icon: pen,
             iconActive: penActive,
             hasColor: true,
             hasStroke: true
           }),
           text: Object.freeze({
+            name: "text",
             icon: text,
             iconActive: textActive,
             hasColor: true,
             hasStroke: false
           }),
           eraser: Object.freeze({
+            name: "eraser",
             icon: eraser,
             iconActive: eraserActive,
             hasColor: false,
             hasStroke: false
           }),
           ellipse: Object.freeze({
+            name: "ellipse",
             icon: ellipse,
             iconActive: ellipseActive,
             hasColor: true,
             hasStroke: true
           }),
           rectangle: Object.freeze({
+            name: "rectangle",
             icon: rectangle,
             iconActive: rectangleActive,
             hasColor: true,
             hasStroke: true
           }),
           straight: Object.freeze({
+            name: "straight",
             icon: straight,
             iconActive: straightActive,
             hasColor: true,
             hasStroke: true
           }),
           arrow: Object.freeze({
+            name: "arrow",
             icon: arrow,
             iconActive: arrowActive,
             hasColor: true,
             hasStroke: true
           }),
           laserPointer: Object.freeze({
+            name: "laserPointer",
             icon: laserPointer,
             iconActive: laserPointerActive,
             hasColor: false,
             hasStroke: false
           }),
           hand: Object.freeze({
+            name: "hand",
             icon: hand,
             iconActive: handActive,
             hasColor: false,
