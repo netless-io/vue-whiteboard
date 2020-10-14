@@ -20,7 +20,8 @@
           @click="handleJoin"
           :disabled="roomId === ''"
           :value="roomId"
-        >加入房间</el-button>
+          >加入房间</el-button
+        >
       </div>
     </div>
   </div>
@@ -29,6 +30,7 @@
 <script>
 import logo from "@/assets/image/logo.svg";
 import router from "@/router";
+import { Identity } from "../../../Identity";
 
 export default {
   name: "JoinPage",
@@ -42,8 +44,9 @@ export default {
   methods: {
     handleJoin() {
       const userId = `${Math.floor(Math.random() * 100000)}`;
-      router.push({ path: `/whiteboard/${this.roomId}/${userId}` });
-      console.log(this.roomId);
+      router.push({
+        path: `/whiteboard/${Identity.joiner}/${this.roomId}/${userId}`
+      });
     }
   }
 };

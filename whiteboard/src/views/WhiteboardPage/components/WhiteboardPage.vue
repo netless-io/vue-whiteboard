@@ -58,7 +58,10 @@
 <script>
 // import { createPlugins, Room, RoomPhase, WhiteWebSdk } from "white-web-sdk";
 import Vue from "vue";
-import { WhiteWebSdk } from "white-web-sdk";
+import Identity from "@/Identity";
+import { videoPlugin } from "@netless/white-video-plugin";
+import { audioPlugin } from "@netless/white-audio-plugin";
+import { createPlugins, WhiteWebSdk } from "white-web-sdk";
 import { netlessToken, ossConfigObj } from "../../../appToken"; // ossConfigObj
 import { netlessWhiteboardApi } from "../../../apiMiddleware/RoomOperator";
 import pages from "@/assets/image/pages.svg";
@@ -96,7 +99,8 @@ export default {
       isMenuVisible: false,
       isFileOpen: false,
       netlessToken,
-      ossConfigObj
+      ossConfigObj,
+      identity: Identity
     };
   },
 
@@ -113,13 +117,24 @@ export default {
     async startJoinRoom() {
       this.uuid = this.$route.params.uuid;
       this.userId = this.$route.params.userId;
-      console.log(this.uuid);
-      console.log(this.userId);
+      this.identity = this.$route.params.identity;
       try {
         const roomToken = await this.getRoomToken(this.uuid);
         // if (uuid && roomToken) {
+        const plugins = createPlugins({
+          video: videoPlugin,
+          audio: audioPlugin
+        });
+        //  { identity === Identity.creator ? "host" : "" }
+        plugins.setPluginContext("video", {
+          identity: identity === Identity.creator ? "host" : ""
+        });
+        plugins.setPluginContext("audio", {
+          identity: identity === Identity.creator ? "host" : ""
+        });
         const whiteWebSdk = new WhiteWebSdk({
-          appIdentifier: netlessToken.appIdentifier
+          appIdentifier: netlessToken.appIdentifier,
+          plugins: plugins
         });
         const room = await whiteWebSdk.joinRoom(
           {

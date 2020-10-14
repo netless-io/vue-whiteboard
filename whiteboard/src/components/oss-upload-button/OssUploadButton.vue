@@ -232,8 +232,6 @@ export default {
               pluginVideoUrl: url
             }
           });
-          console.log("上传视频成功");
-          console.log("video", this.room.insertPlugin);
         }
       } catch (err) {
         console.log(err);
