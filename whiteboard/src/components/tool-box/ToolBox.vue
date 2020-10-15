@@ -1,12 +1,51 @@
 <template>
-  <div>
+  <div class="tool-mid-box-left">
     <template v-for="item in descriptions.applianceName">
       <el-popover placement="right" trigger="click" :key="item.values">
-        <!-- :displayStroke="isExtendable" -->
-        <!-- <tool-box-palette-box
-          :room="room"
-          :roomState="roomState"
-        ></tool-box-palette-box> -->
+        <!-- tool-box-palette" -->
+        <div class="palette-box">
+          <div class="tool-box-stroke-box">
+            <div class="tool-box-input-box">
+              <input
+                type="range"
+                class="palette-stroke-slider"
+                min="1"
+                max="32"
+                @click="setStrokeWidth"
+                :placeholder="roomState.memberState.strokeWidth"
+                @onmouseup="handleMouseUp"
+              />
+            </div>
+            <div class="tool-box-mask-box">
+              <img :src="mask" />
+            </div>
+            <div
+              class="tool-box-under-box-2"
+              :style="{ width: 156 * this.percentage }"
+            ></div>
+            <div class="tool-box-under-box"></div>
+          </div>
+          <div class="stroke-script">
+            <div class="stroke-script-text">细</div>
+            <div class="stroke-script-text">粗</div>
+          </div>
+          <div
+            :style="{ width: 156, height: 1, backgroundColor: '#E7E7E7' }"
+          ></div>
+          <div class="cell-box">
+            <template v-for="item of toolPaletteConfig">
+              <div
+                class="cell-mid-color"
+                :key="item.values"
+                :style="{
+                  borderColor: isMatchColor(newColor) ? '#3381FF' : '#FFFFFF'
+                }"
+              >
+                <div class="color" @click="selectColor(newColor)"></div>
+              </div>
+            </template>
+          </div>
+        </div>
         <el-tooltip placement="right" :content="item.name" slot="reference">
           <!-- v-if="isExtendable && isSelected" -->
           <div class="tool-box-cell-box-left">
@@ -84,6 +123,20 @@ export default {
       strokeEnable: false,
       extendsPanel: false,
       roomState: this.room.state,
+      toolPaletteConfig: [
+        "#FC3A3F",
+        "#FD8343",
+        "#FFDA56",
+        "#9FDF76",
+        "#60E8C6",
+        "#57B2FC",
+        "#4486F6",
+        "#9D27B0",
+        "#DC74FC",
+        "#939AA8",
+        "#1D2129",
+        "#FFFFFF"
+      ],
       // isSelected:
       //   this.room.state.memberState.currentApplianceName ===
       //   this.descriptions.applianceName,
