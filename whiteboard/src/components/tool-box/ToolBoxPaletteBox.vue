@@ -33,12 +33,12 @@
           class="cell-mid-color"
           :key="item.values"
           :style="{
-            borderColor: isMatchColor(newColor) ? '#3381FF' : '#FFFFFF'
+            borderColor: isMatchColor(hexToRgb(item)) ? '#3381FF' : '#FFFFFF'
           }"
         >
           <div
             class="cell-color"
-            @click="selectColor(newColor)"
+            @click="selectColor(hexToRgb(item))"
             :style="{ backgroundColor: item }"
           ></div>
         </div>
@@ -70,7 +70,6 @@ export default {
       mask,
       borderColor: "#FFFFF",
       percentage: this.room.state.memberState.strokeWidth / 32,
-      newColor: "",
       toolPaletteConfig: [
         "#FC3A3F",
         "#FD8343",
@@ -94,12 +93,6 @@ export default {
       const strokeWidth = parseInt(event.target.value);
       this.percentage = percentage;
       this.room.setMemberState({ strokeWidth: strokeWidth });
-    },
-
-    handleColor() {
-      this.toolPaletteConfig.map(data => {
-        this.newColor = this.hexToRgb(data);
-      });
     },
 
     hexToRgb(hex) {
@@ -132,11 +125,6 @@ export default {
         strokeWidth: this.roomState.memberState.strokeWidth
       });
     }
-  },
-
-  mounted() {
-    this.handleColor();
-    console.log("this is newColor", this.newColor);
   }
 };
 </script>
