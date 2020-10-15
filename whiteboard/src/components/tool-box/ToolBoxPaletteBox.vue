@@ -36,7 +36,11 @@
             borderColor: isMatchColor(newColor) ? '#3381FF' : '#FFFFFF'
           }"
         >
-          <div class="color" @click="selectColor(newColor)"></div>
+          <div
+            class="cell-color"
+            @click="selectColor(newColor)"
+            :style="{ backgroundColor: item }"
+          ></div>
         </div>
       </template>
     </div>
@@ -53,7 +57,12 @@ export default {
       require: true
     },
     roomState: {
-      type: Object
+      type: Object,
+      require: true
+    },
+    displayStroke: {
+      type: Boolean,
+      require: true
     }
   },
   data() {
@@ -61,6 +70,7 @@ export default {
       mask,
       borderColor: "#FFFFF",
       percentage: this.room.state.memberState.strokeWidth / 32,
+      newColor: "",
       toolPaletteConfig: [
         "#FC3A3F",
         "#FD8343",
@@ -84,6 +94,12 @@ export default {
       const strokeWidth = parseInt(event.target.value);
       this.percentage = percentage;
       this.room.setMemberState({ strokeWidth: strokeWidth });
+    },
+
+    handleColor() {
+      this.toolPaletteConfig.map(data => {
+        this.newColor = this.hexToRgb(data);
+      });
     },
 
     hexToRgb(hex) {
@@ -116,6 +132,11 @@ export default {
         strokeWidth: this.roomState.memberState.strokeWidth
       });
     }
+  },
+
+  mounted() {
+    this.handleColor();
+    console.log("this is newColor", this.newColor);
   }
 };
 </script>

@@ -3,49 +3,11 @@
     <template v-for="item in descriptions.applianceName">
       <el-popover placement="right" trigger="click" :key="item.values">
         <!-- tool-box-palette" -->
-        <div class="palette-box">
-          <div class="tool-box-stroke-box">
-            <div class="tool-box-input-box">
-              <input
-                type="range"
-                class="palette-stroke-slider"
-                min="1"
-                max="32"
-                @click="setStrokeWidth"
-                :placeholder="roomState.memberState.strokeWidth"
-                @onmouseup="handleMouseUp"
-              />
-            </div>
-            <div class="tool-box-mask-box">
-              <img :src="mask" />
-            </div>
-            <div
-              class="tool-box-under-box-2"
-              :style="{ width: 156 * this.percentage }"
-            ></div>
-            <div class="tool-box-under-box"></div>
-          </div>
-          <div class="stroke-script">
-            <div class="stroke-script-text">细</div>
-            <div class="stroke-script-text">粗</div>
-          </div>
-          <div
-            :style="{ width: 156, height: 1, backgroundColor: '#E7E7E7' }"
-          ></div>
-          <div class="cell-box">
-            <template v-for="item of toolPaletteConfig">
-              <div
-                class="cell-mid-color"
-                :key="item.values"
-                :style="{
-                  borderColor: isMatchColor(newColor) ? '#3381FF' : '#FFFFFF'
-                }"
-              >
-                <div class="color" @click="selectColor(newColor)"></div>
-              </div>
-            </template>
-          </div>
-        </div>
+        <tool-box-palette-box
+          :room="roomData"
+          :roomState="roomState"
+          :displayStroke="item.hasStroke"
+        ></tool-box-palette-box>
         <el-tooltip placement="right" :content="item.name" slot="reference">
           <!-- v-if="isExtendable && isSelected" -->
           <div class="tool-box-cell-box-left">
@@ -65,7 +27,7 @@
 </template>
 
 <script>
-// import ToolBoxPaletteBox from "./ToolBoxPaletteBox";
+import ToolBoxPaletteBox from "./ToolBoxPaletteBox";
 // import { ApplianceNames, RoomState } from "white-web-sdk";
 import selector from "./src/image/selector.svg";
 import selectorActive from "./src/image/selector-active.svg";
@@ -87,10 +49,11 @@ import laserPointer from "./src/image/laserPointer.svg";
 import laserPointerActive from "./src/image/laserPointer-active.svg";
 import hand from "./src/image/hand.svg";
 import handActive from "./src/image/hand-active.svg";
+import mask from "./src/image/mask.svg";
 export default {
   name: "ToolBox",
   components: {
-    // ToolBoxPaletteBox
+    ToolBoxPaletteBox
   },
   props: {
     room: {
@@ -120,23 +83,11 @@ export default {
       laserPointerActive,
       hand,
       handActive,
+      mask,
       strokeEnable: false,
       extendsPanel: false,
+      roomData: this.room,
       roomState: this.room.state,
-      toolPaletteConfig: [
-        "#FC3A3F",
-        "#FD8343",
-        "#FFDA56",
-        "#9FDF76",
-        "#60E8C6",
-        "#57B2FC",
-        "#4486F6",
-        "#9D27B0",
-        "#DC74FC",
-        "#939AA8",
-        "#1D2129",
-        "#FFFFFF"
-      ],
       // isSelected:
       //   this.room.state.memberState.currentApplianceName ===
       //   this.descriptions.applianceName,
