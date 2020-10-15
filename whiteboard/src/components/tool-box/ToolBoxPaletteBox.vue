@@ -8,8 +8,8 @@
           min="1"
           max="32"
           @click="setStrokeWidth"
-          :placeholder="roomState.memberState.strokeWidth"
-          @onmouseup="handleMouseUp"
+          v-model="roomState.memberState.strokeWidth"
+          @mouseup="onMouseUp"
         />
       </div>
       <div class="tool-box-mask-box">
@@ -17,7 +17,7 @@
       </div>
       <div
         class="tool-box-under-box-2"
-        :style="{ width: 156 * this.percentage }"
+        :style="{ width: 156 * percentage }"
       ></div>
       <div class="tool-box-under-box"></div>
     </div>
@@ -120,7 +120,7 @@ export default {
       );
     },
 
-    handleMouseUp() {
+    onMouseUp() {
       this.room.setMemberState({
         strokeWidth: this.roomState.memberState.strokeWidth
       });
