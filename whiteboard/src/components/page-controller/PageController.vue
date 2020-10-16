@@ -6,7 +6,9 @@
     <div class="whiteboard-annex-arrow-left" @click="handlePptPreviousStep()">
       <img :src="isFirst() ? backDisabled : back" />
     </div>
-    <div class="whiteboard-annex-arrow-page">{{activeIndex + 1}} / {{scenes.length}}</div>
+    <div class="whiteboard-annex-arrow-page">
+      {{ activeIndex + 1 }} / {{ roomState.sceneState.scenes.length }}
+    </div>
     <div class="whiteboard-annex-arrow-right" @click="handlePptNextStep()">
       <img :src="isLast() ? nextDisabled : next" />
     </div>
@@ -38,7 +40,7 @@ export default {
       backDisabled,
       firstDisabled,
       roomState: this.room.state,
-      activeIndex: this.room.state.sceneState.index,
+      activeIndex: "",
       scenes: this.room.state.sceneState.scenes
     };
   },
@@ -62,13 +64,11 @@ export default {
     },
 
     isLast() {
-      const activeIndex = this.roomState.sceneState.index;
       const lastIndex = this.roomState.sceneState.length - 1;
-      return activeIndex === lastIndex;
+      return this.activeIndex === lastIndex;
     },
 
     setLastStep() {
-      // const lastIndex = this.roomState.sceneState.scenes.length - 1;
       const lastIndex = this.roomState.sceneState.scenes.length - 1;
       this.room.setSceneIndex(lastIndex);
     },
@@ -84,10 +84,6 @@ export default {
       this.roomState = { ...room.state, ...modifyState };
     });
   }
-
-  // created() {
-  //   console.log(this.room.state.scenes);
-  // }
 };
 </script>
 

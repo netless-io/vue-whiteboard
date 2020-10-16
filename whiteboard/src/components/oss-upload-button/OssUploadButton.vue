@@ -193,15 +193,17 @@ export default {
       uploadFileArray.push(event.file);
       const uploadManager = new UploadManager(this.client, this.room);
       try {
-        if (this.$parent.$refs.bindRoom) {
-          const { clientWidth, clientHeight } = this.$parent.$refs.bindRoom;
+        if (this.$parent.$parent.$refs.bindRoom) {
+          const {
+            clientWidth,
+            clientHeight
+          } = this.$parent.$parent.$refs.bindRoom;
           await uploadManager.uploadImageFiles(
             uploadFileArray,
             clientWidth / 2,
             clientHeight / 2,
             this.progress
           );
-          console.log("图片上传成功");
         }
       } catch (error) {
         this.$message(error);
@@ -298,6 +300,7 @@ export default {
         });
       }
     }
+    console.log("test", this.$parent.$refs.bindRoom);
   }
 };
 </script>

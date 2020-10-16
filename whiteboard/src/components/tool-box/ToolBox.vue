@@ -46,7 +46,6 @@
       </template>
     </template>
     <slot></slot>
-    <!-- <oss-upload-button></oss-upload-button> -->
   </div>
 </template>
 
