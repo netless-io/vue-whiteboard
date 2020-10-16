@@ -1,7 +1,12 @@
 <template>
   <div class="tool-mid-box-left">
     <template v-for="item in descriptions.applianceName">
-      <el-popover placement="right" trigger="click" :key="item.values">
+      <el-popover
+        placement="right"
+        trigger="click"
+        :key="item.values"
+        @click="onVisibleChange(extendsPanel)"
+      >
         <!-- tool-box-palette" -->
         <tool-box-palette-box
           :room="roomData"
@@ -13,9 +18,7 @@
           <div class="tool-box-cell-box-left">
             <div
               class="tool-box-cell"
-              @click.prevent="
-                event => clickAppliance(event, item.applianceName)
-              "
+              @click.prevent="event => clickAppliance(event, item.name)"
             >
               <img :src="item.icon" />
             </div>
