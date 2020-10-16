@@ -1,20 +1,39 @@
 <template>
   <div class="tool-mid-box-left">
     <template v-for="item in descriptions.applianceName">
-      <el-popover
-        placement="right"
-        trigger="click"
-        :key="item.values"
-        @click="onVisibleChange(extendsPanel)"
-      >
-        <!-- tool-box-palette" -->
-        <tool-box-palette-box
-          :room="roomData"
-          :roomState="roomState"
-          :displayStroke="item.hasStroke"
-        ></tool-box-palette-box>
-        <el-tooltip placement="right" :content="item.name" slot="reference">
-          <!-- v-if="isExtendable && isSelected" -->
+      <template v-if="item.hasColor">
+        <el-popover
+          placement="right"
+          trigger="click"
+          :key="item.values"
+          @click="onVisibleChange(extendsPanel)"
+        >
+          <template v-if="item.hasColor">
+            <tool-box-palette-box
+              :room="roomData"
+              :roomState="roomState"
+              :displayStroke="item.hasStroke"
+            ></tool-box-palette-box>
+          </template>
+          <el-tooltip placement="right" :content="item.name" slot="reference">
+            <div class="tool-box-cell-box-left">
+              <div
+                class="tool-box-cell"
+                @click.prevent="event => clickAppliance(event, item.name)"
+              >
+                <img :src="item.icon" />
+              </div>
+            </div>
+          </el-tooltip>
+        </el-popover>
+      </template>
+      <template v-else>
+        <el-tooltip
+          :key="item.values"
+          placement="right"
+          :content="item.name"
+          slot="reference"
+        >
           <div class="tool-box-cell-box-left">
             <div
               class="tool-box-cell"
@@ -24,7 +43,7 @@
             </div>
           </div>
         </el-tooltip>
-      </el-popover>
+      </template>
     </template>
   </div>
 </template>
@@ -101,7 +120,7 @@ export default {
             name: "selector",
             icon: selector,
             iconActive: selectorActive,
-            hasColor: false,
+            // hasColor: false,
             hasStroke: false
           }),
           pencil: Object.freeze({
@@ -122,7 +141,7 @@ export default {
             name: "eraser",
             icon: eraser,
             iconActive: eraserActive,
-            hasColor: false,
+            // hasColor: false,
             hasStroke: false
           }),
           ellipse: Object.freeze({
@@ -157,14 +176,14 @@ export default {
             name: "laserPointer",
             icon: laserPointer,
             iconActive: laserPointerActive,
-            hasColor: false,
+            // hasColor: false,
             hasStroke: false
           }),
           hand: Object.freeze({
             name: "hand",
             icon: hand,
             iconActive: handActive,
-            hasColor: false,
+            // hasColor: false,
             hasStroke: false
           })
         })
