@@ -45,6 +45,8 @@
         </el-tooltip>
       </template>
     </template>
+    <slot></slot>
+    <!-- <oss-upload-button></oss-upload-button> -->
   </div>
 </template>
 
@@ -72,10 +74,12 @@ import laserPointerActive from "./src/image/laserPointer-active.svg";
 import hand from "./src/image/hand.svg";
 import handActive from "./src/image/hand-active.svg";
 import mask from "./src/image/mask.svg";
+// import OssUploadButton from "@/components/oss-upload-button/OssUploadButton";
 export default {
   name: "ToolBox",
   components: {
     ToolBoxPaletteBox
+    // OssUploadButton
   },
   props: {
     room: {
@@ -110,10 +114,6 @@ export default {
       extendsPanel: false,
       roomData: this.room,
       roomState: this.room.state,
-      // isSelected:
-      //   this.room.state.memberState.currentApplianceName ===
-      //   this.descriptions.applianceName,
-      // isExtendable: this.descriptions.hasStroke || this.descriptions.hasColor,
       descriptions: {
         applianceName: Object.freeze({
           selector: Object.freeze({

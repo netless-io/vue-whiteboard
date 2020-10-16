@@ -17,7 +17,7 @@
       </div>
       <div
         class="tool-box-under-box-2"
-        :style="{ width: 156 * percentage }"
+        :style="{ width: 156 * percentage + 'px' }"
       ></div>
       <div class="tool-box-under-box"></div>
     </div>
@@ -25,7 +25,9 @@
       <div class="stroke-script-text">细</div>
       <div class="stroke-script-text">粗</div>
     </div>
-    <div :style="{ width: 156, height: 1, backgroundColor: '#E7E7E7' }"></div>
+    <div
+      :style="{ width: '156px', height: '1px', backgroundColor: '#E7E7E7' }"
+    ></div>
 
     <div class="cell-box">
       <template v-for="item of toolPaletteConfig">

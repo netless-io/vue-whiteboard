@@ -25,7 +25,13 @@
             </div>
           </div>
         </el-upload>
-        <div :style="{ width: 208, height: 0.5, backgroundColor: '#E7E7E7' }" />
+        <div
+          :style="{
+            width: '208px',
+            height: '0.5px',
+            backgroundColor: '#E7E7E7'
+          }"
+        />
       </div>
     </template>
     <el-tooltip

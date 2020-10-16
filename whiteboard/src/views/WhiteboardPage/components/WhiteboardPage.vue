@@ -5,14 +5,15 @@
     </div>
     <div class="tool-box-out">
       <template v-if="roomIsInit">
-        <tool-box :room="this.$room"></tool-box>
-        <oss-upload-button
-          :room="this.$room"
-          :oss="ossConfigObj"
-          :appIdentifier="netlessToken.appIdentifier"
-          :sdkToken="netlessToken.sdkToken"
-        >
-        </oss-upload-button>
+        <tool-box :room="this.$room">
+          <oss-upload-button
+            :room="this.$room"
+            :oss="ossConfigObj"
+            :appIdentifier="netlessToken.appIdentifier"
+            :sdkToken="netlessToken.sdkToken"
+          >
+          </oss-upload-button>
+        </tool-box>
       </template>
     </div>
     <div class="redo-undo-box">
