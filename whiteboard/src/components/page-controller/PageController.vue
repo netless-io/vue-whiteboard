@@ -20,8 +20,8 @@
 
 <script>
 import next from "./src/image/next.svg";
-import last from "./src/image/last-active.svg";
 import nextDisabled from "./src/image/next-disabled.svg";
+import last from "./src/image/last-active.svg";
 import lastDisabled from "./src/image/last-disable.svg";
 import back from "./src/image/back.svg";
 import backDisabled from "./src/image/back-disable.svg";
@@ -64,7 +64,8 @@ export default {
     },
 
     isLast() {
-      const lastIndex = this.roomState.sceneState.length - 1;
+      this.activeIndex = this.roomState.sceneState.index;
+      const lastIndex = this.roomState.sceneState.scenes.length - 1;
       return this.activeIndex === lastIndex;
     },
 
@@ -79,9 +80,8 @@ export default {
   },
 
   mounted() {
-    const room = this.room;
-    room.callbacks.on("onRoomStateChanged", modifyState => {
-      this.roomState = { ...room.state, ...modifyState };
+    this.room.callbacks.on("onRoomStateChanged", modifyState => {
+      this.roomState = { ...this.room.state, ...modifyState };
     });
   }
 };
