@@ -42,7 +42,7 @@
           class="connect"
           :style="{
             ...getPositionStyle(this.currentTime),
-            backgroundColor: this.props.sliderColor
+            backgroundColor: this.sliderColor
           }"
         ></div>
         <div
@@ -232,7 +232,7 @@ export default {
     },
 
     isThumbActive() {
-      this.seekHoverPosition > 0 || this.seeking;
+      return this.seekHoverPosition > 0 || this.seeking;
     },
 
     mobileTouchSeekingHandler() {

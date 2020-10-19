@@ -17,7 +17,7 @@
             @click="onClickOperationButton(player)"
           >
             <div v-if="phase === 'pause'">
-              <img :src="video_play" :style="{ marginLeft: 2 }" />
+              <img :src="video_play" :style="{ marginLeft: '2px' }" />
             </div>
             <div v-else-if="phase === 'playing'">
               <img :src="video_pause" />
@@ -31,39 +31,24 @@
           </div>
         </div>
         <el-dropdown placement="top-start" @command="handleActiveMultiple">
-          <span class="el-dropdown-link">倍数</span>
+          <span class="el-dropdown-link">{{
+            multiple === 1.0 ? "倍数" : `${multiple}x`
+          }}</span>
           <el-dropdown-menu slot="dropdown" class="player-menu-box">
-            <el-dropdown-item class="player-menu-cell" command="2.0"
-              >2.0x</el-dropdown-item
-            >
-            <el-dropdown-item
-              class="player-menu-cell"
-              @click="handleActiveMultiple(1.5)"
-              command="1.5"
+            <el-dropdown-item command="2.0">2.0x</el-dropdown-item>
+            <el-dropdown-item @click="handleActiveMultiple(1.5)" command="1.5"
               >1.5x</el-dropdown-item
             >
-            <el-dropdown-item
-              class="player-menu-cell"
-              @click="handleActiveMultiple(1.25)"
-              command="1.25"
+            <el-dropdown-item @click="handleActiveMultiple(1.25)" command="1.25"
               >1.25x</el-dropdown-item
             >
-            <el-dropdown-item
-              class="player-menu-cell"
-              command="1.0"
-              @click="handleActiveMultiple(1.0)"
+            <el-dropdown-item command="1.0" @click="handleActiveMultiple(1.0)"
               >1.0x</el-dropdown-item
             >
-            <el-dropdown-item
-              class="player-menu-cell"
-              command="0.75"
-              @click="handleActiveMultiple(0.75)"
+            <el-dropdown-item command="0.75" @click="handleActiveMultiple(0.75)"
               >0.75x</el-dropdown-item
             >
-            <el-dropdown-item
-              class="player-menu-cell"
-              command="0.5"
-              @click="handleActiveMultiple(0.5)"
+            <el-dropdown-item command="0.5" @click="handleActiveMultiple(0.5)"
               >0.5x</el-dropdown-item
             >
           </el-dropdown-menu>
@@ -78,7 +63,6 @@ import video_play from "./src/image/video_play.svg";
 import video_pause from "./src/image/video_pause.svg";
 import SeekSlider from "./SeekSlider";
 import { PlayerPhase } from "white-web-sdk";
-// import { PlayerPhase } from "../../PlayerPhase";
 import { displayWatch } from "./WatchDisplay";
 
 export default {
