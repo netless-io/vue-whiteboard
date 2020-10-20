@@ -21,7 +21,9 @@
                 class="tool-box-cell"
                 @click.prevent="event => clickAppliance(event, item.name)"
               >
-                <img :src="item.icon" />
+                <img
+                  :src="isSelected === item.name ? item.iconActive : item.icon"
+                />
               </div>
             </div>
           </el-tooltip>
@@ -39,7 +41,9 @@
               class="tool-box-cell"
               @click.prevent="event => clickAppliance(event, item.name)"
             >
-              <img :src="item.icon" />
+              <img
+                :src="isSelected === item.name ? item.iconActive : item.icon"
+              />
             </div>
           </div>
         </el-tooltip>
@@ -113,6 +117,7 @@ export default {
       extendsPanel: false,
       roomData: this.room,
       roomState: this.room.state,
+      isSelected: this.room.state.memberState.currentApplianceName,
       descriptions: {
         applianceName: Object.freeze({
           selector: Object.freeze({
