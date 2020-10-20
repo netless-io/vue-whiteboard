@@ -72,6 +72,7 @@ export default {
   },
   props: {
     player: {
+      type: Object,
       require: true
     }
   },
@@ -81,7 +82,7 @@ export default {
       video_pause,
       progressTime: 0,
       phase: PlayerPhase,
-      changePhase: "playing",
+      // changePhase: "playing",
       // phase: this.player.phase,
       isPlayerSeeking: false,
       currentTime: 0,
@@ -105,12 +106,11 @@ export default {
       switch (this.player.phase) {
         case PlayerPhase.WaitingFirstFrame:
         case PlayerPhase.Pause: {
-          this.changePhase = "pause";
+          // this.changePhase = "pause";
           player.play();
           break;
         }
         case PlayerPhase.Playing: {
-          // this.changePhase = "playing";
           player.pause();
           break;
         }

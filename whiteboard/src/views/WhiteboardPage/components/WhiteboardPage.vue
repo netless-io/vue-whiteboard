@@ -57,7 +57,6 @@
 </template>
 
 <script>
-// import { createPlugins, Room, RoomPhase, WhiteWebSdk } from "white-web-sdk";
 import Vue from "vue";
 import Identity from "@/Identity";
 import { videoPlugin } from "@netless/white-video-plugin";

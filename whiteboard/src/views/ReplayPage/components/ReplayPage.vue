@@ -172,7 +172,6 @@ export default {
       this.handleSpaceKey;
     });
 
-    // 后续添加 identity 参数
     const uuid = this.$route.params.uuid;
     this.identity = this.$route.params.identity;
     const plugins = createPlugins({

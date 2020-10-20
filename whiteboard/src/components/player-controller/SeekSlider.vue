@@ -52,9 +52,17 @@
         ></div>
       </div>
     </div>
-    <div v-if="!hideHoverTime"></div>
-    <div v-if="thumbColor"></div>
-    <div v-else-if="!thumbColor"></div>
+    <div v-if="!hideHoverTime">
+      <div
+        :class="isThumbActive() ? `hover-time active` : 'hover-time'"
+        :style="getHoverTimePosition()"
+        ref="hoverTime"
+      >
+        {{ getHoverTime() }}
+      </div>
+    </div>
+    <!-- <div v-if="thumbColor"></div>
+    <div v-else-if="!thumbColor"></div> -->
   </div>
 </template>
 
@@ -73,6 +81,21 @@ export default {
     },
     limitTimeTooltipBySides: {
       type: Boolean
+    },
+    sliderColor: {
+      type: String
+    },
+    sliderHoverColor: {
+      type: String
+    },
+    thumbColor: {
+      type: String
+    },
+    bufferColor: {
+      type: String
+    },
+    bufferProgress: {
+      type: Number
     }
   },
   data() {
@@ -81,17 +104,10 @@ export default {
       trackWidth: 0,
       seekHoverPosition: 0,
       mobileSeeking: "",
-      hoverTime: "",
       offset: 0,
       secondsPrefix: "00:00:",
       minutesPrefix: "00:",
       seeking: "",
-      transform: "",
-      bufferProgress: "",
-      sliderColor: "",
-      sliderHoverColor: "",
-      thumbColor: "",
-      bufferColor: "",
       time: ""
     };
   },
@@ -174,13 +190,17 @@ export default {
 
     getHoverTimePosition() {
       let position = 0;
-      if (this.hoverTime) {
-        position = this.seekHoverPosition - this.hoverTime.offsetWidth / 2;
+      if (this.$refs.hoverTime) {
+        position =
+          this.seekHoverPosition - this.$refs.hoverTime.offsetWidth / 2;
         if (this.limitTimeTooltipBySides) {
           if (position < 0) {
             position = 0;
-          } else if (position + this.hoverTime.offsetWidth > this.trackWidth) {
-            position = this.trackWidth - this.hoverTime.offsetWidth;
+          } else if (
+            position + this.$refs.hoverTime.offsetWidth >
+            this.trackWidth
+          ) {
+            position = this.trackWidth - this.$refs.hoverTime.offsetWidth;
           }
         }
       }
@@ -232,7 +252,7 @@ export default {
     },
 
     isThumbActive() {
-      return this.seekHoverPosition > 0 || this.seeking;
+      this.seekHoverPosition > 0 || this.seeking;
     },
 
     mobileTouchSeekingHandler() {
