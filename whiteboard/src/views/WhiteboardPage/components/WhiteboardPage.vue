@@ -62,11 +62,12 @@ import Identity from "@/Identity";
 import { videoPlugin } from "@netless/white-video-plugin";
 import { audioPlugin } from "@netless/white-audio-plugin";
 import { createPlugins, WhiteWebSdk } from "white-web-sdk";
-import { netlessToken, ossConfigObj } from "../../../appToken"; // ossConfigObj
+import { netlessToken, ossConfigObj } from "../../../appToken";
 import { netlessWhiteboardApi } from "../../../apiMiddleware/RoomOperator";
 import pages from "@/assets/image/pages.svg";
 import folder from "@/assets/image/folder.svg";
 import logo from "@/assets/image/logo.svg";
+// import LoadingPage from "@/views/LoadingPage/LoadingPage";
 import RedoUndo from "@/components/RedoUndo/RedoUndo";
 import PageController from "@/components/page-controller/PageController";
 import ZoomController from "@/components/zoom-controller/ZoomController";
@@ -78,6 +79,7 @@ import ToolBox from "@/components/tool-box/ToolBox";
 export default {
   name: "WhiteboardPage",
   components: {
+    // LoadingPage,
     RedoUndo,
     PageController,
     ZoomController,
