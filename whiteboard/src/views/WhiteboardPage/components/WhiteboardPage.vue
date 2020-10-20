@@ -126,7 +126,6 @@ export default {
           video: videoPlugin,
           audio: audioPlugin
         });
-        //  { identity === Identity.creator ? "host" : "" }
         plugins.setPluginContext("video", {
           identity: this.identity === Identity.creator ? "host" : ""
         });

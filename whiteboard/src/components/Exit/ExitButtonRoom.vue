@@ -5,7 +5,12 @@
         <img :src="exit" @click="dialogVisible = true" />
       </div>
     </el-tooltip>
-    <el-dialog title="退出教室" :visible.sync="dialogVisible" width="30%" :modal-append-to-body="false">
+    <el-dialog
+      title="退出教室"
+      :visible.sync="dialogVisible"
+      width="30%"
+      :modal-append-to-body="false"
+    >
       <div class="modal-box">
         <div @click="handleReplay">
           <img class="modal-box-img" :src="replayScreen" />
@@ -14,7 +19,13 @@
       </div>
       <span slot="footer" class="dialog-footer">
         <!-- <el-button @click="dialogVisible = false">取 消</el-button> -->
-        <el-button @click="handleGoBack(); dialogVisible = false">确认退出</el-button>
+        <el-button
+          @click="
+            handleGoBack();
+            dialogVisible = false;
+          "
+          >确认退出</el-button
+        >
       </span>
     </el-dialog>
   </div>
@@ -23,6 +34,7 @@
 <script>
 import exit from "@/assets/image/exit.svg";
 import replayScreen from "@/assets/image/replay-screen.png";
+import Identity from "@/Identity";
 export default {
   name: "ExitButtonRoom",
   props: {
@@ -39,7 +51,8 @@ export default {
       exit,
       replayScreen,
       dialogVisible: false,
-      exitViewDisable: false
+      exitViewDisable: false,
+      identity: Identity
     };
   },
 
@@ -47,7 +60,9 @@ export default {
     async handleReplay() {
       if (this.room) {
         await this.room.disconnect();
-        this.$router.push(`/replay/${this.room.uuid}/${this.userId}/`);
+        this.$router.push(
+          `/replay/${Identity}/${this.room.uuid}/${this.userId}/`
+        );
       }
     },
 

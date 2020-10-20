@@ -42,8 +42,11 @@
 
 <script>
 // import { WhiteWebSdk, PlayerPhase, Player } from "white-web-sdk";
-import { WhiteWebSdk } from "white-web-sdk";
+import { WhiteWebSdk, createPlugins } from "white-web-sdk";
 // import { WaitingFirstFrame, Playing, Pause, Ended } from "../../../PlayerPhase";
+import Identity from "@/Identity";
+import { videoPlugin } from "@netless/white-video-plugin";
+import { audioPlugin } from "@netless/white-audio-plugin";
 import PlayerPhase from "../../../PlayerPhase";
 import polly from "polly-js";
 import { netlessToken } from "../../../appToken";
@@ -70,7 +73,8 @@ export default {
       Pause: "",
       Playing: "",
       Ended: "",
-      player: ""
+      player: "",
+      identity: Identity
     };
   },
   methods: {
@@ -170,6 +174,17 @@ export default {
 
     // 后续添加 identity 参数
     const uuid = this.$route.params.uuid;
+    this.identity = this.$route.params.identity;
+    const plugins = createPlugins({
+      video: videoPlugin,
+      audio: audioPlugin
+    });
+    plugins.setPluginContext("video", {
+      identity: this.identity === Identity.creator ? "host" : ""
+    });
+    plugins.setPluginContext("audio", {
+      identity: this.identity === Identity.creator ? "host" : ""
+    });
     const roomToken = await this.getRoomToken(uuid);
     if (uuid && roomToken) {
       const whiteWebSdk = new WhiteWebSdk({
