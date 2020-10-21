@@ -34,7 +34,7 @@
 <script>
 import exit from "@/assets/image/exit.svg";
 import replayScreen from "@/assets/image/replay-screen.png";
-import Identity from "@/Identity";
+// import Identity from "@/Identity";
 export default {
   name: "ExitButtonRoom",
   props: {
@@ -44,6 +44,9 @@ export default {
     },
     userId: {
       require: true
+    },
+    identity: {
+      type: Object
     }
   },
   data() {
@@ -51,8 +54,7 @@ export default {
       exit,
       replayScreen,
       dialogVisible: false,
-      exitViewDisable: false,
-      identity: Identity
+      exitViewDisable: false
     };
   },
 
@@ -61,7 +63,7 @@ export default {
       if (this.room) {
         await this.room.disconnect();
         this.$router.push(
-          `/replay/${Identity}/${this.room.uuid}/${this.userId}/`
+          `/replay/${this.identity}/${this.room.uuid}/${this.userId}/`
         );
       }
     },

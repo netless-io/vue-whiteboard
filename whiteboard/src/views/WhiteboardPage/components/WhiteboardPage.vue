@@ -33,6 +33,7 @@
             <exit-button-room
               :room="this.$room"
               :userId="userId"
+              :identity="identity"
             ></exit-button-room>
           </template>
         </div>
