@@ -22,6 +22,7 @@
                 @click.prevent="event => clickAppliance(event, item.name)"
               >
                 <img
+                  @click="changeIcon(item.name)"
                   :src="isSelected === item.name ? item.iconActive : item.icon"
                 />
               </div>
@@ -42,6 +43,7 @@
               @click.prevent="event => clickAppliance(event, item.name)"
             >
               <img
+                @click="changeIcon(item.name)"
                 :src="isSelected === item.name ? item.iconActive : item.icon"
               />
             </div>
@@ -196,6 +198,10 @@ export default {
   },
 
   methods: {
+    changeIcon(value) {
+      this.isSelected = value;
+    },
+
     clickAppliance(eventTarget, applianceName) {
       this.room.setMemberState({ currentApplianceName: applianceName });
       this.extendsPanel = true;
