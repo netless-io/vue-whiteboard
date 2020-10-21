@@ -1,42 +1,55 @@
 <template>
-  <div class="player-out-box">
-    <div class="logo-box">
-      <img :src="logo" />
-    </div>
-    <div class="room-controller-box">
-      <div class="page-controller-mid-box">
-        <!-- ExitButtonPlayer -->
-      </div>
-    </div>
-    <div class="player-board">
-      <template v-if="player && isVisible">
-        <div @mouseenter="isVisible = true">
-          <player-controller :player="player"></player-controller>
+  <div>
+    <template v-if="replayFail">
+      <page-error></page-error>
+    </template>
+    <template v-else-if="isLoading">
+      <loading-page :text="loadingText"></loading-page>
+    </template>
+    <template v-else-if="player === undefined">
+      <loading-page></loading-page>
+    </template>
+    <template v-else>
+      <div class="player-out-box">
+        <div class="logo-box">
+          <img :src="logo" />
         </div>
-      </template>
-      <div
-        class="player-board-inner"
-        @mouseover="isVisible = true"
-        @mouseleave="isVisible = false"
-      >
-        <div class="player-mask" @click="onClickOperationButton(player)">
-          <template v-if="phase === Pause">
-            <div class="player-big-icon">
-              <img
-                :src="video_play"
-                :style="{ width: '50px', marginLeft: '6px' }"
-              />
+        <div class="room-controller-box">
+          <div class="page-controller-mid-box">
+            <!-- ExitButtonPlayer -->
+          </div>
+        </div>
+        <div class="player-board">
+          <template v-if="player && isVisible">
+            <div @mouseenter="isVisible = true">
+              <player-controller :player="player"></player-controller>
             </div>
           </template>
           <div
-            class="player-box"
-            ref="bindRoom"
-            @click="handleBindRoom"
-            :style="{ backgroundColor: 'F2F2F2' }"
-          ></div>
+            class="player-board-inner"
+            @mouseover="isVisible = true"
+            @mouseleave="isVisible = false"
+          >
+            <div class="player-mask" @click="onClickOperationButton(player)">
+              <template v-if="phase === Pause">
+                <div class="player-big-icon">
+                  <img
+                    :src="video_play"
+                    :style="{ width: '50px', marginLeft: '6px' }"
+                  />
+                </div>
+              </template>
+              <div
+                class="player-box"
+                ref="bindRoom"
+                @click="handleBindRoom"
+                :style="{ backgroundColor: 'F2F2F2' }"
+              ></div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </template>
   </div>
 </template>
 
@@ -54,11 +67,15 @@ import { netlessWhiteboardApi } from "../../../apiMiddleware/RoomOperator";
 import video_play from "@/assets/image/video-play.svg";
 import logo from "@/assets/image/logo.svg";
 import PlayerController from "@/components/player-controller/PlayerController";
+import LoadingPage from "@/views/LoadingPage/LoadingPage";
+import PageError from "@/views/PageError/PageError";
 
 export default {
   name: "ReplayPage",
   components: {
-    PlayerController
+    PlayerController,
+    LoadingPage,
+    PageError
   },
   data() {
     return {
@@ -74,7 +91,9 @@ export default {
       Playing: "",
       Ended: "",
       player: "",
-      identity: Identity
+      identity: Identity,
+      isLoading: true,
+      loadingText: "正在生成回放，请耐心等待"
     };
   },
   methods: {
@@ -132,6 +151,7 @@ export default {
       );
       // cursorAdapter.setPlayer(player);
       this.player = player;
+      this.isLoading = false;
       console.log("player", this.player);
     },
 
