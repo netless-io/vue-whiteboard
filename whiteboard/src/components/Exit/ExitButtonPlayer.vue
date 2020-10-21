@@ -41,8 +41,8 @@ export default {
     };
   },
   props: {
-    room: {
-      type: Object,
+    uuid: {
+      type: String,
       require: true
     },
     userId: {

@@ -18,10 +18,10 @@
           <div class="page-controller-mid-box">
             <div class="page-controller-cell">
               <exit-button-player
-                :identity="this.identity"
-                :uuid="this.uuid"
-                :userId="this.userId"
-                :player="this.player"
+                :identity="identity"
+                :uuid="uuid"
+                :userId="userId"
+                :player="player"
               ></exit-button-player>
             </div>
           </div>
@@ -204,6 +204,7 @@ export default {
     });
 
     this.uuid = this.$route.params.uuid;
+    console.log("uuid", this.uuid);
     this.identity = this.$route.params.identity;
     this.userId = this.$route.params.userId;
     const plugins = createPlugins({
