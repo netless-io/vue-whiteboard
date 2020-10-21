@@ -8,7 +8,8 @@
     <el-dialog
       title="退出教室"
       :visible.sync="dialogVisible"
-      width="30%"
+      width="25%"
+      center
       :modal-append-to-body="false"
     >
       <div class="modal-box">
@@ -18,12 +19,7 @@
         <div class="modal-box-name">观看回放</div>
       </div>
       <span slot="footer" class="dialog-footer">
-        <!-- <el-button @click="dialogVisible = false">取 消</el-button> -->
-        <el-button
-          @click="
-            handleGoBack();
-            dialogVisible = false;
-          "
+        <el-button :style="{ width: '176px' }" @click="handleGoBack"
           >确认退出</el-button
         >
       </span>
@@ -34,7 +30,6 @@
 <script>
 import exit from "@/assets/image/exit.svg";
 import replayScreen from "@/assets/image/replay-screen.png";
-// import Identity from "@/Identity";
 export default {
   name: "ExitButtonRoom",
   props: {
@@ -46,7 +41,7 @@ export default {
       require: true
     },
     identity: {
-      type: Object
+      type: String
     }
   },
   data() {

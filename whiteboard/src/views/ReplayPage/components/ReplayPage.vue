@@ -16,7 +16,14 @@
         </div>
         <div class="room-controller-box">
           <div class="page-controller-mid-box">
-            <!-- ExitButtonPlayer -->
+            <div class="page-controller-cell">
+              <exit-button-player
+                :identity="this.identity"
+                :uuid="this.uuid"
+                :userId="this.userId"
+                :player="this.player"
+              ></exit-button-player>
+            </div>
           </div>
         </div>
         <div class="player-board">
@@ -55,8 +62,8 @@
 
 <script>
 // import { WhiteWebSdk, PlayerPhase, Player } from "white-web-sdk";
-import { WhiteWebSdk, createPlugins } from "white-web-sdk";
 // import { WaitingFirstFrame, Playing, Pause, Ended } from "../../../PlayerPhase";
+import { WhiteWebSdk, createPlugins } from "white-web-sdk";
 import Identity from "@/Identity";
 import { videoPlugin } from "@netless/white-video-plugin";
 import { audioPlugin } from "@netless/white-audio-plugin";
@@ -67,12 +74,14 @@ import { netlessWhiteboardApi } from "../../../apiMiddleware/RoomOperator";
 import video_play from "@/assets/image/video-play.svg";
 import logo from "@/assets/image/logo.svg";
 import PlayerController from "@/components/player-controller/PlayerController";
+import ExitButtonPlayer from "@/components/Exit/ExitButtonPlayer";
 import LoadingPage from "@/views/LoadingPage/LoadingPage";
 import PageError from "@/views/PageError/PageError";
 
 export default {
   name: "ReplayPage",
   components: {
+    ExitButtonPlayer,
     PlayerController,
     LoadingPage,
     PageError
@@ -90,6 +99,8 @@ export default {
       Pause: "",
       Playing: "",
       Ended: "",
+      uuid: "",
+      userId: "",
       player: "",
       identity: Identity,
       isLoading: true,
@@ -192,8 +203,9 @@ export default {
       this.handleSpaceKey;
     });
 
-    const uuid = this.$route.params.uuid;
+    this.uuid = this.$route.params.uuid;
     this.identity = this.$route.params.identity;
+    this.userId = this.$route.params.userId;
     const plugins = createPlugins({
       video: videoPlugin,
       audio: audioPlugin
@@ -204,13 +216,13 @@ export default {
     plugins.setPluginContext("audio", {
       identity: this.identity === Identity.creator ? "host" : ""
     });
-    const roomToken = await this.getRoomToken(uuid);
-    if (uuid && roomToken) {
+    const roomToken = await this.getRoomToken(this.uuid);
+    if (this.uuid && roomToken) {
       const whiteWebSdk = new WhiteWebSdk({
         appIdentifier: netlessToken.appIdentifier
       });
 
-      await this.loadPlayer(whiteWebSdk, uuid, roomToken);
+      await this.loadPlayer(whiteWebSdk, this.uuid, roomToken);
       console.log("this.player", this.player);
     }
   }
