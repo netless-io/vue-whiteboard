@@ -28,15 +28,15 @@
     </div>
     <div class="room-controller-box">
       <div class="page-controller-mid-box">
-        <div class="page-controller-cell">
-          <template v-if="roomIsInit">
-            <exit-button-room
-              :room="this.$room"
-              :userId="userId"
-              :identity="identity"
-            ></exit-button-room>
-          </template>
-        </div>
+        <template v-if="roomIsInit">
+          <invite-button :uuid="uuid"></invite-button>
+          <exit-button-room
+            :room="this.$room"
+            :userId="userId"
+            :identity="identity"
+          ></exit-button-room>
+        </template>
+        <!-- <div class="page-controller-cell"></div> -->
       </div>
     </div>
     <div class="page-controller-box">
@@ -69,6 +69,7 @@ import pages from "@/assets/image/pages.svg";
 import folder from "@/assets/image/folder.svg";
 import logo from "@/assets/image/logo.svg";
 // import LoadingPage from "@/views/LoadingPage/LoadingPage";
+import InviteButton from "@/components/InviteButton/InviteButton";
 import RedoUndo from "@/components/RedoUndo/RedoUndo";
 import PageController from "@/components/page-controller/PageController";
 import ZoomController from "@/components/zoom-controller/ZoomController";
@@ -86,10 +87,10 @@ export default {
     ZoomController,
     PreviewController,
     ExitButtonRoom,
+    InviteButton,
     OssUploadButton,
     ToolBox
   },
-
   data() {
     return {
       pages,
