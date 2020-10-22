@@ -35,20 +35,41 @@
             multiple === 1.0 ? "倍数" : `${multiple}x`
           }}</span>
           <el-dropdown-menu slot="dropdown" class="player-menu-box">
-            <el-dropdown-item command="2.0">2.0x</el-dropdown-item>
-            <el-dropdown-item @click="handleActiveMultiple(1.5)" command="1.5"
+            <!-- <template v-for="item in multipleArr">
+              <el-dropdown-item :key="item.values" slot="dropdown" class="player-menu-box"></el-dropdown-item>
+            </template> -->
+            <el-dropdown-item
+              :style="{ color: multiple === 2.0 ? '#ff0000' : null }"
+              command="2.0"
+              >2.0x</el-dropdown-item
+            >
+            <el-dropdown-item
+              :style="{ color: multiple === 1.5 ? '#ff0000 !important' : null }"
+              command="1.5"
               >1.5x</el-dropdown-item
             >
-            <el-dropdown-item @click="handleActiveMultiple(1.25)" command="1.25"
+            <el-dropdown-item
+              :style="{
+                color: multiple === 1.25 ? '#ff0000 !important' : null
+              }"
+              command="1.25"
               >1.25x</el-dropdown-item
             >
-            <el-dropdown-item command="1.0" @click="handleActiveMultiple(1.0)"
+            <el-dropdown-item
+              :style="{ color: multiple === 1.0 ? '#ff0000 !important' : null }"
+              command="1.0"
               >1.0x</el-dropdown-item
             >
-            <el-dropdown-item command="0.75" @click="handleActiveMultiple(0.75)"
+            <el-dropdown-item
+              :style="{
+                color: multiple === 0.75 ? '#ff0000 !important' : null
+              }"
+              command="0.75"
               >0.75x</el-dropdown-item
             >
-            <el-dropdown-item command="0.5" @click="handleActiveMultiple(0.5)"
+            <el-dropdown-item
+              :style="{ color: multiple === 0.5 ? '#ff0000 !important' : null }"
+              command="0.5"
               >0.5x</el-dropdown-item
             >
           </el-dropdown-menu>
@@ -81,12 +102,12 @@ export default {
       video_play,
       video_pause,
       progressTime: 0,
-      phase: PlayerPhase,
+      phase: PlayerPhase.WaitingFirstFrame,
       // changePhase: "playing",
       // phase: this.player.phase,
       isPlayerSeeking: false,
       currentTime: 0,
-      multiple: this.player.playbackSpeed,
+      multiple: Number(this.player.playbackSpeed),
       showTime: displayWatch(Math.floor(this.player.timeDuration / 1000)),
       showProgressTime: displayWatch(
         Math.floor(this.player.progressTime / 1000)
@@ -142,7 +163,7 @@ export default {
 
     handleActiveMultiple(command) {
       this.handleMultiplePlay(command);
-      this.multiple = command;
+      this.multiple = Number(command);
     }
   },
 

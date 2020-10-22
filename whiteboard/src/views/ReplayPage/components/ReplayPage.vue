@@ -63,11 +63,11 @@
 <script>
 // import { WhiteWebSdk, PlayerPhase, Player } from "white-web-sdk";
 // import { WaitingFirstFrame, Playing, Pause, Ended } from "../../../PlayerPhase";
-import { WhiteWebSdk, createPlugins } from "white-web-sdk";
+import { WhiteWebSdk, createPlugins, PlayerPhase } from "white-web-sdk";
 import Identity from "@/Identity";
 import { videoPlugin } from "@netless/white-video-plugin";
 import { audioPlugin } from "@netless/white-audio-plugin";
-import PlayerPhase from "../../../PlayerPhase";
+// import PlayerPhase from "../../../PlayerPhase";
 import polly from "polly-js";
 import { netlessToken } from "../../../appToken";
 import { netlessWhiteboardApi } from "../../../apiMiddleware/RoomOperator";
@@ -91,7 +91,7 @@ export default {
       logo,
       video_play,
       currentTime: 0,
-      phase: "",
+      phase: PlayerPhase.WaitingFirstFrame,
       isPlayerSeeking: false,
       isVisible: false,
       replayFail: false,
@@ -161,6 +161,7 @@ export default {
         }
       );
       // cursorAdapter.setPlayer(player);
+      window.player = player;
       this.player = player;
       this.isLoading = false;
       console.log("player", this.player);
