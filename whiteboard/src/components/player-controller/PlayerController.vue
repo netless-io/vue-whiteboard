@@ -119,6 +119,7 @@ export default {
           break;
         }
       }
+      console.log("video object");
     },
 
     getCurrentTime(progressTime) {

@@ -7,7 +7,6 @@
           class="palette-stroke-slider"
           min="1"
           max="32"
-          @click="setStrokeWidth"
           v-model="roomState.memberState.strokeWidth"
           @mouseup="onMouseUp"
         />
@@ -71,7 +70,7 @@ export default {
     return {
       mask,
       borderColor: "#FFFFF",
-      percentage: this.room.state.memberState.strokeWidth / 32,
+      // percentage: this.room.state.memberState.strokeWidth / 32,
       toolPaletteConfig: [
         "#FC3A3F",
         "#FD8343",
@@ -126,6 +125,12 @@ export default {
       this.room.setMemberState({
         strokeWidth: this.roomState.memberState.strokeWidth
       });
+      console.log("click");
+    }
+  },
+  computed: {
+    percentage() {
+      return this.roomState.memberState.strokeWidth / 32;
     }
   }
 };
