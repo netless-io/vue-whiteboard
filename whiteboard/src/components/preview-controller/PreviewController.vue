@@ -1,28 +1,17 @@
  <template>
-  <!-- <div class="page-out-box">
-    <div class="page-box"></div>
-    <div class="page-box-under">
-      <div class="page-box-under-left"></div>
-      <div class="page-box-under-right">
-        <img :src="deleteIcon" />
-      </div>
-    </div>
-  </div>-->
   <div>
-    <img :src="pages" @click="test2" />
+    <img :src="pages" @click="handleOpen" />
     <el-drawer
-      title="我是标题"
       :modal="false"
-      :class="['normal-drawer', oncevis?'':'hidden']"
       :show-close="true"
       :visible.sync="drawer"
       :with-header="false"
-      :before-close="test"
+      :before-close="handleClose"
       :wrapperClosable="true"
       :modal-append-to-body="false"
       custom-class="drawer-class"
     >
-      <div :style="{width: 240}">
+      <div :style="{ width: 240 }">
         <div class="menu-annex-box">
           <div class="menu-title-line-box">
             <div class="menu-title-line">
@@ -31,7 +20,11 @@
                 <div class="menu-head-btn" @click="handleAddPage">
                   <img :src="addPage" />
                 </div>
-                <div class="menu-head-btn" :style="{ marginLeft: 8 }">
+                <div
+                  class="menu-head-btn"
+                  @click="handleClose"
+                  :style="{ marginLeft: 8 }"
+                >
                   <img :src="close" />
                 </div>
               </div>
@@ -46,7 +39,7 @@
                     <div class="ppt-image" ref="bindPpt"></div>
                   </div>
                   <div class="page-box-under">
-                    <div class="page-box-under-left"></div>
+                    <div class="page-box-under-left">{{ index + 1 }}</div>
                     <div class="page-box-under-right" @click="removeScene">
                       <img :src="deleteIcon" />
                     </div>
@@ -83,42 +76,32 @@ export default {
       pages,
       isFocus: false,
       roomState: this.room.state,
-      scenes: this.room.state.sceneState.scenes,
-      sceneDir: this.room.state.sceneState.scenePath.split("/"),
+      sceneDir: this.room.state.sceneState.scenePath.split("/").slice(0, -1),
       hoverCellIndex: null,
-      drawer: true,
+      drawer: false,
       path: "",
       activeIndex: "",
-      scenePath: "",
-      oncevis: false
+      scenePath: ""
     };
   },
 
-  methods: {
-    // 暂时魔改的 elementUI 可忽略
-    test2() {
-      if (this.oncevis) this.drawer = !this.drawer;
-      else {
-        document
-          .querySelector(".normal-drawer .el-drawer__container")
-          .classList.remove("hidden");
-        this.oncevis = true;
-        document
-          .querySelector(".normal-drawer .el-drawer__container")
-          .classList.add("el-drawer__open");
-      }
+  computed: {
+    scenes() {
+      return this.room.state.sceneState.scenes;
+    }
+  },
 
-      console.log("c2", this.drawer, this.oncevis);
+  methods: {
+    handleOpen() {
+      this.drawer = true;
     },
-    // 暂时魔改的 elementUI 可忽略
-    test(done) {
-      console.log(12, this.drawer, done);
+
+    handleClose() {
       this.drawer = false;
     },
 
     removeScene() {
       this.scenePath = this.roomState.sceneState.scenePath;
-      this.scenes = this.room.state.sceneState.scenes;
       this.room.removeScenes(`${this.scenePath}`);
     },
 
@@ -134,7 +117,6 @@ export default {
       }
       return cells.join("/");
     },
-    // 添加页面
     handleAddPage() {
       this.activeIndex = this.roomState.sceneState.index;
       const newSceneIndex = this.activeIndex + 1;
@@ -143,36 +125,48 @@ export default {
       this.room.putScenes(pathName, [{}], newSceneIndex);
       this.room.setSceneIndex(newSceneIndex);
       this.room.setSceneIndex(newSceneIndex);
-      this.scenes = this.room.state.sceneState.scenes;
     },
 
-    setupDivRef(ref) {
-      if (ref) {
-        this.path = this.sceneDir.concat(this.scenes.name).join("/");
-        this.room.scenePreview(this.path, ref, 208, 156);
+    setupDivRefUntilBindPptExist() {
+      if (this.$refs.bindPpt == null) {
+        setTimeout(this.setupDivRefUntilBindPptExist.bind(this));
+      } else {
+        const bindPpt = this.$refs.bindPpt;
+        const scenes = this.scenes;
+        if (bindPpt && scenes) {
+          if (bindPpt.length < scenes.length) {
+            setTimeout(this.setupDivRefUntilBindPptExist.bind(this));
+            return;
+          }
+          scenes.map((scene, i) => {
+            if (!(i < bindPpt.length)) {
+              console.warn(i, bindPpt.length);
+              return;
+            }
+            this.path = this.sceneDir.concat(scene.name).join("/");
+            try {
+              // console.log(this.path, bindPpt[i]);
+              this.room.scenePreview(this.path, bindPpt[i], 208, 156);
+            } catch {
+              console.debug("error");
+            }
+          });
+        }
       }
+    },
+
+    setupDivRef(modifyState) {
+      this.roomState = { ...this.room.state, ...modifyState };
+      this.setupDivRefUntilBindPptExist();
     }
   },
 
   mounted() {
-    // 暂时魔改的 elementUI 可忽略
-    document
-      .querySelector(".normal-drawer .el-drawer__container")
-      .classList.remove("el-drawer__open");
-
-    this.room.callbacks.on("onRoomStateChanged", modifyState => {
-      this.roomState = { ...this.room.state, ...modifyState };
-    });
-    // setInterval(() => {
-    //   this.drawer = !this.drawer;
-    // }, 3000);
-    // this.setupDivRef(this.$refs.bindPpt);
-    // console.log(this.$refs.bindPpt);
-
-    this.$nextTick(() => {
-      console.warn("refs", this.$refs.bindPpt);
-      this.setupDivRef(this.$refs.bindPpt[0]);
-    });
+    this.room.callbacks.on("onRoomStateChanged", this.setupDivRef);
+    this.$watch(
+      "room.state.sceneState.scenes",
+      this.setupDivRefUntilBindPptExist
+    );
   }
 };
 </script>
@@ -182,26 +176,4 @@ export default {
 .hidden {
   visibility: hidden;
 }
-// .drawer-class {
-//   transform: translate3d(100%, 0, 0);
-// }
-
-// .normal-drawer {
-//   .drawer-class {
-//     // background: cadetblue;
-//     animation: rtl-drawer-in 0.3s 1ms !important;
-//   }
-// }
-// .outside-drawer {
-//   .drawer-class {
-//     // transform: translate3d(100%, 0, 0);
-//     // background: cadetblue;
-//     animation: rtl-drawer-out 0.3s !important;
-//   }
-// }
-// @keyframes bao {
-// }
-// .el-drawer__open .el-drawer.rtl {
-//   animation: bao 0s !important;
-// }
 </style>
