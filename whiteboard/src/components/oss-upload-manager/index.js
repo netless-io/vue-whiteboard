@@ -122,8 +122,8 @@ export class UploadManager {
 
   setUpScenes = async (scenes, uuid, type, sdkToken, taskUuid) => {
     const sceneId = `${uuidv4()}`;
-    this.room.putScenes(`/${uuid}/${sceneId}`);
-    this.room.setScenePath(`${uuid}/${sceneId}/${scenes[0].name}`);
+    this.room.putScenes(`/${uuid}/${sceneId}`, scenes);
+    this.room.setScenePath(`/${uuid}/${sceneId}/${scenes[0].name}`);
     let res;
     try {
       res = await this.task.getCover(
@@ -149,7 +149,7 @@ export class UploadManager {
           type === PPTType.dynamic ? "dynamicConvert" : "staticConvert"
         }/${taskUuid}.zip`,
     };
-    const docs = this.toom.state.globalState.docs;
+    const docs = this.room.state.globalState.docs;
     if (docs && docs.length > 0) {
       const oldDocs = docs.map((data) => {
         data.active = false;

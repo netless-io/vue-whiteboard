@@ -301,13 +301,6 @@ export default {
         });
       }
     }
-  },
-
-  mounted() {
-    this.$message({
-      message: "正在转码",
-      iconClass: "el-icon-loading"
-    });
   }
 };
 </script>
