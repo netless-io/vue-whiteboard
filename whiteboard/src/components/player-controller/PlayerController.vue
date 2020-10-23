@@ -39,36 +39,36 @@
               <el-dropdown-item :key="item.values" slot="dropdown" class="player-menu-box"></el-dropdown-item>
             </template> -->
             <el-dropdown-item
-              :style="{ color: multiple === 2.0 ? '#ff0000' : null }"
+              :style="{ color: multiple === 2.0 ? '#3381FF' : null }"
               command="2.0"
               >2.0x</el-dropdown-item
             >
             <el-dropdown-item
-              :style="{ color: multiple === 1.5 ? '#ff0000 !important' : null }"
+              :style="{ color: multiple === 1.5 ? '#3381FF' : null }"
               command="1.5"
               >1.5x</el-dropdown-item
             >
             <el-dropdown-item
               :style="{
-                color: multiple === 1.25 ? '#ff0000 !important' : null
+                color: multiple === 1.25 ? '#3381FF' : null
               }"
               command="1.25"
               >1.25x</el-dropdown-item
             >
             <el-dropdown-item
-              :style="{ color: multiple === 1.0 ? '#ff0000 !important' : null }"
+              :style="{ color: multiple === 1.0 ? '#3381FF' : null }"
               command="1.0"
               >1.0x</el-dropdown-item
             >
             <el-dropdown-item
               :style="{
-                color: multiple === 0.75 ? '#ff0000 !important' : null
+                color: multiple === 0.75 ? '#3381FF' : null
               }"
               command="0.75"
               >0.75x</el-dropdown-item
             >
             <el-dropdown-item
-              :style="{ color: multiple === 0.5 ? '#ff0000 !important' : null }"
+              :style="{ color: multiple === 0.5 ? '#3381FF' : null }"
               command="0.5"
               >0.5x</el-dropdown-item
             >

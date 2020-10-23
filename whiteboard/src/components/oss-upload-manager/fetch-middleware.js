@@ -20,8 +20,8 @@ export default class TaskOperator {
   // roomToken  sdkToken
   async getCover(uuid, path, width, height, token) {
     const json = await fetcher.post({
-      path: `room/${uuid}/screenshots`,
-      heeaders: {
+      path: `rooms/${uuid}/screenshots`,
+      headers: {
         token,
       },
       body: {

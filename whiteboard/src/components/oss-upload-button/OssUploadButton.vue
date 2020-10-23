@@ -162,7 +162,8 @@ export default {
           this.progress
         );
       } catch (error) {
-        this.$message(error);
+        // this.$message(error);
+        console.log(error);
       }
     },
 
@@ -184,7 +185,7 @@ export default {
           this.progress
         );
       } catch (error) {
-        this.$message(error);
+        console.log(error);
       }
     },
 
@@ -294,13 +295,19 @@ export default {
           iconClass: "el-icon-loading"
         });
       } else if (this.uploadState === PPTProgressPhase.Converting) {
-        this.message({
+        this.$message({
           message: "正在转码",
           iconClass: "el-icon-loading"
         });
       }
     }
-    console.log("test", this.$parent.$refs.bindRoom);
+  },
+
+  mounted() {
+    this.$message({
+      message: "正在转码",
+      iconClass: "el-icon-loading"
+    });
   }
 };
 </script>

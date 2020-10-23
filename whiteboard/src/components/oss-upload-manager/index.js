@@ -56,13 +56,13 @@ export class UploadManager {
         res = await pptConverter.convert({
           url: pptURL,
           kind: kind,
-          onProgress: (process) => {
+          onProgressUpdated: (process) => {
             if (onProgress) {
               onProgress(PPTProgressPhase.Converting, process);
             }
           },
         });
-        await this.setUpScenes(res.scenes, uuid.PPTType.static, sdkToken);
+        await this.setUpScenes(res.scenes, uuid, PPTType.static, sdkToken);
         if (onProgress) {
           onProgress(PPTProgressPhase.Stop, 1);
         }
@@ -72,7 +72,7 @@ export class UploadManager {
         }
       }
     } else {
-      const taskInf = await this.task.createPPTTask(
+      const taskInf = await this.task.createPPTTaskInf(
         pptURL,
         "dynamic",
         true,
