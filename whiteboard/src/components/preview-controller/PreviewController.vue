@@ -1,4 +1,4 @@
- <template>
+<template>
   <div>
     <img :src="pages" @click="handleOpen" />
     <el-drawer
@@ -20,11 +20,7 @@
                 <div class="menu-head-btn" @click="handleAddPage">
                   <img :src="addPage" />
                 </div>
-                <div
-                  class="menu-head-btn"
-                  @click="handleClose"
-                  :style="{ marginLeft: 8 }"
-                >
+                <div class="menu-head-btn" @click="handleClose">
                   <img :src="close" />
                 </div>
               </div>
@@ -36,7 +32,10 @@
               <template v-for="(item, index) in scenes">
                 <div class="page-out-box" :key="item.index">
                   <div class="page-box" @click="setScenePath(index)">
-                    <div class="ppt-image" ref="bindPpt"></div>
+                    <ppt-image
+                      :index="index"
+                      @mounted="setupDivRefOnMounted"
+                    ></ppt-image>
                   </div>
                   <div class="page-box-under">
                     <div class="page-box-under-left">{{ index + 1 }}</div>
@@ -59,6 +58,7 @@ import close from "./src/image/close.svg";
 import addPage from "./src/image/add-page.svg";
 import deleteIcon from "./src/image/delete.svg";
 import pages from "./src/image/pages.svg";
+import PptImage from "./PptImage.vue";
 
 export default {
   name: "PreviewController",
@@ -67,6 +67,9 @@ export default {
       type: Object,
       require: true
     }
+  },
+  components: {
+    PptImage
   },
   data() {
     return {
@@ -79,7 +82,6 @@ export default {
       sceneDir: this.room.state.sceneState.scenePath.split("/").slice(0, -1),
       hoverCellIndex: null,
       drawer: false,
-      path: "",
       activeIndex: "",
       scenePath: ""
     };
@@ -117,6 +119,7 @@ export default {
       }
       return cells.join("/");
     },
+
     handleAddPage() {
       this.activeIndex = this.roomState.sceneState.index;
       const newSceneIndex = this.activeIndex + 1;
@@ -127,46 +130,29 @@ export default {
       this.room.setSceneIndex(newSceneIndex);
     },
 
-    setupDivRefUntilBindPptExist() {
-      if (this.$refs.bindPpt == null) {
-        setTimeout(this.setupDivRefUntilBindPptExist.bind(this));
-      } else {
-        const bindPpt = this.$refs.bindPpt;
-        const scenes = this.scenes;
-        if (bindPpt && scenes) {
-          if (bindPpt.length < scenes.length) {
-            setTimeout(this.setupDivRefUntilBindPptExist.bind(this));
-            return;
-          }
-          scenes.map((scene, i) => {
-            if (!(i < bindPpt.length)) {
-              console.warn(i, bindPpt.length);
-              return;
-            }
-            this.path = this.sceneDir.concat(scene.name).join("/");
-            try {
-              // console.log(this.path, bindPpt[i]);
-              this.room.scenePreview(this.path, bindPpt[i], 208, 156);
-            } catch {
-              console.debug("error");
-            }
-          });
-        }
-      }
+    onRoomStateChanged(modifyState = {}) {
+      this.roomState = { ...this.room.state, ...modifyState };
+      const images = Array.from(document.querySelectorAll(".ppt-image"));
+      this.scenes?.forEach((scene, index) => {
+        if (!(index < images.length)) return;
+        this.setupDivRef(images[index], scene);
+      });
     },
 
-    setupDivRef(modifyState) {
-      this.roomState = { ...this.room.state, ...modifyState };
-      this.setupDivRefUntilBindPptExist();
+    setupDivRef(el, scene) {
+      const path = this.sceneDir.concat(scene.name).join("/");
+      this.room.scenePreview(path, el, 208, 156);
+    },
+
+    setupDivRefOnMounted(pptImage) {
+      const index = pptImage.index;
+      if (!this.scenes || !(index < this.scenes.length)) return;
+      this.setupDivRef(pptImage.$el, this.scenes[index]);
     }
   },
 
   mounted() {
-    this.room.callbacks.on("onRoomStateChanged", this.setupDivRef);
-    this.$watch(
-      "room.state.sceneState.scenes",
-      this.setupDivRefUntilBindPptExist
-    );
+    this.room.callbacks.on("onRoomStateChanged", this.onRoomStateChanged);
   }
 };
 </script>

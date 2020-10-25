@@ -184,6 +184,7 @@ export default {
           this.sdkToken,
           this.progress
         );
+        window.location.reload(); // TODO: fix sdk?
       } catch (error) {
         console.log(error);
       }
