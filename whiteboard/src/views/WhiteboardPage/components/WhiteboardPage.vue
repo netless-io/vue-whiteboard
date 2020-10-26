@@ -36,7 +36,6 @@
             :identity="identity"
           ></exit-button-room>
         </template>
-        <!-- <div class="page-controller-cell"></div> -->
       </div>
     </div>
     <div class="page-controller-box">
@@ -68,7 +67,6 @@ import { netlessWhiteboardApi } from "../../../apiMiddleware/RoomOperator";
 import pages from "@/assets/image/pages.svg";
 import folder from "@/assets/image/folder.svg";
 import logo from "@/assets/image/logo.svg";
-// import LoadingPage from "@/views/LoadingPage/LoadingPage";
 import InviteButton from "@/components/InviteButton/InviteButton";
 import RedoUndo from "@/components/RedoUndo/RedoUndo";
 import PageController from "@/components/page-controller/PageController";
@@ -77,6 +75,7 @@ import PreviewController from "@/components/preview-controller/PreviewController
 import ExitButtonRoom from "@/components/Exit/ExitButtonRoom";
 import OssUploadButton from "@/components/oss-upload-button/OssUploadButton";
 import ToolBox from "@/components/tool-box/ToolBox";
+// import LoadingPage from "@/views/LoadingPage/LoadingPage";
 
 export default {
   name: "WhiteboardPage",

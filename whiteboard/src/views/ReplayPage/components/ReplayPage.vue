@@ -61,13 +61,10 @@
 </template>
 
 <script>
-// import { WhiteWebSdk, PlayerPhase, Player } from "white-web-sdk";
-// import { WaitingFirstFrame, Playing, Pause, Ended } from "../../../PlayerPhase";
 import { WhiteWebSdk, createPlugins, PlayerPhase } from "white-web-sdk";
 import Identity from "@/Identity";
 import { videoPlugin } from "@netless/white-video-plugin";
 import { audioPlugin } from "@netless/white-audio-plugin";
-// import PlayerPhase from "../../../PlayerPhase";
 import polly from "polly-js";
 import { netlessToken } from "../../../appToken";
 import { netlessWhiteboardApi } from "../../../apiMiddleware/RoomOperator";
@@ -97,8 +94,6 @@ export default {
       replayFail: false,
       replayState: false,
       Pause: PlayerPhase.Pause,
-      // Playing: "",
-      // Ended: "",
       uuid: "",
       userId: "",
       player: "",
