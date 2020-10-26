@@ -131,6 +131,7 @@ export default {
     },
 
     onRoomStateChanged(modifyState = {}) {
+      console.log("hello");
       this.roomState = { ...this.room.state, ...modifyState };
       const images = Array.from(document.querySelectorAll(".ppt-image"));
       this.scenes?.forEach((scene, index) => {
@@ -153,6 +154,7 @@ export default {
 
   mounted() {
     this.room.callbacks.on("onRoomStateChanged", this.onRoomStateChanged);
+    document.body.addEventListener("mouseup", this.onRoomStateChanged);
   }
 };
 </script>
