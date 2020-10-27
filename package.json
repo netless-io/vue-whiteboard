@@ -4,9 +4,5 @@
   "devDependencies": {
     "lerna": "^3.22.1"
   },
-  "dependencies": {
-    "@netless/white-audio-plugin": "^1.2.16",
-    "@netless/white-video-plugin": "^1.2.15",
-    "polly-js": "^1.6.8"
-  }
+  "dependencies": {}
 }
