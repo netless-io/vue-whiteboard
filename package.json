@@ -1,8 +1,11 @@
 {
-  "name": "root",
+  "name": "vue-whiteboard",
   "private": true,
   "devDependencies": {
     "lerna": "^3.22.1"
   },
-  "dependencies": {}
+  "author": {
+    "name": "cheerchen",
+    "email": "meetcheerego@gmail.com"
+  }
 }
