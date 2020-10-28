@@ -1,6 +1,6 @@
 {
   "name": "@netless/vue-page-controller",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "> TODO: description",
   "author": "cheerchen <meetcheerego@gmail.com>",
   "homepage": "https://github.com/netless-io/vue-whiteboard#readme",
@@ -23,9 +23,9 @@
     "eslint-plugin-vue": "^6.2.2",
     "less": "^3.0.4",
     "less-loader": "^5.0.0",
+    "normalize.css": "^8.0.1",
     "prettier": "^1.19.1",
-    "vue-template-compiler": "^2.6.11",
-    "normalize.css": "^8.0.1"
+    "vue-template-compiler": "^2.6.11"
   },
   "repository": {
     "type": "git",

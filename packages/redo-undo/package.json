@@ -1,11 +1,10 @@
 {
   "name": "@netless/vue-redo-undo",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "vue-redo-undo",
   "author": "cheerchen <meetcheerego@gmail.com>",
   "homepage": "https://github.com/netless-io/vue-whiteboard#readme",
   "license": "MIT",
-  "dependencies": {},
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
@@ -19,9 +18,9 @@
     "eslint-plugin-vue": "^6.2.2",
     "less": "^3.0.4",
     "less-loader": "^5.0.0",
+    "normalize.css": "^8.0.1",
     "prettier": "^1.19.1",
-    "vue-template-compiler": "^2.6.11",
-    "normalize.css": "^8.0.1"
+    "vue-template-compiler": "^2.6.11"
   },
   "peerDependencies": {
     "vue": "^2.6.11",
