@@ -10,10 +10,10 @@
 </template>
 
 <script>
-import redo from "./src/image/redo.svg";
-import undo from "./src/image/undo.svg";
-import redoDisabled from "./src/image/redo-disabled.svg";
-import undoDisabled from "./src/image/undo-disabled.svg";
+import redo from "./image/redo.svg";
+import undo from "./image/undo.svg";
+import redoDisabled from "./image/redo-disabled.svg";
+import undoDisabled from "./image/undo-disabled.svg";
 
 export default {
   name: "RedoUndo",

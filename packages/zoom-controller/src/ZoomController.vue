@@ -18,9 +18,9 @@
 </template>
 
 <script>
-import reset from "./src/image/reset.svg";
-import plus from "./src/image/plus.svg";
-import less from "./src/image/less.svg";
+import reset from "./image/reset.svg";
+import plus from "./image/plus.svg";
+import less from "./image/less.svg";
 
 export default {
   name: "ZoomController",
