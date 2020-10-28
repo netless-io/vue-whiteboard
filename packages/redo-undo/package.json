@@ -21,7 +21,8 @@
     "less": "^3.0.4",
     "less-loader": "^5.0.0",
     "prettier": "^1.19.1",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.11",
+    "normalize.css": "^8.0.1"
   },
   "peerDependencies": {
     "vue": "^2.6.11",

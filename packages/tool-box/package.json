@@ -1,14 +1,18 @@
 {
-  "name": "@netless/vue-zoom-controller",
+  "name": "@netless/vue-tool-box",
   "version": "0.0.0",
   "description": "> TODO: description",
   "author": "cheerchen <meetcheerego@gmail.com>",
   "homepage": "https://github.com/netless-io/vue-whiteboard#readme",
   "license": "MIT",
+  "main": "lib/tool-box.js",
   "peerDependencies": {
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
     "white-web-sdk": "^2.9.12"
+  },
+  "dependencies": {
+    "element-ui": "^2.13.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
@@ -27,7 +31,6 @@
     "vue-template-compiler": "^2.6.11",
     "normalize.css": "^8.0.1"
   },
-  "dependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/netless-io/vue-whiteboard.git"

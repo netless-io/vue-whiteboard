@@ -131,7 +131,6 @@ export default {
     },
 
     onRoomStateChanged(modifyState = {}) {
-      console.log("hello");
       this.roomState = { ...this.room.state, ...modifyState };
       const images = Array.from(document.querySelectorAll(".ppt-image"));
       this.scenes?.forEach((scene, index) => {
