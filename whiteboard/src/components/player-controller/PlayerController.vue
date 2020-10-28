@@ -5,8 +5,8 @@
         :fullTime="this.player.timeDuration"
         :currentTime="getCurrentTime(this.currentTime)"
         :hideHoverTime="true"
-        @onChange="handleChangeTime"
         :limitTimeTooltipBySides="true"
+        @onChange="handleChangeTime"
       ></seek-slider>
     </div>
     <div class="player-controller-box">
@@ -16,11 +16,11 @@
             class="player-controller"
             @click="onClickOperationButton(player)"
           >
-            <div v-if="phase === 'pause'">
-              <img :src="video_play" :style="{ marginLeft: '2px' }" />
+            <div v-if="phase === 'playing'">
+              <img :src="video_pause" :style="{ marginLeft: '2px' }" />
             </div>
-            <div v-else-if="phase === 'playing'">
-              <img :src="video_pause" />
+            <div v-else-if="phase === 'buffering'">
+              <i class="el-icon-loading"></i>
             </div>
             <div v-else>
               <img :src="video_play" />
@@ -35,9 +35,6 @@
             multiple === 1.0 ? "倍数" : `${multiple}x`
           }}</span>
           <el-dropdown-menu slot="dropdown" class="player-menu-box">
-            <!-- <template v-for="item in multipleArr">
-              <el-dropdown-item :key="item.values" slot="dropdown" class="player-menu-box"></el-dropdown-item>
-            </template> -->
             <el-dropdown-item
               :style="{ color: multiple === 2.0 ? '#3381FF' : null }"
               command="2.0"
@@ -103,8 +100,6 @@ export default {
       video_pause,
       progressTime: 0,
       phase: PlayerPhase.WaitingFirstFrame,
-      // changePhase: "playing",
-      // phase: this.player.phase,
       isPlayerSeeking: false,
       currentTime: 0,
       multiple: Number(this.player.playbackSpeed),
@@ -124,10 +119,9 @@ export default {
     },
 
     onClickOperationButton(player) {
-      switch (this.player.phase) {
+      switch (player.phase) {
         case PlayerPhase.WaitingFirstFrame:
         case PlayerPhase.Pause: {
-          // this.changePhase = "pause";
           player.play();
           break;
         }
@@ -140,7 +134,6 @@ export default {
           break;
         }
       }
-      console.log("video object");
     },
 
     getCurrentTime(progressTime) {

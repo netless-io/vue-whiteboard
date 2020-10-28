@@ -61,8 +61,6 @@
         {{ getHoverTime() }}
       </div>
     </div>
-    <!-- <div v-if="thumbColor"></div>
-    <div v-else-if="!thumbColor"></div> -->
   </div>
 </template>
 
@@ -267,15 +265,6 @@ export default {
     window.addEventListener("mouseup", this.mouseSeekingHandler);
     window.addEventListener("touchmove", this.handleTouchSeeking);
     window.addEventListener("touchend", this.mobileTouchSeekingHandler);
-
-    // 程序化侦听事件
-    // this.$once("hook:beforeDestroy", function() {
-    //   this.setTrackWidthState().destroy();
-    //   this.handleSeeking().destroy();
-    //   this.mouseSeekingHandler().destroy();
-    //   this.handleTouchSeeking().destroy();
-    //   this.mobileTouchSeekingHandler().destroy();
-    // });
   },
 
   beforeDestroy() {

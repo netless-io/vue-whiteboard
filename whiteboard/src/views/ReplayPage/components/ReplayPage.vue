@@ -38,14 +38,12 @@
             @mouseleave="isVisible = false"
           >
             <div class="player-mask" @click="onClickOperationButton(player)">
-              <template v-if="phase === Pause">
-                <div class="player-big-icon">
-                  <img
-                    :src="video_play"
-                    :style="{ width: '50px', marginLeft: '6px' }"
-                  />
-                </div>
-              </template>
+              <div v-if="phase === 'pause'" class="player-big-icon">
+                <img
+                  :src="video_play"
+                  :style="{ width: '50px', marginLeft: '6px' }"
+                />
+              </div>
               <div
                 class="player-box"
                 ref="bindRoom"
@@ -93,7 +91,6 @@ export default {
       isVisible: false,
       replayFail: false,
       replayState: false,
-      Pause: PlayerPhase.Pause,
       uuid: "",
       userId: "",
       player: "",
@@ -135,7 +132,7 @@ export default {
     },
 
     async startPlayer(whiteWebSdk, uuid, roomToken) {
-      // cursorTool 后续添加
+      // TODO   add cursorTool
       // const cursorAdapter = new CursorTool();
 
       const player = await whiteWebSdk.replayRoom(
@@ -147,7 +144,7 @@ export default {
           },
           onStoppedWithError: error => {
             console.error(`Playback error: ${error}`);
-            // message.error(`Playback error: ${error}`); //后续添加 element 组件
+            // message.error(`Playback error: ${error}`); //TODO add elementUI
             this.replayFail = true;
           },
           onProgressTimeChanged: scheduleTime => {
@@ -156,10 +153,8 @@ export default {
         }
       );
       // cursorAdapter.setPlayer(player);
-      window.player = player;
       this.player = player;
       this.isLoading = false;
-      console.log("player", this.player);
     },
 
     handleBindRoom() {
@@ -194,11 +189,6 @@ export default {
   },
 
   async mounted() {
-    // window.addEventListener("keydown", this.handleSpaceKey);
-    this.$on("keydown", function() {
-      this.handleSpaceKey;
-    });
-
     this.uuid = this.$route.params.uuid;
     console.log("uuid", this.uuid);
     this.identity = this.$route.params.identity;
@@ -220,8 +210,20 @@ export default {
       });
 
       await this.loadPlayer(whiteWebSdk, this.uuid, roomToken);
-      console.log("this.player", this.player);
     }
+
+    //  TODO keydown
+    // window.addEventListener(
+    //   "keydown",
+    //   event => {
+    //     if (event.keyCode === 32) {
+    //       console.warn("test", this.player);
+    //       this.onClickOperationButton(this.player);
+    //     }
+    //     console.log("clicked", event.keyCode);
+    //   },
+    //   false
+    // );
   }
 };
 </script>
