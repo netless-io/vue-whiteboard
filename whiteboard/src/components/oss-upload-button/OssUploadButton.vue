@@ -1,5 +1,4 @@
 <template>
-  <!-- TopLoadingBar from "@netless/loading-bar" -->
   <el-popover trigger="click" placement="right">
     <template v-for="item in dataArr">
       <div class="oss-upload-box" :key="item.value">
@@ -288,7 +287,6 @@ export default {
   },
 
   updated(prevState) {
-    // this.$watch(expOrFn, callback, [options])
     if (this.uploadState !== prevState.uploadState) {
       if (this.uploadState === PPTProgressPhase.Uploading) {
         this.$message({
