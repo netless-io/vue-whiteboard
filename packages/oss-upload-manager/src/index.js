@@ -2,10 +2,7 @@ import {
   AnimationMode,
   ApplianceNames,
   createPPTTask,
-  // LegacyPPTConverter,
-  // PPT,
   PPTKind,
-  // Room, SceneDefinition
 } from "white-web-sdk";
 import { v4 as uuidv4 } from "uuid";
 // import { MultipartUploadResult } from "ali-oss";
