@@ -160,9 +160,6 @@ export default {
             }
           }
         );
-        // this.room = room;
-        console.log(room);
-        // window.room = room;
         room.setMemberState({
           pencilOptions: {
             disableBezier: false,
@@ -172,7 +169,6 @@ export default {
           }
         });
         room.bindHtmlElement(this.$refs.bindRoom);
-        // this.$room = room;
         this.roomIsInit = true;
         Vue.prototype.$room = room;
 
@@ -190,12 +186,6 @@ export default {
     handleDocCenterState(state) {
       this.isFileOpen = state;
     }
-
-    // provide() {
-    //   return {
-    //     ref: this
-    //   };
-    // }
   },
 
   async mounted() {
