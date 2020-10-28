@@ -6,16 +6,13 @@
   "author": "cheerchen <meetcheerego@gmail.com>",
   "homepage": "https://github.com/netless-io/vue-whiteboard#readme",
   "license": "MIT",
-  "main": "lib/preview-controller.js",
-  "directories": {
-    "lib": "lib",
-    "test": "__tests__"
-  },
-  "files": [
-    "lib"
-  ],
   "dependencies": {
     "element-ui": "^2.13.2"
+  },
+  "peerDependencies": {
+    "vue": "^2.6.11",
+    "vue-router": "^3.2.0",
+    "white-web-sdk": "^2.9.12"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

@@ -5,7 +5,6 @@
   "author": "cheerchen <meetcheerego@gmail.com>",
   "homepage": "https://github.com/netless-io/vue-whiteboard#readme",
   "license": "MIT",
-  "main": "lib/redo-undo.js",
   "dependencies": {},
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

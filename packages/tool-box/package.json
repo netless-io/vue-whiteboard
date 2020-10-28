@@ -5,7 +5,6 @@
   "author": "cheerchen <meetcheerego@gmail.com>",
   "homepage": "https://github.com/netless-io/vue-whiteboard#readme",
   "license": "MIT",
-  "main": "lib/tool-box.js",
   "peerDependencies": {
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
