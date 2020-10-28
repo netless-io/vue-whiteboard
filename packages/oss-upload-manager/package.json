@@ -5,6 +5,9 @@
   "author": "cheerchen <meetcheerego@gmail.com>",
   "homepage": "https://github.com/netless-io/vue-whiteboard#readme",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@netless/fetch-middleware": "^1.0.6",
     "@types/uuid": "^8.0.1",
