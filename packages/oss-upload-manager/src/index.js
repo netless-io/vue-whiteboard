@@ -53,9 +53,9 @@ export class UploadManager {
         res = await pptConverter.convert({
           url: pptURL,
           kind: kind,
-          onProgressUpdated: (process) => {
+          onProgressUpdated: (progress) => {
             if (onProgress) {
-              onProgress(PPTProgressPhase.Converting, process);
+              onProgress(PPTProgressPhase.Converting, progress);
             }
           },
         });

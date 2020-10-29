@@ -37,8 +37,14 @@
             @mouseover="isVisible = true"
             @mouseleave="isVisible = false"
           >
-            <div class="player-mask" @click="onClickOperationButton(player)">
-              <div v-if="phase === 'pause'" class="player-big-icon">
+            <div
+              class="player-mask"
+              @click.passive="onClickOperationButton(player)"
+            >
+              <div
+                v-if="phase === 'pause' || phase === 'waitingFirstFrame'"
+                class="player-big-icon"
+              >
                 <img
                   :src="video_play"
                   :style="{ width: '50px', marginLeft: '6px' }"
@@ -170,7 +176,7 @@ export default {
     },
 
     onClickOperationButton(player) {
-      switch (this.player.phase) {
+      switch (player.phase) {
         case PlayerPhase.WaitingFirstFrame:
         case PlayerPhase.Pause: {
           player.play();
@@ -190,7 +196,6 @@ export default {
 
   async mounted() {
     this.uuid = this.$route.params.uuid;
-    console.log("uuid", this.uuid);
     this.identity = this.$route.params.identity;
     this.userId = this.$route.params.userId;
     const plugins = createPlugins({
@@ -224,6 +229,8 @@ export default {
     //   },
     //   false
     // );
+
+    window.replayPage = this;
   }
 };
 </script>

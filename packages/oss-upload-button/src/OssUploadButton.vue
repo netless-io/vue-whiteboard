@@ -160,6 +160,7 @@ export default {
           this.sdkToken,
           this.progress
         );
+        window.location.reload(); // TODO: fix sdk?
       } catch (error) {
         console.log(error);
       }
@@ -288,11 +289,13 @@ export default {
   updated(prevState) {
     if (this.uploadState !== prevState.uploadState) {
       if (this.uploadState === PPTProgressPhase.Uploading) {
+        console.log('test1')
         this.$message({
           message: "正在上传",
           iconClass: "el-icon-loading"
         });
       } else if (this.uploadState === PPTProgressPhase.Converting) {
+        console.log('test1')
         this.$message({
           message: "正在转码",
           iconClass: "el-icon-loading"

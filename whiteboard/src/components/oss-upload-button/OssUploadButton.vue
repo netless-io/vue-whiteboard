@@ -161,8 +161,9 @@ export default {
           this.progress
         );
       } catch (error) {
-        // this.$message(error);
-        console.log(error);
+        this.$message({
+          message: error
+        });
       }
     },
 
@@ -185,7 +186,9 @@ export default {
         );
         window.location.reload(); // TODO: fix sdk?
       } catch (error) {
-        console.log(error);
+        this.$message({
+          message: error
+        });
       }
     },
 
@@ -207,7 +210,9 @@ export default {
           );
         }
       } catch (error) {
-        this.$message(error);
+        this.$message({
+          message: error
+        });
       }
     },
 
@@ -242,8 +247,10 @@ export default {
             }
           });
         }
-      } catch (err) {
-        console.log(err);
+      } catch (error) {
+        this.$message({
+          message: error
+        });
       }
     },
 
@@ -260,10 +267,11 @@ export default {
               pluginAudioUrl: url
             }
           });
-          console.log("上传音频成功");
         }
       } catch (error) {
-        console.log(error);
+        this.$message({
+          message: error
+        });
       }
     },
 
@@ -286,20 +294,22 @@ export default {
     }
   },
 
-  updated(prevState) {
-    if (this.uploadState !== prevState.uploadState) {
-      if (this.uploadState === PPTProgressPhase.Uploading) {
-        this.$message({
-          message: "正在上传",
-          iconClass: "el-icon-loading"
-        });
-      } else if (this.uploadState === PPTProgressPhase.Converting) {
-        this.$message({
-          message: "正在转码",
-          iconClass: "el-icon-loading"
-        });
-      }
+  updated() {
+    // if (this.uploadState !== prevState.uploadState) {
+    if (this.uploadState === PPTProgressPhase.Uploading) {
+      console.log("test1");
+      this.$message({
+        message: "正在上传",
+        iconClass: "el-icon-loading"
+      });
+    } else if (this.uploadState === PPTProgressPhase.Converting) {
+      console.log("test2");
+      this.$message({
+        message: "正在转码",
+        iconClass: "el-icon-loading"
+      });
     }
+    // }
   }
 };
 </script>
