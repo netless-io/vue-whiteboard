@@ -276,6 +276,7 @@ export default {
     },
 
     progress(phase, percent) {
+      const lastPhase = this.uploadState;
       this.uploadState = phase;
       switch (phase) {
         case PPTProgressPhase.Uploading: {
@@ -291,25 +292,29 @@ export default {
           this.ossPercent = 0;
         }
       }
-    }
-  },
+      if (lastPhase !== phase) {
+        this.makeToast();
+      }
+    },
 
-  updated() {
-    // if (this.uploadState !== prevState.uploadState) {
-    if (this.uploadState === PPTProgressPhase.Uploading) {
-      console.log("test1");
-      this.$message({
-        message: "正在上传",
-        iconClass: "el-icon-loading"
-      });
-    } else if (this.uploadState === PPTProgressPhase.Converting) {
-      console.log("test2");
-      this.$message({
-        message: "正在转码",
-        iconClass: "el-icon-loading"
-      });
+    makeToast() {
+      if (this.uploadState === PPTProgressPhase.Uploading) {
+        this.$message({
+          message: "正在上传",
+          iconClass: "el-icon-loading",
+          duration: 0
+        });
+      } else if (this.uploadState === PPTProgressPhase.Converting) {
+        this.$message.closeAll();
+        this.$message({
+          message: "正在转码",
+          iconClass: "el-icon-loading",
+          duration: 0
+        });
+      } else {
+        this.$message.closeAll();
+      }
     }
-    // }
   }
 };
 </script>

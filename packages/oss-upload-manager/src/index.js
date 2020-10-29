@@ -5,15 +5,15 @@ import {
   PPTKind,
 } from "white-web-sdk";
 import { v4 as uuidv4 } from "uuid";
-// import { MultipartUploadResult } from "ali-oss";
 import TaskOperator from "./fetch-middleware";
-import default_cover from "./src/image/default_cover.svg";
+import default_cover from "./image/default_cover.svg";
+// import { MultipartUploadResult } from "ali-oss";
 
-export class PPTProgressPhase {
-  Uploading;
-  Converting;
-  Stop;
-}
+export const PPTProgressPhase = {
+  Uploading: 0,
+  Converting: 1,
+  Stop: 2,
+};
 
 export class PPTType {
   dynamic = "dynamic";
