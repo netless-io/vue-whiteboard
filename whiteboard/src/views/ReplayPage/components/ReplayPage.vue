@@ -39,7 +39,7 @@
           >
             <div
               class="player-mask"
-              @click.passive="onClickOperationButton(player)"
+              @click.prevent="onClickOperationButton(player)"
             >
               <div
                 v-if="phase === 'pause' || phase === 'waitingFirstFrame'"
@@ -177,7 +177,11 @@ export default {
 
     onClickOperationButton(player) {
       switch (player.phase) {
-        case PlayerPhase.WaitingFirstFrame:
+        case PlayerPhase.WaitingFirstFrame: {
+          this.$refs.bindRoom.click();
+          player.play();
+          break;
+        }
         case PlayerPhase.Pause: {
           player.play();
           break;
@@ -216,21 +220,15 @@ export default {
 
       await this.loadPlayer(whiteWebSdk, this.uuid, roomToken);
     }
-
-    //  TODO keydown
-    // window.addEventListener(
-    //   "keydown",
-    //   event => {
-    //     if (event.keyCode === 32) {
-    //       console.warn("test", this.player);
-    //       this.onClickOperationButton(this.player);
-    //     }
-    //     console.log("clicked", event.keyCode);
-    //   },
-    //   false
-    // );
-
-    window.replayPage = this;
+    window.addEventListener(
+      "keydown",
+      event => {
+        if (event.keyCode === 32) {
+          this.onClickOperationButton(this.player);
+        }
+      },
+      false
+    );
   }
 };
 </script>
