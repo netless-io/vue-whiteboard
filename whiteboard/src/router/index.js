@@ -4,6 +4,7 @@ import Index from "@/views/IndexPage/Index.vue";
 import Join from "@/views/JoinPage/Join.vue";
 import Whiteboard from "@/views/WhiteboardPage/Whiteboard.vue";
 import Replay from "@/views/ReplayPage/Replay.vue";
+import ReplaySync from "@/views/ReplayPage/ReplaySync.vue";
 // import WhiteboardCreatorPage from "@/views/WhiteboardCreatorPage/WhiteboardCreatorPage.vue";
 
 Vue.use(VueRouter);
@@ -32,12 +33,17 @@ const routes = [
   {
     path: "/replay/:identity/:uuid/:userId",
     name: "Replay",
-    component: Replay,
+    component: Replay
   },
+  {
+    path: "/replaySync/:identity/:uuid/:userId",
+    name: "ReplaySync",
+    component: ReplaySync
+  }
 ];
 
 const router = new VueRouter({
-  routes,
+  routes
 });
 
 export default router;
