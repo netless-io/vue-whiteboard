@@ -110,19 +110,20 @@ export default {
     },
 
     async loadPlayer(whiteWebSdk, uuid, roomToken) {
-      await polly()
+      const replayState = await polly()
         .waitAndRetry(10)
         .executeForPromise(async () => {
-          const replayState = await whiteWebSdk.isPlayable({ room: uuid });
-          if (replayState) {
-            this.replayState = true;
-            await this.startPlayer(whiteWebSdk, uuid, roomToken);
-            return Promise.resolve();
-          } else {
-            this.replayState = false;
-            return Promise.reject();
-          }
+          return await whiteWebSdk.isPlayable({
+            region: "cn-hz",
+            room: uuid,
+            roomToken
+          });
         });
+
+      if (replayState) {
+        this.replayState = true;
+        await this.startPlayer(whiteWebSdk, uuid, roomToken);
+      }
     },
 
     onWindowResize() {

@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@netless/combine-player": "^0.0.2",
     "@netless/fetch-middleware": "^1.0.6",
     "@netless/white-audio-plugin": "^1.2.16",
     "@netless/white-video-plugin": "^1.2.15",
@@ -21,7 +22,7 @@
     "vue-burger-menu": "^2.0.5",
     "vue-router": "^3.2.0",
     "vuex": "^3.5.1",
-    "white-web-sdk": "^2.9.14"
+    "white-web-sdk": "2.11.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
