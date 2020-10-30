@@ -15,7 +15,8 @@
   },
   "dependencies": {
     "ali-oss": "^6.10.0",
-    "element-ui": "^2.13.2"
+    "element-ui": "^2.13.2",
+    "netless/vue-oss-upload-manager": "^0.0.4"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

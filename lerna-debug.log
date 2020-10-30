@@ -1,0 +1,6 @@
+78 error Error: Command failed: git tag v0.0.3 -m v0.0.3
+78 error fatal: tag 'v0.0.3' already exists
+78 error
+78 error     at makeError (/Users/netless/.config/yarn/global/node_modules/execa/index.js:174:9)
+78 error     at /Users/netless/.config/yarn/global/node_modules/execa/index.js:278:16
+78 error     at processTicksAndRejections (internal/process/task_queues.js:97:5)
