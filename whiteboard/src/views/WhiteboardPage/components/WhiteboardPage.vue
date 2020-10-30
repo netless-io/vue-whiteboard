@@ -69,6 +69,7 @@ import folder from "@/assets/image/folder.svg";
 import logo from "@/assets/image/logo.svg";
 import InviteButton from "@/components/InviteButton/InviteButton";
 import RedoUndo from "@/components/RedoUndo/RedoUndo";
+// import RedoUndo from "@netless/vue-redo-undo";
 import PageController from "@/components/page-controller/PageController";
 import ZoomController from "@/components/zoom-controller/ZoomController";
 import PreviewController from "@/components/preview-controller/PreviewController";
