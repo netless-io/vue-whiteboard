@@ -941,11 +941,6 @@
   dependencies:
     query-string "^6.13.1"
 
-"@netless/vue-redo-undo@^0.0.5":
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/@netless/vue-redo-undo/-/vue-redo-undo-0.0.5.tgz#d0040588a44da516b64b0d5c26cfd93a56d6c7c1"
-  integrity sha512-9z09yGEb8fqpfVNN5MQ5dxAqUU1jJWiSV3e4FCzpCMy623vB5S5OyqyV7xuCP4fpcWVJO4na1pS9KqhRb1tTgQ==
-
 "@netless/white-audio-plugin@^1.2.16":
   version "1.2.16"
   resolved "https://registry.yarnpkg.com/@netless/white-audio-plugin/-/white-audio-plugin-1.2.16.tgz#ee8eea3b3c370d7648579129b8e280a48825111c"
