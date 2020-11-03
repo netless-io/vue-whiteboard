@@ -5,7 +5,7 @@
   "author": "cheerchen <meetcheerego@gmail.com>",
   "homepage": "https://github.com/netless-io/vue-whiteboard#readme",
   "license": "MIT",
-  "main": "dist/index.js",
+  "main": "src/RedoUndo.vue",
   "files": [
     "src"
   ],
