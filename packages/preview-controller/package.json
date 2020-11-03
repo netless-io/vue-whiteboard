@@ -7,6 +7,9 @@
   "homepage": "https://github.com/netless-io/vue-whiteboard#readme",
   "license": "MIT",
   "main": "dist/index.js",
+  "files": [
+    "src"
+  ],
   "publishConfig": {
     "access": "public"
   },
