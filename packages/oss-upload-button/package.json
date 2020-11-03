@@ -1,6 +1,6 @@
 {
   "name": "@netless/vue-oss-upload-button",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "> TODO: description",
   "author": "cheerchen <meetcheerego@gmail.com>",
   "homepage": "https://github.com/netless-io/vue-whiteboard#readme",
@@ -18,7 +18,7 @@
     "white-web-sdk": "^2.9.12"
   },
   "dependencies": {
-    "@netless/vue-oss-upload-manager": "^0.0.7",
+    "@netless/vue-oss-upload-manager": "^0.0.8",
     "ali-oss": "^6.10.0",
     "element-ui": "^2.13.2"
   },
