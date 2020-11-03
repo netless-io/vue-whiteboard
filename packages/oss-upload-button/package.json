@@ -18,7 +18,7 @@
     "white-web-sdk": "^2.9.12"
   },
   "dependencies": {
-    "@netless/vue-oss-upload-manager": "^0.0.6",
+    "@netless/vue-oss-upload-manager": "^0.0.7",
     "ali-oss": "^6.10.0",
     "element-ui": "^2.13.2"
   },
