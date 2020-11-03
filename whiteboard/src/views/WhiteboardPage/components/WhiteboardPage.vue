@@ -75,7 +75,8 @@ import ZoomController from "@/components/zoom-controller/ZoomController";
 import PreviewController from "@/components/preview-controller/PreviewController";
 import ExitButtonRoom from "@/components/Exit/ExitButtonRoom";
 import OssUploadButton from "@/components/oss-upload-button/OssUploadButton";
-import ToolBox from "@/components/tool-box/ToolBox";
+// import ToolBox from "@/components/tool-box/ToolBox";
+import ToolBox from "@netless/vue-tool-box";
 // import LoadingPage from "@/views/LoadingPage/LoadingPage";
 
 export default {
