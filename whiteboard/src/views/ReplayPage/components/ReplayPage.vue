@@ -119,11 +119,17 @@ export default {
       const replayState = await polly()
         .waitAndRetry(10)
         .executeForPromise(async () => {
-          return await whiteWebSdk.isPlayable({
+          const isPlayable = await whiteWebSdk.isPlayable({
             region: "cn-hz",
             room: uuid,
             roomToken
           });
+
+          if (!isPlayable) {
+            throw Error("the current room cannot be replay");
+          }
+
+          return true;
         });
 
       if (replayState) {
