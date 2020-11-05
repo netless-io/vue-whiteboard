@@ -37,8 +37,14 @@
             @mouseover="isVisible = true"
             @mouseleave="isVisible = false"
           >
-            <div class="player-mask" @click="onClickOperationButton(player)">
-              <div v-if="phase === 'pause'" class="player-big-icon">
+            <div
+              class="player-mask"
+              @click.prevent="onClickOperationButton(player)"
+            >
+              <div
+                v-if="phase === 'pause' || phase === 'waitingFirstFrame'"
+                class="player-big-icon"
+              >
                 <img
                   :src="video_play"
                   :style="{ width: '50px', marginLeft: '6px' }"
@@ -171,8 +177,12 @@ export default {
     },
 
     onClickOperationButton(player) {
-      switch (this.player.phase) {
-        case PlayerPhase.WaitingFirstFrame:
+      switch (player.phase) {
+        case PlayerPhase.WaitingFirstFrame: {
+          this.$refs.bindRoom.click();
+          player.play();
+          break;
+        }
         case PlayerPhase.Pause: {
           player.play();
           break;
@@ -191,7 +201,6 @@ export default {
 
   async mounted() {
     this.uuid = this.$route.params.uuid;
-    console.log("uuid", this.uuid);
     this.identity = this.$route.params.identity;
     this.userId = this.$route.params.userId;
     const plugins = createPlugins({
@@ -212,19 +221,15 @@ export default {
 
       await this.loadPlayer(whiteWebSdk, this.uuid, roomToken);
     }
-
-    //  TODO keydown
-    // window.addEventListener(
-    //   "keydown",
-    //   event => {
-    //     if (event.keyCode === 32) {
-    //       console.warn("test", this.player);
-    //       this.onClickOperationButton(this.player);
-    //     }
-    //     console.log("clicked", event.keyCode);
-    //   },
-    //   false
-    // );
+    window.addEventListener(
+      "keydown",
+      event => {
+        if (event.keyCode === 32) {
+          this.onClickOperationButton(this.player);
+        }
+      },
+      false
+    );
   }
 };
 </script>

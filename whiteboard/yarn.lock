@@ -948,6 +948,18 @@
   dependencies:
     query-string "^6.13.1"
 
+"@netless/vue-redo-undo@^0.0.10":
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/@netless/vue-redo-undo/-/vue-redo-undo-0.0.10.tgz#67615a9f95dfa83b68ac220b26612e1a5e0e24b8"
+  integrity sha512-nqCoIm5wYbwVoXc4VzbxLvot25IzgMQzpbzhhwdoXUPM0TXWP7WaxPCb48lvpIDn691phokZjmLW0atd1GuBSQ==
+
+"@netless/vue-tool-box@^0.0.9":
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/@netless/vue-tool-box/-/vue-tool-box-0.0.9.tgz#774e89bbe71edcce080e170c101881a86fb4d1e5"
+  integrity sha512-mR7SRhMsIY8dwsOsBU3ML6kuLsxfe0iB9+ss5uWWT5j4JRrsUfSc7mU/pUakGfTmgeff2nrYm0bXc1eTjvHRdw==
+  dependencies:
+    element-ui "^2.13.2"
+
 "@netless/white-audio-plugin@^1.2.16":
   version "1.2.16"
   resolved "https://registry.yarnpkg.com/@netless/white-audio-plugin/-/white-audio-plugin-1.2.16.tgz#ee8eea3b3c370d7648579129b8e280a48825111c"

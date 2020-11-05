@@ -1,10 +1,14 @@
 {
   "name": "@netless/vue-tool-box",
-  "version": "0.0.0",
+  "version": "0.0.10",
   "description": "> TODO: description",
   "author": "cheerchen <meetcheerego@gmail.com>",
   "homepage": "https://github.com/netless-io/vue-whiteboard#readme",
   "license": "MIT",
+  "main": "dist/tool-box.js",
+  "files": [
+    "src"
+  ],
   "publishConfig": {
     "access": "public"
   },

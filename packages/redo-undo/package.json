@@ -1,10 +1,14 @@
 {
   "name": "@netless/vue-redo-undo",
-  "version": "0.0.0",
+  "version": "0.0.10",
   "description": "vue-redo-undo",
   "author": "cheerchen <meetcheerego@gmail.com>",
   "homepage": "https://github.com/netless-io/vue-whiteboard#readme",
   "license": "MIT",
+  "main": "dist/redo-undo.js",
+  "files": [
+    "src"
+  ],
   "publishConfig": {
     "access": "public"
   },
@@ -34,9 +38,6 @@
     "lib": "lib",
     "test": "__tests__"
   },
-  "files": [
-    "lib"
-  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/netless-io/vue-whiteboard.git"

@@ -19,7 +19,10 @@
         <div class="modal-box-name">回到白板</div>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button :style="{ width: '176px' }" @click="handleGoBack"
+        <el-button
+          :style="{ width: '176px' }"
+          :loading="buttonLoading"
+          @click="handleGoBack"
           >确认退出</el-button
         >
       </span>
@@ -37,7 +40,8 @@ export default {
       exit,
       replayScreen,
       dialogVisible: false,
-      exitViewDisable: false
+      exitViewDisable: false,
+      buttonLoading: false
     };
   },
   props: {
@@ -54,10 +58,10 @@ export default {
   },
   methods: {
     handleReplay() {
+      this.buttonLoading = true;
       this.$router.push(
         `/whiteboard/${this.identity}/${this.uuid}/${this.userId}/`
       );
-      console.log("click");
     },
 
     handleGoBack() {
