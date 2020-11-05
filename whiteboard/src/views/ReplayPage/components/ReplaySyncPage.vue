@@ -61,11 +61,7 @@
             </div>
           </div>
         </div>
-        <video
-          class="video-box video-js"
-          ref="videoDOM"
-          width="500"
-        />
+        <video class="video-box video-js" ref="videoDOM" width="500" />
       </div>
     </template>
   </div>
@@ -209,16 +205,23 @@ export default {
       }
     },
 
-    onClickOperationButton(combinePlayer) {
+    onClickOperationButton(player) {
       switch (this.player.phase) {
-        case PlayerPhase.WaitingFirstFrame:
-        case PlayerPhase.Pause:
-        case PlayerPhase.Ended: {
-          combinePlayer.play();
+        case PlayerPhase.WaitingFirstFrame: {
+          this.$refs.bindRoom.click();
+          player.play();
+          break;
+        }
+        case PlayerPhase.Pause: {
+          player.play();
           break;
         }
         case PlayerPhase.Playing: {
-          combinePlayer.pause();
+          player.pause();
+          break;
+        }
+        case PlayerPhase.Ended: {
+          player.seekToScheduleTime(0);
           break;
         }
       }
@@ -227,7 +230,6 @@ export default {
 
   async mounted() {
     this.uuid = this.$route.params.uuid;
-    console.log("uuid", this.uuid);
     this.identity = this.$route.params.identity;
     this.userId = this.$route.params.userId;
     const plugins = createPlugins({
@@ -248,19 +250,15 @@ export default {
 
       await this.loadPlayer(whiteWebSdk, this.uuid, roomToken);
     }
-
-    //  TODO keydown
-    // window.addEventListener(
-    //   "keydown",
-    //   event => {
-    //     if (event.keyCode === 32) {
-    //       console.warn("test", this.player);
-    //       this.onClickOperationButton(this.player);
-    //     }
-    //     console.log("clicked", event.keyCode);
-    //   },
-    //   false
-    // );
+    window.addEventListener(
+      "keydown",
+      event => {
+        if (event.keyCode === 32) {
+          this.onClickOperationButton(this.player);
+        }
+      },
+      false
+    );
   }
 };
 </script>
