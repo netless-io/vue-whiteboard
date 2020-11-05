@@ -10,80 +10,88 @@
       <loading-page></loading-page>
     </template>
     <template v-else>
-      <div class="player-out-box">
-        <div class="logo-box">
-          <img :src="logo" />
-        </div>
-        <div class="room-controller-box">
-          <div class="page-controller-mid-box">
-            <div class="page-controller-cell">
-              <exit-button-player
-                :identity="identity"
-                :uuid="uuid"
-                :userId="userId"
-                :player="player"
-              ></exit-button-player>
+      <div class="overall-box">
+        <div class="player-out-box">
+          <div class="logo-box">
+            <img :src="logo" />
+          </div>
+          <div class="room-controller-box">
+            <div class="page-controller-mid-box">
+              <div class="page-controller-cell">
+                <exit-button-player
+                  :identity="identity"
+                  :uuid="uuid"
+                  :userId="userId"
+                  :player="player"
+                ></exit-button-player>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="player-board">
-          <template v-if="player && isVisible">
-            <div @mouseenter="isVisible = true">
-              <player-controller :player="player"></player-controller>
-            </div>
-          </template>
-          <div
-            class="player-board-inner"
-            @mouseover="isVisible = true"
-            @mouseleave="isVisible = false"
-          >
+          <div class="player-board">
+            <template v-if="player && combinePlayer && isVisible">
+              <div @mouseenter="isVisible = true">
+                <player-sync-controller
+                  :player="player"
+                  :combine-player="combinePlayer"
+                ></player-sync-controller>
+              </div>
+            </template>
             <div
-              class="player-mask"
-              @click.prevent="onClickOperationButton(player)"
+              class="player-board-inner"
+              @mouseover="isVisible = true"
+              @mouseleave="isVisible = false"
             >
               <div
-                v-if="phase === 'pause' || phase === 'waitingFirstFrame'"
-                class="player-big-icon"
+                class="player-mask"
+                @click="onClickOperationButton(combinePlayer)"
               >
-                <img
-                  :src="video_play"
-                  :style="{ width: '50px', marginLeft: '6px' }"
-                />
+                <div v-if="phase === 'pause'" class="player-big-icon">
+                  <img
+                    :src="video_play"
+                    :style="{ width: '50px', marginLeft: '6px' }"
+                  />
+                </div>
+                <div
+                  class="player-box"
+                  ref="bindRoom"
+                  @click="handleBindRoom"
+                  :style="{ backgroundColor: 'F2F2F2' }"
+                ></div>
               </div>
-              <div
-                class="player-box"
-                ref="bindRoom"
-                @click="handleBindRoom"
-                :style="{ backgroundColor: 'F2F2F2' }"
-              ></div>
             </div>
           </div>
         </div>
+        <video
+          class="video-box video-js"
+          ref="videoDOM"
+          width="500"
+        />
       </div>
     </template>
   </div>
 </template>
 
 <script>
-import { WhiteWebSdk, createPlugins, PlayerPhase } from "white-web-sdk";
+import { createPlugins, PlayerPhase, WhiteWebSdk } from "white-web-sdk";
 import Identity from "@/Identity";
 import { videoPlugin } from "@netless/white-video-plugin";
 import { audioPlugin } from "@netless/white-audio-plugin";
 import polly from "polly-js";
-import { netlessToken } from "../../../appToken";
-import { netlessWhiteboardApi } from "../../../apiMiddleware/RoomOperator";
+import { netlessToken } from "@/appToken";
+import { netlessWhiteboardApi } from "@/apiMiddleware/RoomOperator";
 import video_play from "@/assets/image/video-play.svg";
 import logo from "@/assets/image/logo.svg";
-import PlayerController from "@/components/player-controller/PlayerController";
+import PlayerSyncController from "@/components/player-controller/PlayerSyncController";
 import ExitButtonPlayer from "@/components/Exit/ExitButtonPlayer";
 import LoadingPage from "@/views/LoadingPage/LoadingPage";
 import PageError from "@/views/PageError/PageError";
+import CombinePlayerFactory from "@netless/combine-player";
 
 export default {
-  name: "ReplayPage",
+  name: "ReplaySyncPage",
   components: {
     ExitButtonPlayer,
-    PlayerController,
+    PlayerSyncController,
     LoadingPage,
     PageError
   },
@@ -102,7 +110,8 @@ export default {
       player: "",
       identity: Identity,
       isLoading: true,
-      loadingText: "正在生成回放，请耐心等待"
+      loadingText: "正在生成回放，请耐心等待",
+      combinePlayer: null
     };
   },
   methods: {
@@ -148,7 +157,8 @@ export default {
       // TODO   add cursorTool
       // const cursorAdapter = new CursorTool();
 
-      const player = await whiteWebSdk.replayRoom(
+      // cursorAdapter.setPlayer(player);
+      this.player = await whiteWebSdk.replayRoom(
         // , cursorAdapter: cursorAdapter
         { room: uuid, roomToken: roomToken },
         {
@@ -165,9 +175,26 @@ export default {
           }
         }
       );
-      // cursorAdapter.setPlayer(player);
-      this.player = player;
       this.isLoading = false;
+
+      this.$nextTick(() => {
+        const combinePlayerFactory = new CombinePlayerFactory(
+          this.player,
+          {
+            url:
+              "https://docs-assets.oss-cn-hangzhou.aliyuncs.com/m3u8-video/test.m3u8",
+            videoDOM: this.$refs.videoDOM
+          },
+          true
+        );
+
+        const combinePlayer = combinePlayerFactory.create();
+        combinePlayer.setOnStatusChange((status, message) => {
+          console.log("状态发生改变: ", status, message);
+        });
+
+        this.combinePlayer = combinePlayer;
+      });
     },
 
     handleBindRoom() {
@@ -182,23 +209,16 @@ export default {
       }
     },
 
-    onClickOperationButton(player) {
-      switch (player.phase) {
-        case PlayerPhase.WaitingFirstFrame: {
-          this.$refs.bindRoom.click();
-          player.play();
-          break;
-        }
-        case PlayerPhase.Pause: {
-          player.play();
+    onClickOperationButton(combinePlayer) {
+      switch (this.player.phase) {
+        case PlayerPhase.WaitingFirstFrame:
+        case PlayerPhase.Pause:
+        case PlayerPhase.Ended: {
+          combinePlayer.play();
           break;
         }
         case PlayerPhase.Playing: {
-          player.pause();
-          break;
-        }
-        case PlayerPhase.Ended: {
-          player.seekToScheduleTime(0);
+          combinePlayer.pause();
           break;
         }
       }
@@ -207,6 +227,7 @@ export default {
 
   async mounted() {
     this.uuid = this.$route.params.uuid;
+    console.log("uuid", this.uuid);
     this.identity = this.$route.params.identity;
     this.userId = this.$route.params.userId;
     const plugins = createPlugins({
@@ -227,19 +248,25 @@ export default {
 
       await this.loadPlayer(whiteWebSdk, this.uuid, roomToken);
     }
-    window.addEventListener(
-      "keydown",
-      event => {
-        if (event.keyCode === 32) {
-          this.onClickOperationButton(this.player);
-        }
-      },
-      false
-    );
+
+    //  TODO keydown
+    // window.addEventListener(
+    //   "keydown",
+    //   event => {
+    //     if (event.keyCode === 32) {
+    //       console.warn("test", this.player);
+    //       this.onClickOperationButton(this.player);
+    //     }
+    //     console.log("clicked", event.keyCode);
+    //   },
+    //   false
+    // );
   }
 };
 </script>
 
 <style lang="less">
 @import "./ReplayPage.less";
+@import "./ReplaySyncPage.less";
+@import "https://cdn.bootcdn.net/ajax/libs/video.js/7.10.1/alt/video-js-cdn.css";
 </style>

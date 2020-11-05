@@ -18,6 +18,12 @@
         </div>
         <div class="modal-box-name">观看回放</div>
       </div>
+      <div class="modal-box">
+        <div @click="handleReplaySync">
+          <img class="modal-box-img" :src="replayScreen" />
+        </div>
+        <div class="modal-box-name">观看回放(与视频同步)</div>
+      </div>
       <span slot="footer" class="dialog-footer">
         <el-button
           :style="{ width: '176px' }"
@@ -64,6 +70,15 @@ export default {
         await this.room.disconnect();
         this.$router.push(
           `/replay/${this.identity}/${this.room.uuid}/${this.userId}/`
+        );
+      }
+    },
+
+    async handleReplaySync() {
+      if (this.room) {
+        await this.room.disconnect();
+        this.$router.push(
+            `/replaySync/${this.identity}/${this.room.uuid}/${this.userId}/`
         );
       }
     },

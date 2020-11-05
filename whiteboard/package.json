@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@netless/combine-player": "^0.0.3",
     "@netless/fetch-middleware": "^1.0.6",
     "@netless/vue-redo-undo": "^0.0.10",
     "@netless/vue-tool-box": "^0.0.9",
@@ -23,7 +24,7 @@
     "vue-burger-menu": "^2.0.5",
     "vue-router": "^3.2.0",
     "vuex": "^3.5.1",
-    "white-web-sdk": "^2.9.14"
+    "white-web-sdk": "2.11.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
