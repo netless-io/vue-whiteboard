@@ -17,12 +17,8 @@ export default {
   },
 
   methods: {
-    async createRoomAndGetUuid(room, limit, mode) {
-      const res = await netlessWhiteboardApi.room.createRoomApi(
-        room,
-        limit,
-        mode
-      );
+    async createRoomAndGetUuid(room, limit) {
+      const res = await netlessWhiteboardApi.room.createRoomApi(room, limit);
       if (res.code === 200) {
         return res.msg.room.uuid;
       } else {

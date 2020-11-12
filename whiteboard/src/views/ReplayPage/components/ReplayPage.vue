@@ -107,9 +107,9 @@ export default {
   },
   methods: {
     async getRoomToken(uuid) {
-      const res = await netlessWhiteboardApi.room.joinRoomApi(uuid);
-      if (res.code === 200) {
-        return res.msg.roomToken;
+      const roomToken = await netlessWhiteboardApi.room.joinRoomApi(uuid);
+      if (roomToken) {
+        return roomToken;
       } else {
         return null;
       }
@@ -166,7 +166,9 @@ export default {
         }
       );
       // cursorAdapter.setPlayer(player);
+      console.log(player);
       this.player = player;
+      console.log("test1", this.player);
       this.isLoading = false;
     },
 

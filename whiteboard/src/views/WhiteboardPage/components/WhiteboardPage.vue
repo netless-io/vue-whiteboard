@@ -111,9 +111,9 @@ export default {
 
   methods: {
     async getRoomToken(uuid) {
-      const res = await netlessWhiteboardApi.room.joinRoomApi(uuid);
-      if (res.code === 200) {
-        return res.msg.roomToken;
+      const roomToken = await netlessWhiteboardApi.room.joinRoomApi(uuid);
+      if (roomToken) {
+        return roomToken;
       } else {
         return null;
       }
@@ -144,6 +144,7 @@ export default {
           {
             uuid: this.uuid,
             roomToken: roomToken,
+            isRecord: true,
             userPayload: {
               userId: this.userId
             },
@@ -173,21 +174,12 @@ export default {
         room.bindHtmlElement(this.$refs.bindRoom);
         this.roomIsInit = true;
         Vue.prototype.$room = room;
-
         console.log(this.$room);
         // }
       } catch (error) {
         console.error(error);
       }
     }
-
-    // handlePreviewState(state) {
-    //   this.isMenuVisible = state;
-    // },
-
-    // handleDocCenterState(state) {
-    //   this.isFileOpen = state;
-    // }
   },
 
   async mounted() {

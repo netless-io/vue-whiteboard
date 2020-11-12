@@ -47,14 +47,10 @@ export default {
     };
   },
   methods: {
-    async createRoomAndGetUuid(room, limit, mode) {
-      const res = await netlessWhiteboardApi.room.createRoomApi(
-        room,
-        limit,
-        mode
-      );
-      if (res.code == 200) {
-        this.uuid = res.msg.room.uuid;
+    async createRoomAndGetUuid(room, limit) {
+      const res = await netlessWhiteboardApi.room.createRoomApi(room, limit);
+      if (res.uuid) {
+        this.uuid = res.uuid;
       }
       this.userId = `${Math.floor(Math.random() * 100000)}`;
     },
