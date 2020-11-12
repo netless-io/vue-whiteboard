@@ -78,7 +78,7 @@ export default {
       if (this.room) {
         await this.room.disconnect();
         this.$router.push(
-            `/replaySync/${this.identity}/${this.room.uuid}/${this.userId}/`
+          `/replaySync/${this.identity}/${this.room.uuid}/${this.userId}/`
         );
       }
     },

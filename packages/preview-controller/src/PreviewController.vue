@@ -127,7 +127,6 @@ export default {
       const pathName = this.pathName(this.scenePath);
       this.room.putScenes(pathName, [{}], newSceneIndex);
       this.room.setSceneIndex(newSceneIndex);
-      this.room.setSceneIndex(newSceneIndex);
     },
 
     onRoomStateChanged(modifyState = {}) {
