@@ -179,15 +179,15 @@ export default {
       } catch (error) {
         console.error(error);
       }
-    },
-
-    handlePreviewState(state) {
-      this.isMenuVisible = state;
-    },
-
-    handleDocCenterState(state) {
-      this.isFileOpen = state;
     }
+
+    // handlePreviewState(state) {
+    //   this.isMenuVisible = state;
+    // },
+
+    // handleDocCenterState(state) {
+    //   this.isFileOpen = state;
+    // }
   },
 
   async mounted() {
