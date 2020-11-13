@@ -36,39 +36,14 @@
           }}</span>
           <el-dropdown-menu slot="dropdown" class="player-menu-box">
             <el-dropdown-item
-              :style="{ color: multiple === 2.0 ? '#3381FF' : null }"
-              command="2.0"
-              >2.0x</el-dropdown-item
-            >
-            <el-dropdown-item
-              :style="{ color: multiple === 1.5 ? '#3381FF' : null }"
-              command="1.5"
-              >1.5x</el-dropdown-item
-            >
-            <el-dropdown-item
+              v-for="item in multipleNum"
+              :key="item.values"
               :style="{
-                color: multiple === 1.25 ? '#3381FF' : null
+                color: multiple === item ? '#3381FF' : null
               }"
-              command="1.25"
-              >1.25x</el-dropdown-item
-            >
-            <el-dropdown-item
-              :style="{ color: multiple === 1.0 ? '#3381FF' : null }"
-              command="1.0"
-              >1.0x</el-dropdown-item
-            >
-            <el-dropdown-item
-              :style="{
-                color: multiple === 0.75 ? '#3381FF' : null
-              }"
-              command="0.75"
-              >0.75x</el-dropdown-item
-            >
-            <el-dropdown-item
-              :style="{ color: multiple === 0.5 ? '#3381FF' : null }"
-              command="0.5"
-              >0.5x</el-dropdown-item
-            >
+              :command="item"
+              >{{ item }}x
+            </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -110,7 +85,8 @@ export default {
       showTime: displayWatch(Math.floor(this.player.timeDuration / 1000)),
       showProgressTime: displayWatch(
         Math.floor(this.player.progressTime / 1000)
-      )
+      ),
+      multipleNum: [2.0, 1.5, 1.25, 1.0, 0.75, 0.5]
     };
   },
 
