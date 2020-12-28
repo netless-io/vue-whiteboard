@@ -10,8 +10,8 @@
         >
           <template v-if="item.hasColor">
             <tool-box-palette-box
-              :room="roomData"
-              :roomState="roomState"
+              :room="$room"
+              :roomState="$room.state"
               :displayStroke="item.hasStroke"
             ></tool-box-palette-box>
           </template>
@@ -57,7 +57,6 @@
 
 <script>
 import ToolBoxPaletteBox from "./ToolBoxPaletteBox";
-// import { ApplianceNames, RoomState } from "white-web-sdk";
 import selector from "./src/image/selector.svg";
 import selectorActive from "./src/image/selector-active.svg";
 import pen from "./src/image/pencil.svg";
@@ -79,12 +78,10 @@ import laserPointerActive from "./src/image/laserPointer-active.svg";
 import hand from "./src/image/hand.svg";
 import handActive from "./src/image/hand-active.svg";
 import mask from "./src/image/mask.svg";
-// import OssUploadButton from "@/components/oss-upload-button/OssUploadButton";
 export default {
   name: "ToolBox",
   components: {
     ToolBoxPaletteBox
-    // OssUploadButton
   },
   props: {
     room: {
@@ -117,8 +114,6 @@ export default {
       mask,
       strokeEnable: false,
       extendsPanel: false,
-      roomData: this.room,
-      roomState: this.room.state,
       isSelected: this.room.state.memberState.currentApplianceName,
       descriptions: {
         applianceName: Object.freeze({
@@ -215,8 +210,8 @@ export default {
   },
 
   mounted() {
-    this.room.callbacks.on("onRoomStateChanged", modifyState => {
-      this.roomState = { ...this.room.state, ...modifyState };
+    this.room.callbacks.on("onRoomStateChanged", () => {
+      this.$forceUpdate();
     });
   }
 };

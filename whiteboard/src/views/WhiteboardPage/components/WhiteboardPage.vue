@@ -69,20 +69,16 @@ import folder from "@/assets/image/folder.svg";
 import logo from "@/assets/image/logo.svg";
 import InviteButton from "@/components/InviteButton/InviteButton";
 import RedoUndo from "@/components/RedoUndo/RedoUndo";
-// import RedoUndo from "@netless/vue-redo-undo";
 import PageController from "@/components/page-controller/PageController";
 import ZoomController from "@/components/zoom-controller/ZoomController";
 import PreviewController from "@/components/preview-controller/PreviewController";
 import ExitButtonRoom from "@/components/Exit/ExitButtonRoom";
 import OssUploadButton from "@/components/oss-upload-button/OssUploadButton";
 import ToolBox from "@/components/tool-box/ToolBox";
-// import ToolBox from "@netless/vue-tool-box";
-// import LoadingPage from "@/views/LoadingPage/LoadingPage";
 
 export default {
   name: "WhiteboardPage",
   components: {
-    // LoadingPage,
     RedoUndo,
     PageController,
     ZoomController,
